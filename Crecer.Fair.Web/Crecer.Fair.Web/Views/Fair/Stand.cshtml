@@ -1,0 +1,306 @@
+@model StandViewModel
+@{
+    ViewData["Title"] = "Stand";
+    Guid? chatProviderId = null;
+    ChatMode chatMode = ChatMode.OnlyAllowedConversations;
+  
+    if(User.GetFairProviderId()!=null)
+    {
+        chatMode = ChatMode.All;
+    }
+
+    if(Model.ProviderId != User.GetFairProviderId())
+    {
+        chatProviderId = Model.ProviderId;
+    }
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/fair-model/@{@(Model.ModelCode.ToLower())}.css" ></link>
+}
+<partial name="_FairHeaderStand" />
+
+
+<!-- Hero Section-->
+<section>
+    <vc:chat provider-Id="@chatProviderId" chat-mode="@chatMode"></vc:chat>
+    <div class="stand-bg-content @{@(Model.ModelCode.ToLower())}">
+        <img id="standMap" class="area-map stand-bg" src="@Url.Content($"~/img/fair/standmodels/{Model.ModelCode}.jpg")"
+            alt="">
+        <div id="map-resources" class="stand-resources-map area-map">
+            <partial name="_StandResourceItems" model="Model"></partial>
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade stand-modal" id="modal-stand-content" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <button class="close modal-close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                <svg class="svg-icon w-100 h-100 svg-icon-light align-middle">
+                    <use xlink:href="#close-1"> </use>
+                </svg>
+            </button>
+            <div class="modal-body m-3">
+                <div class="row">
+                    <div class="clearfix">
+                        <div id="quill-viewer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade stand-modal" id="modal-stand-documents" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <button class="close modal-close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                <svg class="svg-icon w-100 h-100 svg-icon-light align-middle">
+                    <use xlink:href="#close-1"> </use>
+                </svg>
+            </button>
+            <div class="modal-body m-3">
+                <h2 class="modal-title mb-4">Documentos</h2>
+                <div class="row">
+                    <nav class="nav nav-pills flex-column sticky-top ms-1 p-3 mb-5">
+                        @foreach (var item in Model.Files.OrderBy(p => p.Priority))
+                        {
+                            <a class="nav-link" data-smooth-scroll="data-smooth-scroll" href="@item.Url"
+                            target="_blank">@item.Name</a>
+                        }
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade stand-modal" id="modal-stand-links" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <button class="close modal-close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                <svg class="svg-icon w-100 h-100 svg-icon-light align-middle">
+                    <use xlink:href="#close-1"> </use>
+                </svg>
+            </button>
+            <div class="modal-body m-3">
+                <h2 class="modal-title mb-4">Enlaces</h2>
+                <div class="row">
+                    <nav class="nav nav-pills flex-column sticky-top ms-1 p-3 mb-5">
+                        @foreach (var item in Model.Links.OrderBy(p => p.Priority))
+                        {
+                            <a class="nav-link" data-smooth-scroll="data-smooth-scroll" href="@item.Url"
+                            target="_blank">@item.Name</a>
+                        }
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade stand-modal" id="modal-stand-calendar" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <button class="close modal-close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                <svg class="svg-icon w-100 h-100 svg-icon-light align-middle">
+                    <use xlink:href="#close-1"> </use>
+                </svg>
+            </button>
+            <div class="modal-body m-3">
+                <h2 class="modal-title mb-4">Horario</h2>
+                <div class="row">
+                    <div class="col-sm-12">
+                         <table>
+                                <tbody>
+                        @foreach (var item in Model.CalendarItems)
+                        {                           
+                            <tr>
+                                <td class="p-1"><span>@item.WeekDayDescription</span></td>
+                                <td class="p-1"><span>@item.Start - @item.End</span></td>
+                            </tr>                                
+                        }
+                        </tbody>
+                            </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade stand-modal" id="modal-stand-contact" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <button class="close modal-close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                <svg class="svg-icon w-100 h-100 svg-icon-light align-middle">
+                    <use xlink:href="#close-1"> </use>
+                </svg>
+            </button>
+            <div class="modal-body m-3">
+                <h2 class="modal-title mb-4">Datos de Contacto</h2>
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <h4>@Model.ProviderName</h4>
+                    </div>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(Model.ContactData.Address))
+                {
+                    <div class="row mt-3">
+                        <div class="col-12 text-md-start">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>@Model.ContactData.Address</span>
+                        </div>
+                    </div>
+                }
+                 @if (!string.IsNullOrWhiteSpace(Model.ContactData.WebSite))
+                {
+                    <div class="row mt-3">
+                        <div class="col-12 text-md-start">
+                            <i class="fas fa-globe"></i>
+                            <a class="btn-link" href="@Model.ContactData.WebSite" target="_blank">Sitio WEB</a>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.ContactData.PhoneNumber1))
+                {
+                    <div class="row mt-2">
+                        <div class="col-12 text-md-start">
+                            <i class="fas fa-phone"></i>
+                            <span>@Model.ContactData.PhoneNumber1</span>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.ContactData.PhoneNumber2))
+                {
+                    <div class="row mt-2">
+                        <div class="col-12 text-md-start">
+                            <i class="fas fa-phone"></i>
+                            <span>@Model.ContactData.PhoneNumber2</span>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.ContactData.Email))
+                {
+                    <div class="row mt-2">
+                        <div class="col-12 text-md-start">
+                            <i class="far fa-envelope"></i>
+                            <a class="float" href="mailto:@Model.ContactData.Email">@Model.ContactData.Email</a>
+                        </div>
+                    </div>
+                }
+                <div class="row mt-2">
+                    <div class="col-sm-12 text-center">
+                        <div class="social-items-content">
+            <ul class="list-inline">
+                @if (!string.IsNullOrWhiteSpace(Model.ContactData.TwitterAddress))
+                {
+                    <li class="list-inline-item stand-contact-social twitter"><a href="@Model.ContactData.TwitterAddress"
+                        target="_blank"><i class="fab fa-twitter"></i></a></li>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.ContactData.FacebookAddress))
+                {
+                    <li class="list-inline-item stand-contact-social facebook"><a
+                        href="@Model.ContactData.FacebookAddress" target="_blank"><i
+                            class="fab fab fa-facebook"></i></a></li>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.ContactData.InstagramAddress))
+                {
+                    <li class="list-inline-item stand-contact-social instagram"><a href="@Model.ContactData.InstagramAddress" target="_blank"><i
+                            class="fab fab fa-instagram"></i></a></li>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.ContactData.YoutubeAddress))
+                {
+                    <li class="list-inline-item stand-contact-social youtube"><a href="@Model.ContactData.YoutubeAddress" target="_blank"><i
+                            class="fab fa-youtube"></i></a></li>
+                }
+            </ul>
+        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<vc:footer-section></vc:footer-section>
+
+@section Scripts{
+
+<link rel="stylesheet" href="~/lib/quill/dist/quill.core.css" />
+<script src="~/lib/quill/dist/quill.min.js"></script>
+<script src="~/lib/jquery-nicescroll/jquery.nicescroll.min.js"></script>
+
+<script>
+    $(function () {
+
+        $(".stand-resource-item").niceScroll({horizrailenabled:false});
+
+        $(window).resize(function () {
+            resizeStandMap();
+        });
+
+        resizeStandMap();
+
+        function resizeStandMap() {
+            var standMap = $("#standMap");
+            var parentArea = standMap.parent();
+            if (standMap.width() > parentArea.width()) {
+                let excessWidth = standMap.width() - parentArea.width();
+                let marginLeft = parseInt(excessWidth / 2.00);
+                $(".area-map").css('margin-left', -marginLeft + 'px');
+            }
+            else{
+                $(".area-map").css('margin-left', '0px');
+            }
+
+            if (standMap.height() > parentArea.height()) {
+                let gapT = -40; // TOP Menu
+
+                let excessHeight = standMap.height() - parentArea.height();
+                let marginTop = parseInt(excessHeight / 2.00) + gapT;
+                $(".area-map").css('margin-top', -marginTop + 'px');
+            }
+            else{
+                $(".area-map").css('margin-top', '0px');
+            }
+        }
+
+
+        if ($("#videoPlayer-content").length > 0) {
+            var videoPlayerContent = $("#videoPlayer-content");
+            videoPlayerContent.owlCarousel({
+                items: 1,
+                loop: true,
+                margin: 10,
+                //video: true,
+                lazyLoad: true,
+                center: true,
+                nav: true          
+        });
+        }
+
+    if ($("#banner-player-content").length > 0) {
+        var bannerPlayer = $("#banner-player-content");
+        bannerPlayer.owlCarousel({
+            items: 1,
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            autoplayHoverPause: false,
+            margin: 10,
+            center: true,
+            nav: true
+        });
+    }
+
+    setTimeout(function () {
+        if ($(".owl-item.active video").length > 0)
+            $(".owl-item.active video").trigger('play');
+    }, 2000);
+
+    });
+</script>
+}

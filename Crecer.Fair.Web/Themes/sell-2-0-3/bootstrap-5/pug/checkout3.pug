@@ -1,0 +1,39 @@
+extends _pug-includes/layout.pug
+
+block content
+
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Checkout'})
+    - var heroHeading = 'Checkout'
+    - var heroText ='<p class="lead text-muted">Choose the payment method.</p>'
+    
+    include _pug-includes/inc-hero.pug
+                                    
+    
+    // Checkout
+    section
+        .container
+            .row
+                .col-lg-8
+
+                    - var step = 2
+                    include _pug-includes/inc-checkout-nav.pug
+                    
+                    .mb-5
+                           
+                        include _pug-includes/inc-checkout-accordion.pug
+                            
+                    .mb-5.d-flex.justify-content-between.flex-column.flex-lg-row
+                        a.btn.btn-link.text-muted(href="checkout2.html") 
+                            i.fa.fa-angle-left.me-2
+                            | Back to the delivery method
+                        a.btn.btn-dark(href="checkout4.html")
+                            | Continue to order review
+                            i.fa.fa-angle-right.ms-2
+                                
+                        
+                
+                .col-lg-4
+                    include _pug-includes/inc-checkout-summary.pug
+                        

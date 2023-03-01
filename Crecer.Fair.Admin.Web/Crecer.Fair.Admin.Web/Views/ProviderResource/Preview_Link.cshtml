@@ -1,0 +1,27 @@
+@model ResourceTypeViewModel
+
+@foreach (var itemResource in Model.Resources.OrderBy(p=>p.Priority))
+{
+    <div class="card">
+        <div class="card-header">
+            <div class="card-actions float-end mt-0">
+                <a action-type="EDIT" asp-action="Edit" asp-controller="ProviderResource"
+                asp-route-providerId="@Model.MainData.ProviderId" asp-route-type="@Model.ResourceTypeId"
+                asp-route-resourceId="@itemResource.ResourceId"><i class="align-middle me-2 far fa-fw fa-edit"></i></a>
+                <a action-type="DELETE" asp-action="Edit" asp-controller="ProviderResource"
+                asp-route-providerId="@Model.MainData.ProviderId" asp-route-type="@Model.ResourceTypeId"
+                asp-route-resourceId="@itemResource.ResourceId" asp-route-delete="@true"><i class="align-middle me-2 far fa-trash-alt"></i></a>
+            </div>
+
+            <h4 class="mt-1">@(!string.IsNullOrWhiteSpace(itemResource.Name) ? itemResource.Name : itemResource.ResourceTypeName)
+                @* <span class="text-muted">@itemResource.Name</span> *@
+            </h4>
+        </div>
+
+        <div class="card-body">
+
+            <p><a class="link-secondary" href="@itemResource.Value" target="_blank">@itemResource.Value</a></p>
+
+        </div>
+    </div>
+}

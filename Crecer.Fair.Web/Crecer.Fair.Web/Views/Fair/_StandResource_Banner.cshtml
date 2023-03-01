@@ -1,0 +1,35 @@
+@model StandResourceCoordViewModel
+
+@if (Model.StandModel.Banner.Any())
+{
+    <div id="banner-player-content" class="stand-banner-content owl-carousel owl-theme owl-dots-modern"
+    style="padding: 10px;">
+        @foreach (var item in Model.StandModel.Banner.OrderBy(p => p.Priority))
+        {
+
+            <div class="item stand-banner-item" style="width=@{@(Model.Width-10)}px height=@{@(Model.Height-10)}px">
+                <a data-fancybox="photo-gallery" data-src="@Html.Raw(item.Url)">                    
+                    <img src="@item.Url" width="@{@(Model.Width-10)}px" height="@{@(Model.Height-10)}px">
+                </a>                
+            </div>
+        }
+    </div>
+
+    <style>
+        .stand-banner-content .owl-dots {
+            top: @{@(Model.Height + 10)}px;
+        }
+
+        .stand-banner-content .owl-nav {
+            top: 30px;
+        }
+
+        .stand-banner-content .owl-nav .owl-next {
+            right: -20px;
+        }
+
+        .stand-banner-content .owl-nav .owl-prev {
+            left: -20px;
+        }
+    </style>
+}

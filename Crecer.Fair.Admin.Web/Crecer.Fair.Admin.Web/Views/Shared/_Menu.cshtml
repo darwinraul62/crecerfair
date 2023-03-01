@@ -1,0 +1,113 @@
+@{
+    string providerName = this.User.GetFairProviderName();
+    Guid? providerId = this.User.GetFairProviderId();
+    bool HasAccessAll = this.User.HasAccessAll();
+}
+
+<nav id="sidebar" class="sidebar">
+    <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" asp-action="Index" asp-controller="Home">
+            <img src="/img/logo_crecer.png" class="logo-home">
+            <div>
+                <span class="align-middle me-3">Feria Crecer Admin</span>
+            </div>
+        </a>
+
+        <ul class="sidebar-nav">
+            <li class="sidebar-item"><a class="sidebar-link" asp-action="GoFair" asp-controller="Home"><i
+                        class="fas fa-store"></i>Ir a la Feria</a></li>
+            @* <li class="sidebar-header">
+                Mantenimientos
+                </li> *@
+            @if (!providerId.HasValue || HasAccessAll)
+            {
+                <li class="sidebar-item active">
+                    <a data-bs-target="#dashboards" data-bs-toggle="collapse" class="sidebar-link">
+                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Mantenimientos</span>
+                    </a>
+                    <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
+                        <li class="sidebar-item"><a class="sidebar-link" asp-action="Index"
+                            asp-controller="Provider">Proveedores</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" asp-action="Index"
+                            asp-controller="Stands">Stands</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" asp-action="Index"
+                            asp-controller="Partnert">Socios</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" asp-action="Index"
+                            asp-controller="User">Usuarios</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" asp-action="Edit" asp-controller="Fair">Datos
+                                Generales de Feria</a></li>
+                    </ul>
+                </li>
+            }
+            else
+            {
+                <li class="sidebar-item active">
+                    <a data-bs-target="#dashboards" data-bs-toggle="collapse" class="sidebar-link">
+                        <i class="align-middle" data-feather="sliders"></i>
+                        <span class="align-middle">
+                            @providerName
+                        </span>
+                    </a>
+                    <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-action="Edit" asp-controller="Provider"
+                            asp-route-id="@providerId">Datos Generales</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-action="Index" asp-controller="ProviderResource"
+                            asp-route-id="@providerId">Recursos</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-action="GoFairStand" asp-controller="Home"
+                            asp-route-providerId="@providerId">Ir a mi Stand</a>
+                        </li>
+                        @* <li class="sidebar-item">
+                            <a class="sidebar-link" asp-action="EditUsers" asp-controller="Provider"
+                            asp-route-id="@providerId">Usuarios</a>
+                        </li> *@
+                    </ul>
+                </li>
+            }
+
+            @if (User.IsInRole(SecurityRoles.ReportRead))
+            {
+                <li class="sidebar-item active">
+                    <a data-bs-target="#reports-menu-section" data-bs-toggle="collapse" class="sidebar-link">
+                        <i class="far fa-chart-bar"></i> <span class="align-middle">Reportes</span>
+                    </a>
+                    <ul id="reports-menu-section" class="sidebar-dropdown list-unstyled collapse show"
+                    data-bs-parent="#sidebar">
+                        <li class="sidebar-item"><a class="sidebar-link" asp-action="PartnertStandVisited"
+                            asp-controller="Report">Visitas por Socios</a></li>
+                    </ul>
+                </li>
+            }
+
+            @* <li class="sidebar-item">
+                <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                <i class="align-middle" data-feather="pie-chart"></i> <span class="align-middle">Reportes</span>
+                </a>
+                <ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
+                <li class="sidebar-item"><a class="sidebar-link" asp-action="Index"
+                asp-controller="Home">Visitas</a></li>
+                <li class="sidebar-item"><a class="sidebar-link" href="pages-settings.html">Grupos</a>
+                </li>
+                </ul>
+                </li>
+                <li class="sidebar-item">
+                <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                <i class="align-middle" data-feather="lock"></i> <span class="align-middle">Seguridad</span>
+                </a>
+                <ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
+                <li class="sidebar-item"><a class="sidebar-link" asp-action="Index"
+                asp-controller="Home">Usuarios</a></li>
+                <li class="sidebar-item"><a class="sidebar-link" asp-action="Index" asp-controller="Home">Grupos</a>
+                </li>
+                </ul>
+                </li> *@
+
+        </ul>
+
+
+    </div>
+</nav>

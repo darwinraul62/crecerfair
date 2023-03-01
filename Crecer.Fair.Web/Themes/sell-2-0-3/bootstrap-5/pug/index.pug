@@ -1,0 +1,73 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var active = 'home'  
+    - var navbarClass = 'bg-transparent navbar-sticky navbar-airy navbar-dark bg-hover-white bg-fixed-white navbar-hover-light navbar-fixed-light'  
+    - var headerClass = 'header header-absolute'  
+
+block content
+    // Hero Section
+    section.home-full-slider-wrapper.mb-2
+        // Hero Slider
+        .owl-carousel.owl-theme.owl-dots-modern.home-full-slider
+            .item.home-full-item(style="background: #f8d5cf;")
+                img.bg-image(src="img/photo/matheus-ferrero-334418-unsplash.jpg", alt="")
+                .container-fluid.h-100.py-5
+                    .row.align-items-center.h-100
+                        .col-lg-8.col-xl-6.mx-auto.text-white.text-center.position-relative
+                            h5.text-uppercase.text-white.fw-light.mb-4.letter-spacing-5  Just arrived
+                            h1.mb-5.display-2.fw-bold.text-serif Denim Jackets
+                            p.lead.mb-4 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            p 
+                                a.btn.btn-light(href="category.html") View collection
+
+            .item.home-full-item.bg-dark.dark-overlay
+                img.bg-image(src="img/photo/ian-dooley-347942-unsplash.jpg", alt="")
+                .container-fluid.h-100
+                    .row.align-items-center.h-100
+                        .col-lg-8.col-xl-6.mx-auto.text-white.text-center.overlay-content
+                            h1.mb-4.display-2.text-uppercase.fw-bold Skeleton Tees
+                            p.lead.mb-5 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            p 
+                                a.btn.btn-light(href="category.html") Start shopping
+
+            .item.home-full-item
+                img.bg-image(src="img/photo/haley-phelps-62815-unsplash.jpg", alt="")
+                .container-fluid.h-100
+                    .row.align-items-center.h-100
+                        .col-lg-8.col-xl-6.mx-auto.text-white.text-center.position-relative
+                            h5.text-uppercase.fw-light.mb-4.letter-spacing-5  Our bestseller
+                            h1.mb-5.display-1.fw-bold.text-serif Skinny Jeans
+                            p 
+                                a.btn.btn-light(href="category.html") View collection
+
+    section
+        .container-fluid.g-2
+
+            - var tiles = []
+            - tiles.push({name: 'Top picks', text: '', link: 'category.html', image: 'img/photo/christopher-campbell-28571-unsplash.jpg'})
+            - tiles.push({name: 'New arrivals', text: '', link: 'category.html', image: 'img/photo/marco-xu-496929-unsplash.jpg'})
+
+            .row.g-2
+                each val in tiles
+                    .col-md-6
+                        .card.border-0.text-white.text-center
+                                img.card-img(src=val.image, alt='Card image')
+                                .card-img-overlay.d-flex.align-items-center  
+                                    .w-100.py-3
+                                        h2.display-3.fw-bold.mb-4 #{val.name}
+                                        a.btn.btn-light(href=val.link) Shop now
+                
+                - var tiles = []
+                - tiles.push({name: 'Jackets', text: '', link: 'category.html', image: 'img/photo/benjamin-voros-260869-unsplash.jpg', textClass: 'text-white'})
+                - tiles.push({name: 'Lookbook', text: '', link: 'category.html', image: 'img/photo/malvestida-magazine-458585-unsplash.jpg', textClass: 'text-white'})
+                - tiles.push({name: 'Try this', text: '', link: 'category.html', image: 'img/photo/michael-frattaroli-221247-unsplash.jpg', textClass: 'text-dark'})
+                each val in tiles
+                    .col-lg-4
+                        .card(class="border-0 text-center " + val.textClass)
+                            img.card-img(src=val.image, alt='Card image')
+                            .card-img-overlay.d-flex.align-items-center  
+                                .w-100
+                                    h2.display-4.mb-4 #{val.name}
+                                    a(class="btn btn-link " + val.textClass, href=val.link) Shop now 
+                                        i.fa-arrow-right.fa.ms-2

@@ -1,0 +1,12 @@
+// Brands Section
+section.py-6.brands
+    .container
+        h4.text-uppercase.text-center.mb-5 Our brands
+        // Brands Slider
+        .owl-carousel.owl-theme.brands-slider
+            - var brands = [1,2,3,4,5,6,1,2,3,4]
+            each val in brands
+                // item
+                .item.d-flex.align-items-center.justify-content-center
+                    .w-6rem
+                        img.img-fluid(src=`img/brand/brand-${val}.svg`, alt=`Brand ${val}`)

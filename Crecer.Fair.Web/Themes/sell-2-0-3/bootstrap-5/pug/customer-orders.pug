@@ -1,0 +1,46 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var active = 'customer-orders.html'  
+    - var customerZone = true
+
+block content
+       
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Orders'})
+    - var heroHeading = 'Your orders'
+    - var heroText ='<p class="lead">Your orders in one place.</p>'
+
+    include _pug-includes/inc-hero.pug
+        
+    section
+        .container
+            .row
+                .col-lg-8.col-xl-9
+                    - var orders = []
+                    - orders.push({id: 1735, date: '22/6/2017', price: '$150.00', label: 'Being prepared', labelClass: 'badge-info-light'})
+                    - orders.push({id: 1734, date: '7/5/2017', price: '$150.00', label: 'Action needed', labelClass: 'badge-warning-light'})
+                    - orders.push({id: 1730, date: '30/9/2016', price: '$150.00', label: 'Received', labelClass: 'badge-success-light'})
+                    - orders.push({id: 1705, date: '22/6/2016', price: '$150.00', label: 'Cancelled', labelClass: 'badge-danger-light'})
+
+                    table.table.table-borderless.table-hover.table-responsive-md
+                        thead.bg-light
+                            tr
+                                th.py-4.text-uppercase.text-sm Order #
+                                th.py-4.text-uppercase.text-sm Date
+                                th.py-4.text-uppercase.text-sm Total
+                                th.py-4.text-uppercase.text-sm Status
+                                th.py-4.text-uppercase.text-sm Action
+                        tbody
+                            each val in orders
+                                tr
+                                    th.py-4.align-middle # #{val.id}
+                                    td.py-4.align-middle #{val.date}
+                                    td.py-4.align-middle #{val.price}
+                                    td.py-4.align-middle
+                                        span(class="badge p-2 text-uppercase " + val.labelClass) #{val.label}
+                                    td.py-4.align-middle
+                                        a.btn.btn-outline-dark.btn-sm(href='customer-order.html') View
+
+                include _pug-includes/inc-customer-sidebar.pug

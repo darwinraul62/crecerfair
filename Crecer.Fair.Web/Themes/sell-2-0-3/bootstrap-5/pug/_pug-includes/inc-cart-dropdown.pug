@@ -1,0 +1,39 @@
+// Cart Dropdown
+.nav-item.dropdown
+    a.navbar-icon-link.d-lg-none(href=path + "cart.html") 
+        +svgIcon('cart-1')
+        span.text-sm.ms-2.ms-lg-0.text-uppercase.text-sm.fw-bold.d-none.d-sm-inline.d-lg-none View cart
+    .d-none.d-lg-block
+        a#cartdetails.navbar-icon-link(href="cart.html", data-bs-target="#", data-bs-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            +svgIcon('cart-1') 
+            .navbar-icon-link-badge 3                         
+        .dropdown-menu.dropdown-menu-animated.dropdown-menu-end.p-4(aria-labelledby='cartdetails')
+            
+            include inc-var-basketitems.pug
+            
+            .navbar-cart-product-wrapper
+                each val, index in basketProducts
+                    if (index < 3)
+                        // cart item
+                        .navbar-cart-product 
+                            .d-flex.align-items-center
+                                a(href=path + "detail.html")
+                                    img.img-fluid.navbar-cart-product-image(src=path + val.image, alt="...")
+                                .w-100
+                                    a.navbar-cart-product-close(href="#")
+                                        i.fa.fa-times                                                    
+                                    .ps-3 
+                                        a.navbar-cart-product-link(href=path + "detail.html") #{val.name}
+                                        small.d-block.text-muted Quantity: 1 
+                                        strong.d-block.text-sm $75.00 
+                                        
+            // total price
+            .navbar-cart-total
+                span.text-uppercase.text-muted Total
+                strong.text-uppercase $75.00
+            
+            // buttons
+            .d-flex.justify-content-between
+                a.btn.btn-link.text-dark.me-3(href=path + "cart.html") View Cart 
+                    i.fa-arrow-right.fa
+                a.btn.btn-outline-dark(href=path + "checkout1.html") Checkout

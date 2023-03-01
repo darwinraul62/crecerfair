@@ -1,0 +1,51 @@
+@using System.Web
+@model StandResourceCoordViewModel
+
+<div class="list-group stand-text-content stand-text stand-resource-item">
+    @* <h6 class="sidebar-heading">Documentos</h6> *@    
+    @{
+        int index = 0;
+    }
+    @foreach (var item in Model.StandModel.Contents.OrderBy(p=>p.Priority))
+    {
+        <div class="stand-text-item">        
+            <div stand-content-index="@{@(index++)}" class="stand-text-item-label">@item.Title</div>
+        </div>
+    }
+</div>
+
+
+
+<script>
+    var quillViewer = null;
+
+    var standContentList = new Array();
+
+    @foreach (var item in Model.StandModel.Contents.OrderBy(p=>p.Priority))
+    {
+        <text>
+            standContentList.push("@Html.Raw(HttpUtility.JavaScriptStringEncode(item.Content))");
+        </text>
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        $("[stand-content-index]").on('click',function()
+        {
+            let index = $(this).attr('stand-content-index');
+            quillViewer.root.innerHTML = standContentList[index];
+
+            $('#modal-stand-content').modal('show');
+        });
+
+        quillViewer = new Quill("#quill-viewer", {
+            readOnly: true,
+            //theme: "snow",
+            "modules": {
+                "toolbar": false
+            }
+        });
+
+        @* editor.root.innerHTML = '@Html.Raw(Model.Value)'; *@
+    });
+</script>

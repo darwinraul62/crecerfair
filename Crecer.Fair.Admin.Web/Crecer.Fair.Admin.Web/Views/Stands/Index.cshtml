@@ -1,0 +1,204 @@
+@model StandIndexViewModel
+@{
+    this.ViewBag.Title = "Stands";
+}
+
+<div id="fair-map-content" class="row explanade-bg-content">
+
+    <img id="fairMap" class="area-map explanade-bg" src="@Url.Content("~/img/fair/explanade.png")" alt="">
+    <div id="map-items" class="stand-map area-map">
+        <partial name="_StandMapItems" model="Model.Stands"></partial>
+@*         
+        <div class="stand-item-map text-center" style="width: 104px; left: 818px; top:253px; height: 115px; border:1px;">
+            <img src="/img/logo_crecer.png" width="50px" height="50px">
+        </div> *@
+    </div>
+
+    @* <map name="fairmap">
+        <area shape="rect" coords="34,44,270,350" alt="Stand" href="@Url.Action("Index")">
+        </map> *@
+</div>
+
+<div class="modal fade" id="modal-setProvider" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Asignar Proveedor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body m-3">
+                <div class="row">
+                    <div class="mb-3 col-md-12">
+                        <input type="hidden" id="modal-setProvider-standId">
+                        <label class="form-label">Proveedor</label>
+                        <select id="modal-setProvider-providerId" class="form-control select2" 
+                                data-toggle="select2" asp-items="Model.ProviderSelectList" 
+                                placeholder="Seleccione una Categoría"
+                                aria-placeholder="Seleccione un Proveedor"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button id="modal-setProvider-save-button" type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var modalSetProvider = null;
+
+    function bindOnClickSetStand(){
+        $(".stand-item-map[standId]").on("click", function(e){
+            e.preventDefault();
+
+            var providerId = $(this).attr('providerId');
+            var standId = $(this).attr('standId');
+
+            if(providerId)
+                $("#modal-setProvider-providerId").val(providerId).trigger('change');
+            else
+                $("#modal-setProvider-providerId").val(null).trigger('change');
+
+            $("#modal-setProvider-standId").val(standId);
+
+            modalSetProvider.modal('show');            
+        });
+    }
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        $( window ).resize(function(){
+            fitExplanade()
+        });
+
+
+        $(".select2").each(function() {
+				$(this)
+					.wrap("<div class=\"position-relative\"></div>")
+					.select2({
+						placeholder: "Seleccione un Proveedor",
+						dropdownParent: $(this).parent(),
+                        allowClear: true
+					});
+			})
+            
+        
+        
+        modalSetProvider = $("#modal-setProvider");        
+        var contentElement = $('#modal-setProvider .modal-content');
+
+        fitExplanade();
+
+        bindOnClickSetStand();
+
+        $("#modal-setProvider-save-button").on("click", function(e){
+            e.preventDefault();
+            
+            showLoading(contentElement);
+
+            var providerId = $("#modal-setProvider-providerId").val();
+            var standId = $("#modal-setProvider-standId").val();
+            
+            var model = {
+                providerId : providerId,
+                standId : standId,
+                fairId : '@Model.FairId'
+            };
+
+            $.ajax({
+            type: "POST",
+            url: '@Html.Raw(Url.Action("UpdateProvider","Stands"))',
+            data: model,
+            success: function (data) {
+                hideLoading(contentElement);
+                if(data.isValid){
+                    modalSetProvider.modal('hide');
+                    refreshStandMapItems();
+                }else{
+                    window.notyf.open({
+                    type: 'error',
+                    message: data.messages[0].text
+                    });
+                }                
+            },
+            error: function () {
+                hideLoading(contentElement);
+                window.notyf.open({
+                    type: 'error',
+                    message: "No se pudo actualizar el Proveedor"
+                });
+            },
+            dataType: 'json'            
+        });
+        });
+    });
+
+    function fitExplanade() {
+        var fairMap = $("#fairMap");
+        var parentArea = fairMap.parent();
+        if (parentArea.width() > 800) {
+            let excessWidth = fairMap.width() - parentArea.width();
+            let marginLeft = parseInt(excessWidth / 2.00);
+            $(".area-map").css('margin-left', -marginLeft + 'px');
+        }
+    }
+
+    function refreshStandMapItems() {
+        try {
+            showLoading();
+
+            $.get('@Html.Raw(Url.Action("PartialStandMapItems","Stands", new { fairId = Model.FairId } ))', function (content) {
+                $('#map-items').html(content);
+                hideLoading();
+            });
+
+        }
+        catch (ex) {
+            window.notyf.open({
+                type: 'error',
+                message: ex.message
+            });
+            hideLoading();
+        }
+    }
+
+    function hideLoading(element, text) {
+            if (!element) {
+                element = $("main.content");
+            }
+
+            element.waitMe('hide');
+        }
+
+        function showLoading(element, text) {
+            if (!element) {
+                element = $("main.content");
+            }
+
+            if (!text) {
+                if (element.parent().height() > 200)
+                    text = "Cargando...";
+            }
+
+            element.waitMe({
+                //none, rotateplane, stretch, orbit, roundBounce, win8, 
+                //win8_linear, ios, facebook, rotation, timer, pulse, 
+                //progressBar, bouncePulse or img
+                effect: 'bounce',
+                //place text under the effect (string).
+                text: text,
+                //background for container (string).
+                bg: 'rgba(32, 38, 52,0.5)',
+                //color for background animation and text (string).
+                color: '#3680BF',
+                //change width for elem animation (string).
+                sizeW: '',
+                //change height for elem animation (string).
+                sizeH: '',
+                // url to image
+                source: ''
+            });
+        }
+</script>

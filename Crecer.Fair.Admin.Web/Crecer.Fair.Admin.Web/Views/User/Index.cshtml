@@ -1,0 +1,199 @@
+@{
+    this.ViewBag.Title = "Usuarios";
+}
+
+@section TopLeftArea{
+<a asp-action="Create" asp-controller="User" class="float-end ms-1">
+    <button class="btn btn-primary">
+        <i class="fas fa-plus"></i> Nuevo</button>
+</a>
+
+<button id="export-button" class="btn btn-secondary float-end">
+    <i class="far fa-file-excel"></i> Exportar</button>
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="datatables-users" class="table table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>ID</th>
+                            <th>Online</th>
+                            <th>Email</th>
+                            <th>Nombres</th>
+                            <th>Grupo de Usuario</th>      
+                            <th>Socio</th>      
+                            <th>Proveedor</th>                      
+                            <th>último Acceso</th>                      
+                            <th>Bloqueado</th>
+                        </tr>
+                        <tr class="filters">
+                            <th></th>                            
+                            <th></th> 
+                            <th></th>
+                            <th><input type="text" class="form-control" placeholder="Filtrar" /></th>
+                            <th><input type="text" class="form-control" placeholder="Filtrar" /></th>                            
+                            <th><input type="text" class="form-control" placeholder="Filtrar" /></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $(function () {
+
+         var dataTableRequest = {};
+            $("#export-button").on("click", function () {
+            dataTableRequest.export = true;
+            dataTableRequest.length = table.page.info().recordsTotal;  //all records
+            var queryString = $.param(dataTableRequest);
+            window.open('@Url.Action("GetListUsers","User")?' + queryString, "_blank")
+        });
+
+@* <a action-type="DELETE" href="#"><i class="align-middle me-2 far fa-trash-alt"></i></a> *@
+
+        var table = $("#datatables-users").DataTable(
+            {
+                orderCellsTop: true,
+                fixedHeader: true,
+                "order": [[4, 'asc']],
+                "searching": true,
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "columns": [
+                    {
+                        "name": "actions",
+                        "data": null,
+                        "orderable": false,
+                        "defaultContent":
+                            `
+						<div class="table-action">
+						<a action-type="EDIT" href="#"><i class="align-middle me-2 far fa-fw fa-edit"></i></a>
+                        <a action-type="EDITUSERGROUP" href="#"><i class="align-middle me-2 fas fa-user-tag"></i></a>                        
+						</div>
+						`
+                    },
+                    { "data": "userId", "name": "UserId", visible: false, "orderable": false },
+                    { "data": "online", "name": "Online", visible: true, "orderable": true },
+                    { "data": "email", "name": "Email", orderable: true, "searchable": true },                   
+                    { "data": "fullName", "name": "FullName", orderable: true, "searchable": true },                    
+                    { "data": "userGroupNames", "name": "UserGroupNames", "searchable": true },
+                    { "data": "isPartnert", "name": "IsPartnert", "searchable": false, "orderable": false },
+                    { "data": "providerName", "name": "ProviderName", "searchable": false, "orderable": false } ,
+                    { "data": "lastAccessString", "name": "LastAccessString", "searchable": false, "orderable": false } ,
+                    { "data": "blockLogin", "name": "BlockLogin", "searchable": true }
+                ],
+                "columnDefs": [ {
+					"targets": 9,
+					//"data": null,
+					//"defaultContent": "<button>Click!</button>"
+					"render": function (data, type, row){
+						if(data){
+							return '<div class="text-center"><i class="fas fa-ban"></i></div>';
+						}
+						else{
+							return '';
+						}						 
+					}
+				},
+                {
+					"targets": 2,
+					"render": function (data, type, row){
+						if(data){
+							return '<div class="text-center"><i class="fas fa-check-circle"></i></div>';
+						}
+						else{
+							return '';
+						}						 
+					}
+				},
+                {
+					"targets": 6,
+					"render": function (data, type, row){
+						if(data){
+							return '<div class="text-center"><i class="fas fa-check"></i></div>';
+						}
+						else{
+							return '<div class="text-center"><i class="fas fa-times"></i></div>';
+						}						 
+					}
+				}    
+				], 
+                "ajax":{ 
+                    "url" : "/User/GetListUsers",
+                    "data": function (data) {                      
+                        dataTableRequest = data;                        
+                    }
+                }
+            }
+        );
+
+        // Apply the search
+        table.columns().eq(0).each(function (colIdx) {
+            $('input',
+                $('#datatables-users .filters th').eq($(table.column(colIdx).header()).index())
+            ).on('keyup',
+
+                ecubytes.functions.delay(
+                    function () {
+
+                        table
+                            .column(colIdx)
+                            .search(this.value)
+                            .draw();
+                    }
+                    , 1000)
+            );
+        });
+
+        $('#datatables-users_filter').hide();
+
+        $('#datatables-users tbody').on('click', 'a', function () {
+
+            let data = $('#datatables-users').DataTable().row($(this).parents('tr')).data();
+            let url = '';
+            let action = $(this).attr('action-type');
+
+            if (action == 'EDIT')
+                url = '@Url.Action("Edit","User")';
+            if (action == 'EDITUSERGROUP')
+                url = '@Url.Action("EditUserGroup","User")';
+            else if (action == 'DELETE')
+                url = '@Url.Action("Delete","User")';
+
+            location.href = url + '?id=' + data["userId"];
+        });
+
+
+    });
+
+    var ecubytes = {
+        functions:
+        {
+            delay: function (callback, ms) {
+                var timer = 0;
+                return function () {
+                    var context = this, args = arguments;
+                    clearTimeout(timer);
+                    timer = setTimeout(function () {
+                        callback.apply(context, args);
+                    }, ms || 0);
+                };
+            }
+        }
+    }
+
+</script>
+}

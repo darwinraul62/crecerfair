@@ -1,0 +1,48 @@
+@model ProviderResourceGeneralEditViewModel
+@{
+    ViewBag.Title = $"{Model.ProviderName} - Crear Recurso";
+    string partialViewName = $"_FormEditor_{Model.ResourceTypeId}";
+    
+}
+
+<partial name="_BreadCrumbProviderResource" model="@Model"></partial>
+
+<div class="col-12 col-xl-12">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Crear Recurso</h5>
+            <h6 class="card-subtitle text-muted">@Model.ResourceTypeName</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-action="Create" asp-controller="ProviderResource">
+                <partial name = "@partialViewName" model="Model"/>
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+			if (!window.Quill) {
+				return $("#quill-editor,#quill-toolbar,#quill-bubble-editor,#quill-bubble-toolbar").remove();
+			}
+			var editor = new Quill("#quill-editor", {
+				modules: {
+					toolbar: "#quill-toolbar"
+				},
+				placeholder: "Type something",
+				theme: "snow"
+			});
+			var bubbleEditor = new Quill("#quill-bubble-editor", {
+				placeholder: "Compose an epic...",
+				modules: {
+					toolbar: "#quill-bubble-toolbar"
+				},
+				theme: "bubble"
+			});
+		});
+    </script>
+} 

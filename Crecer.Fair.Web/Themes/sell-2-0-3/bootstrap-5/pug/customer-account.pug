@@ -1,0 +1,102 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var active = 'customer-account.html'  
+    - var customerZone = true
+
+block content
+       
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Your profile'})
+    - var heroHeading = 'Your profile'
+    - var heroText ='<p class="lead text-muted">Maecenas sollicitudin. In rutrum. In convallis. Nunc tincidunt ante vitae massa. Cras pede libero, dapibus nec, pretium sit amet, tempor quis. Fusce dui leo, imperdiet in.</p>'
+    
+    include _pug-includes/inc-hero.pug
+  
+    section
+        .container
+            .row
+
+                .col-lg-8.col-xl-9
+                    .block.mb-5
+                        .block-header
+                            strong.text-uppercase Change your password
+                        .block-body
+                            form
+                                .row
+                                    .col-sm-6
+                                        .mb-4
+                                            label.form-label(for='password_old') Old password
+                                            input#password_old.form-control(type='password')
+                                .row
+                                    .col-sm-6
+                                        .mb-4
+                                            label.form-label(for='password_1') New password
+                                            input#password_1.form-control(type='password')
+                                    .col-sm-6
+                                        .mb-4
+                                            label.form-label(for='password_2') Retype new password
+                                            input#password_2.form-control(type='password')
+                                .text-center.mt-4
+                                    button.btn.btn-outline-dark(type='submit')
+                                        i.far.fa-save.me-2
+                                        | Change password
+                    
+                    .block.mb-5
+                        .block-header
+                            strong.text-uppercase Personal details
+                        .block-body
+                            form
+                                .row
+                                    .col-sm-6
+                                        .mb-4
+                                            label.form-label(for='firstname') Firstname
+                                            input#firstname.form-control(type='text')
+                                    .col-sm-6
+                                        .mb-4
+                                            label.form-label(for='lastname') Lastname
+                                            input#lastname.form-control(type='text')
+                                // /.row
+                                .row
+                                    .col-sm-6
+                                        .mb-4
+                                            label.form-label(for='company') Company
+                                            input#company.form-control(type='text')
+                                    .col-sm-6
+                                        .mb-4
+                                            label.form-label(for='street') Street
+                                            input#street.form-control(type='text')
+                                // /.row
+                                .row
+                                    .col-sm-6.col-md-3
+                                        .mb-4
+                                            label.form-label(for='city') Company
+                                            input#city.form-control(type='text')
+                                    .col-sm-6.col-md-3
+                                        .mb-4
+                                            label.form-label(for='zip') ZIP
+                                            input#zip.form-control(type='text')
+                                    .col-sm-6.col-md-3
+                                        .mb-4
+                                            label.form-label(for='state') State
+                                            select#state.form-control
+                                    .col-sm-6.col-md-3
+                                        .mb-4
+                                            label.form-label(for='country') Country
+                                            select#country.form-control
+                                    .col-sm-6
+                                        .mb-4
+                                            label.form-label(for='phone') Telephone
+                                            input#phone.form-control(type='text')
+                                    .col-sm-6
+                                        .mb-4
+                                            label.form-label(for='email') Email
+                                            input#email.form-control(type='text')
+                                // /.row
+                                .text-center.mt-4
+                                    button.btn.btn-outline-dark(type='submit')
+                                        i.far.fa-save.me-2
+                                        | Save changes
+
+                include _pug-includes/inc-customer-sidebar.pug

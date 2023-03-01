@@ -1,0 +1,31 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var active = 'home' 
+    - var current = 'index4.html' 
+    - var hideTopbar = true
+    - var navbarClass = 'bg-transparent navbar-light navbar-airy bg-hover-white bg-fixed-white navbar-hover-light navbar-fixed-light'  
+    - var headerClass = 'header header-absolute'      
+
+block content
+    - var parallax = []
+    - parallax.push({name: 'Autumn vibes', subtitle: 'Just arrived', class: "d-flex align-items-center text-dark text-center", headingClass: 'display-2 fw-bold text-uppercase', columnClass: 'mx-auto',  buttonClass: 'btn-outline-dark', image: 'img/photo/dmitriy-ilkevich-437760-unsplash-parallax.jpg', align: 'left'})    
+    - parallax.push({name: 'Ethnic<br class="display-lg">sweaters', class: "d-flex align-items-center text-start", headingClass: 'display-1 fw-bold text-uppercase',  columnClass: 'mx-auto',  buttonClass: 'btn-dark', image: 'img/photo/serrah-galos-494279-unsplash-parallax.jpg', align:'right', text: 'Trendy. Comfy. Beautiful.'})    
+    - parallax.push({name: 'Shirts', subtitle: 'Our favourites', class: "d-flex align-items-center text-dark text-start text-md-end", headingClass: 'display-3 fw-bold text-uppercase', columnClass: 'mx-auto',  buttonClass: 'btn-outline-dark', image: 'img/photo/kyle-loftus-592041-unsplash-parallax.jpg', align: 'left', text: 'Vestibulum tortor quam.<br>Feugiat vitae, ultricies eget.'})
+    - parallax.push({name: 'Men\'s collection', class: "d-flex align-items-center text-center", headingClass: 'display-3 fw-bold text-uppercase', columnClass: 'mx-auto', buttonClass: 'btn-lg btn-dark', image: 'img/photo/serrah-galos-494312-unsplash-parallax.jpg'})
+
+    each val, index in parallax
+
+        section.vh-100.light-overlay.light-overlay-lg-0(data-parallax="scroll", data-image-src=val.image, data-speed="0.5", data-position-x=val.align, data-bleed="20", class=val.class)
+            .container
+                .row
+                    .col-12.py-5.overflow-hidden.overlay-content(class=val.columnClass)
+                        if (val.subtitle)
+                            h5.text-uppercase.text-dark.fw-normal.mb-4.letter-spacing-5  #{val.subtitle}
+                        if (val.text)
+                            h1.mb-3(class=val.headingClass) !{val.name}
+                            p.h3.fw-normal.mb-5 !{val.text} 
+                        else
+                            h1.mb-5(class=val.headingClass) #{val.name}
+                        p 
+                            a.btn(href="category.html", class=val.buttonClass) See look book

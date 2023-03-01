@@ -1,0 +1,17 @@
+// Grid 
+div(class="products-grid " + gridClass)
+    include inc-grid-header.pug
+            
+    include inc-var-shopitems.pug
+
+    - var additionalButtons = true
+    if (!doNotDisplayView)
+        - var doNotDisplayView = false
+
+    .row
+        each val in shopItems
+            +product(val, itemClass, additionalButtons, doNotDisplayView)
+
+    include inc-pagination.pug
+
+// / Grid End

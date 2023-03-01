@@ -1,0 +1,17 @@
+.sidebar-block.px-3.px-lg-0(class=sidebarBlockClass)
+    a.d-lg-none.block-toggler(data-bs-toggle="collapse", href="#categoriesMenu", aria-expanded="false", aria-controls="categoriesMenu") Product Categories
+
+    - var menu = [] 
+    - menu.push({name: 'Jackets', activeClass: '', count: 120, children: ['Lorem ipsum', 'Dolor', 'Sit amet', 'Donec vitae']})
+    - menu.push({name: 'Jeans & chinos', activeClass: 'active', count: 55, children:  ['Lorem ipsum', 'Dolor', 'Sit amet', 'Donec vitae']})
+    - menu.push({name: 'Accessories', activeClass: '', count: 80, children:  ['Sit amet', 'Donec vitae', 'Lorem ipsum', 'Dolor']})
+    
+    #categoriesMenu.expand-lg.collapse
+        .nav.nav-pills.flex-column.mt-4.mt-lg-0 
+            each val in menu
+                a(href="#", class="nav-link d-flex justify-content-between mb-2 " + val.activeClass)
+                    span #{val.name}
+                    span.sidebar-badge  #{val.count}
+                .nav.nav-pills.flex-column.ms-3
+                    each child in val.children
+                        a.nav-link.mb-2(href="#") #{child}

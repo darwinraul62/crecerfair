@@ -1,0 +1,18 @@
+a.d-lg-none.block-toggler(data-bs-toggle="collapse", href="#sizeFilterMenu", aria-expanded="false", aria-controls="sizeFilterMenu") Filter by size
+
+// Size filter menu
+#sizeFilterMenu.expand-lg.collapse 
+    h6.sidebar-heading.d-none.d-lg-block Size 
+    
+    form(action="#").mt-4.mt-lg-0   
+
+        - var sizes = ['Small', 'Medium', 'Large', 'X-Large']
+        
+        each val, index in sizes
+            .mb-1
+                .form-check
+                    if (index === 0)
+                        input.form-check-input(id=`size${index}`,type="radio", name="size", checked)
+                    else
+                        input.form-check-input(id=`size${index}`,type="radio", name="size")
+                    label.form-check-label(for=`size${index}`) #{val}

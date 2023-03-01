@@ -1,0 +1,95 @@
+if (!navbarClass)
+    - var navbarClass = 'navbar-sticky navbar-light bg-white bg-fixed-white navbar-fullscreen navbar-fullscreen-light px-0 px-sm-3'
+if (!headerClass)
+    - var headerClass = 'header'
+
+header(class=headerClass)
+    if (!hideTopbar)
+        include inc-topbar.pug
+
+    // Navbar
+    nav(class="navbar " + navbarClass)
+        .container-fluid.flex-nowrap 
+            .d-flex.w-50.w-xs-auto
+                button.navbar-toggler(type="button", data-bs-toggle="collapse", data-bs-target="#fullscreenMenu", aria-controls="fullscreenMenu", aria-expanded="false", aria-label="Toggle navigation")
+                    i.fa.fa-bars
+
+            // Navbar Brand
+            a.navbar-brand.mx-auto.text-center(href=path + "index.html")
+                include inc-logo.pug
+            
+            // Right column
+            .d-flex.w-50
+                .d-flex.w-100.align-items-center.justify-content-end
+                    // Search Button
+                    .nav-item.navbar-icon-link(data-bs-toggle="search")
+                        +svgIcon('search-1')
+
+                    // User Not Logged - link to login page                        
+                    .nav-item
+                        a.navbar-icon-link(href=path + 'customer-login.html')
+                            +svgIcon('male-user-1')      
+        
+                    // Cart Dropdown
+                    .nav-item.dropdown
+                        a#cartdetails.navbar-icon-link.dropdown-toggle(data-bs-toggle='dropdown', aria-haspopup='true', aria-expanded='false', href="cart.html")
+                            +svgIcon('cart-1') 
+                            .navbar-icon-link-badge 3                         
+                        .dropdown-menu.dropdown-menu-end.p-4(aria-labelledby='cartdetails')
+                            
+                            include inc-var-basketitems.pug
+                            
+                            .navbar-cart-product-wrapper
+                                each val, index in basketProducts
+                                    if (index < 3)
+                                        // cart item
+                                        .navbar-cart-product 
+                                            .d-flex.align-items-center
+                                                a(href="detail.html")
+                                                    img.img-fluid.navbar-cart-product-image(src=path + val.image, alt="...")
+                                                .w-100
+                                                    a.close.text-sm.me-2(href="#")
+                                                        i.fa.fa-times                                                    
+                                                    .ps-3 
+                                                        a.navbar-cart-product-link(href=path + "detail.html") #{val.name}
+                                                        small.d-block.text-muted Quantity: 1 
+                                                        strong.d-block.text-sm $75.00 
+                                                        
+                            // total price
+                            .navbar-cart-total
+                                span.text-uppercase.text-muted Total
+                                strong.text-uppercase $75.00
+                            
+                            // buttons
+                            .d-flex.justify-content-between
+                                a.btn.btn-link.text-dark.me-3(href=path + "cart.html") View Cart 
+                                    i.fa-arrow-right.fa
+                                a.btn.btn-outline-dark(href=path + "checkout1.html") Checkout
+
+        #fullscreenMenu.collapse.navbar-collapse.navbar-collapse-fullscreen
+            button.close.fullscreen-close.float-start(type='button', data-bs-toggle='collapse', data-bs-target="#fullscreenMenu" aria-label='Close menu')
+                +svgIcon('close-1', 'svg-icon-light w-3rem h-3rem')        
+
+            ul.nav.navbar-nav.navbar-nav-fullscreen
+                - links = {'index.html': 'Homepage', 'category.html': 'Category 1', 'category-right.html': 'Category 2', 'category-masonry.html': 'Category 3', 'contact.html': 'Contact'}
+                each name, link in links
+                    li.nav-fullscreen-item
+                        a.nav-fullscreen-link(href=path + link) !{name}   
+                                
+    // /Navbar 
+
+
+    // Fullscreen search area
+    .search-area-wrapper
+        .search-area.d-flex.align-items-center.justify-content-center
+            .close-btn
+                +svgIcon('close-1', 'svg-icon-light w-3rem h-3rem')
+            
+            form.search-area-form(action="#")
+                .mb-4.position-relative
+                    input.search-area-input(type="search", name="search", id="search", placeholder="What are you looking for?")
+                    button.search-area-button(type="submit")
+                        +svgIcon('search-1')
+    // /Fullscreen search area
+                                
+            

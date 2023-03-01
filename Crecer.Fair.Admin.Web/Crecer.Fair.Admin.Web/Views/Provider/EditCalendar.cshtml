@@ -1,0 +1,181 @@
+@model ProviderCalendarEditViewModel
+@{
+    ViewBag.Title = $"{Model.Tradename} - Calendario";
+}
+
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Inicio</a></li>
+            @if (!User.GetFairProviderId().HasValue)
+            {
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Provider">Proveedores</a></li>
+            }
+            <li class="breadcrumb-item active">Calendario</li>
+        </ol>
+    </nav>
+</div>
+
+
+<div class="col-12 col-xl-12">
+    <div class="card">
+        <input type="hidden" asp-for="ProviderId">
+        <div class="card-header">
+            <h5 class="card-title">Edite el Horario por día de la semana</h5>
+        </div>
+        <div class="card-body">
+            <div class="col-6">
+                <table id="table-calendar" class="table table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">
+
+                            </th>
+                            <th>
+                                Día
+                            </th>
+                            <th>
+                                Desde (HH:mm) 
+                            </th>
+                            <th>
+                                Hasta (HH:mm)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.CalendarItems.OrderBy(p => p.WeekDay))
+                        {
+                            bool used = !string.IsNullOrWhiteSpace(item.Start) && !string.IsNullOrWhiteSpace(item.End);
+                            <text>
+                                <tr calendar-weekday-row="@item.WeekDay">
+                                    <td>
+                                        <input check-weekday="@item.WeekDay" class="form-check-input" type="checkbox" @{@(!used?"":"checked")}>
+                                    </td>
+                                    <td>
+                                        @item.WeekDayDescription
+                                    </td>
+                                    <td>
+                                        <input start-weekday="@item.WeekDay" calendar-item="@item.WeekDay" type="text" value="@item.Start"
+                                        class="form-control" data-mask="00:00" @{@(used?"":"disabled")}>
+                                    </td>
+                                    <td>
+                                        <input end-weekday="@item.WeekDay" type="text" class="form-control" value="@item.End"
+                                        data-mask="00:00" @{@(used?"":"disabled")}>
+                                    </td>
+                                </tr>
+                            </text>
+                        }
+                    </tbody>
+                </table>
+                <button id="save-button" class="btn btn-primary float-end">Actualizar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script>
+    $(function () {
+
+         function hideLoading(element, text) {
+            if (!element) {
+                element = $("main.content");
+            }
+
+            element.waitMe('hide');
+        }
+
+        function showLoading(element, text) {
+            if (!element) {
+                element = $("main.content");
+            }
+
+            if (!text) {
+                if (element.parent().height() > 200)
+                    text = "Cargando...";
+            }
+
+            element.waitMe({
+                //none, rotateplane, stretch, orbit, roundBounce, win8, 
+                //win8_linear, ios, facebook, rotation, timer, pulse, 
+                //progressBar, bouncePulse or img
+                effect: 'bounce',
+                //place text under the effect (string).
+                text: text,
+                //background for container (string).
+                bg: 'rgba(32, 38, 52,0.5)',
+                //color for background animation and text (string).
+                color: '#3680BF',
+                //change width for elem animation (string).
+                sizeW: '',
+                //change height for elem animation (string).
+                sizeH: '',
+                // url to image
+                source: ''
+            });
+        }
+
+
+        $("#table-calendar").find("[check-weekday]").change(function () {
+            var weekday = $(this).attr("check-weekday");
+
+            if ($(this).is(":checked")) {
+                $("input[start-weekday='" + weekday + "']").prop("disabled", false);
+                $("input[end-weekday='" + weekday + "']").prop("disabled", false);
+            } else {
+                $("input[start-weekday='" + weekday + "']").val(null);
+                $("input[end-weekday='" + weekday + "']").val(null);
+
+                $("input[start-weekday='" + weekday + "']").prop("disabled", true);
+                $("input[end-weekday='" + weekday + "']").prop("disabled", true);
+            }
+        });
+
+        $("#save-button").on("click", function (e) {
+            e.preventDefault();
+
+            showLoading();
+
+            var calendarList = new Array();
+            $("#table-calendar [calendar-weekday-row] input[check-weekday]:checked").each(function (i, rowElement) {
+                var weekday = $(rowElement).attr("check-weekday");
+                var start = $("input[start-weekday='" + weekday + "']").val();
+                var end = $("input[end-weekday='" + weekday + "']").val();
+
+                calendarList.push({ weekDay: weekday, start: start, end: end });
+            });
+
+            var providerId = $("#ProviderId").val();
+
+            $.ajax({
+                type: "POST",
+                url: '@Html.Raw(Url.Action("EditCalendar","Provider"))',
+                data: { providerId: providerId, calendarItems : calendarList },
+                success: function (data) {
+                    
+                    hideLoading();
+
+                    if (data.isValid) {
+                        location.href = data.redirectUrl;
+                    } else {
+                        window.notyf.open({
+                            type: 'error',
+                            message: data.messages[0].text
+                        });
+                    }
+                },
+                error: function () {
+                   hideLoading();
+                    window.notyf.open({
+                        type: 'error',
+                        message: "No se pudo actualizar el calendario"
+                    });
+                },
+                dataType: 'json'
+            });
+
+        });
+
+    });
+</script>
+}

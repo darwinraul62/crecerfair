@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Crecer.Fair.Data\Crecer.Fair.Data.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Ecubytes.Data.EntityFramework" Version="1.0.0" />
+    <PackageReference Include="Ecubytes.Extensions.Logging.Repository.EntityFramework" Version="1.0.0" />
+    <PackageReference Include="Ecubytes.Integration.Event.Repository.EntityFramework.Npgsql" Version="1.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
+  </ItemGroup>
+</Project>

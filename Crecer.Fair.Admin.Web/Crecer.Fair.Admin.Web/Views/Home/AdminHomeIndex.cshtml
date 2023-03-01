@@ -1,0 +1,426 @@
+﻿@{
+    ViewData["Title"] = "Feria Crecer Admin - Dashboard";
+}
+
+@section TopLeftArea{
+<div id="reportrange" class="overflow-hidden form-control  float-end ms-2" style="width: 250px; cursor: pointer;">
+    <i class="far fa-calendar"></i>&nbsp;
+    <span></span> <i class="fas fa-caret-down"></i>
+</div>
+
+<button id="export-button" class="btn btn-secondary float-end">
+    <i class="far fa-file-excel"></i> Exportar</button>
+}
+@*
+    <div class="text-center">
+    <h1 class="display-4">Bienvenido</h1>
+    <h3 class="text-muted">Sistema de Administración de la Feria</h3>
+    </div> *@
+
+<div class="row">
+    <div class="col-lg-6 col-xl-5 d-flex">
+        <div class="w-100">
+
+            <div class="row">
+
+                <div content-data class="col-sm-6 col-lg-12 col-xxl-6 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col mt-0">
+                                    <h5 class="card-title">Ingresos</h5>
+                                </div>
+
+                                <div class="col-auto">
+                                    <div class="stat stat-sm ps-2">
+                                        <i class="fs-2 fas fa-walking"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <span id="login-count" class="h1 d-inline-block mt-1 mb-4"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div content-data class="col-sm-6 col-lg-12 col-xxl-6 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="row">
+
+                                <div class="col mt-0">
+                                    <h5 class="card-title">Stands Visitados</h5>
+                                </div>
+
+                                <div class="col-auto">
+                                    <div class="stat stat-sm ps-2">
+                                        <i class="text-center fs-3 fas fa-store"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <span id="stand-visit-count" class="h1 d-inline-block mt-1 mb-4"></span>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+            </div>
+
+            <div class="row d-xxl-flex">
+
+                <div content-data class="col-sm-6 col-lg-12 col-xxl-6 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col mt-0">
+                                    <h5 class="card-title">Usuarios Online</h5>
+                                </div>
+
+                                <div class="col-auto">
+                                    <div class="stat stat-sm ps-2">
+                                        <i class="fs-3 fas fa-user-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <span id="online-count" class="h1 d-inline-block mt-1 mb-4"></span>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <div content-data class="col-sm-6 col-lg-12 col-xxl-6 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col mt-0">
+                                    <h5 class="card-title">Stands Actuales</h5>
+                                </div>
+
+                                <div class="col-auto">
+                                    <div class="stat stat-sm ps-2">
+                                        <i class="fs-3 fas fa-store-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <span id="stand-count" class="h1 d-inline-block mt-1 mb-4"></span>
+
+                        </div>
+                    </div>
+                </div>
+
+                
+
+            </div>
+
+             <div class="row  d-xxl-flex">
+               
+
+                <div content-data class="col-sm-6 col-lg-12 col-xxl-6 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col mt-0">
+                                    <h5 class="card-title">Usuarios Registrados</h5>
+                                </div>
+
+                                <div class="col-auto">
+                                    <div class="stat stat-sm ps-2">
+                                        <i class="fs-3 fas fa-user-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <span id="register-count" class="h1 d-inline-block mt-1 mb-4"></span>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div content-data class="col-lg-6 col-xl-7">
+        <div class="card flex-fill w-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Stands Visitados</h5>
+            </div>
+            <div class="card-body p-2">
+                <table id="datatable-stand-visits" class="table table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Proveedor</th>
+                            <th>Visitas</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+<script>
+
+
+    var startFilter = moment();
+    var endFilter = moment();
+
+    $(function () {
+
+        var dataTableRequest = {};
+        $("#export-button").on("click", function () {
+            dataTableRequest.export = true;
+            dataTableRequest.length = table.page.info().recordsTotal;  //all records
+            var queryString = $.param(dataTableRequest);
+            window.open('@Url.Action("GetProviderVisitCount","Report")?' + queryString, "_blank")
+        });
+        //moment.locale('es');               
+
+
+        function cb(start, end, reload) {
+            startFilter = start;
+            endFilter = end;
+
+            $("#reportrange span").html(start.format("D/MM/YYYY") + " - " + end.format("D/MM/YYYY"));
+
+            if (reload) {
+               refresh();               
+            }
+        }
+        $("#reportrange").daterangepicker({
+            startDate: startFilter,
+            endDate: endFilter,
+            ranges: {
+                "Hoy": [moment(), moment()],
+                "Ayer": [moment().subtract(1, "days"), moment().subtract(1, "days")],
+                "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+                "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+                "Este Mes": [moment().startOf("month"), moment().endOf("month")],
+                "Último Mes": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
+            },
+            "locale": {
+                "format": "MM/DD/YYYY",
+                "separator": " - ",
+                "applyLabel": "Aplicar",
+                "cancelLabel": "Cancelar",
+                "fromLabel": "De",
+                "toLabel": "Hasta",
+                "customRangeLabel": "Personalizado",
+                "daysOfWeek": [
+                    "Do",
+                    "Lu",
+                    "Ma",
+                    "Mi",
+                    "Ju",
+                    "Vi",
+                    "Sa"
+                ],
+                "monthNames": [
+                    "Enero",
+                    "Febrero",
+                    "Marzo",
+                    "Abril",
+                    "Mayo",
+                    "Junio",
+                    "Julio",
+                    "Agosto",
+                    "Septiembre",
+                    "Octubre",
+                    "Noviembre",
+                    "Diciembre"
+                ],
+                "firstDay": 1
+            }
+        }, cb);
+
+        cb(startFilter, endFilter, false);
+
+        refresh(true);
+
+        function refresh(firstLoad) {
+            refreshStandsCount();
+            refreshStandsVisitedCount();
+            refreshLoginCount();
+            refreshUserOnlineCount();
+            refreshRegisterCount();
+            
+            if(!firstLoad)
+                refreshProviderVisitCount();
+        }
+
+        function refreshLoginCount() {
+            var parentElement = $("#login-count").parents("[content-data]");
+            showLoading(parentElement);
+            
+            $.ajax({
+                type: "GET",
+                url: '@Html.Raw(Url.Action("GetLoginCount","Report"))',
+                data: { dateFrom: startFilter.toISOString(), dateTo: endFilter.toISOString() },
+                success: function (data) {
+                    $("#login-count").text(data);
+                    hideLoading(parentElement);
+                },
+                error : function(){
+                     hideLoading(parentElement);
+                }
+            });
+        }
+
+        function refreshUserOnlineCount() {
+            var parentElement = $("#online-count").parents("[content-data]");
+            showLoading(parentElement);
+
+            $.ajax({
+                type: "GET",
+                url: '@Html.Raw(Url.Action("GetUserOnlineCount","Report"))',
+                success: function (data) {
+                    $("#online-count").text(data);
+                    hideLoading(parentElement);
+                },
+                 error : function(){
+                     hideLoading(parentElement);
+                }
+            });
+        }
+
+        function refreshStandsCount() {
+            
+            var parentElement = $("#stand-count").parents("[content-data]");
+            showLoading(parentElement);
+
+            $.ajax({
+                type: "GET",
+                url: '@Html.Raw(Url.Action("GetStandsCount","Report"))',
+                success: function (data) {
+                    $("#stand-count").text(data);
+                    hideLoading(parentElement);
+                },
+                error : function(){
+                     hideLoading(parentElement);
+                }
+            });
+        }
+
+        function refreshRegisterCount() {
+            
+            var parentElement = $("#register-count").parents("[content-data]");
+            showLoading(parentElement);
+
+            $.ajax({
+                type: "GET",
+                url: '@Html.Raw(Url.Action("GetUserRegisterCount","Report"))',
+                data: { dateFrom: startFilter.toISOString(), dateTo: endFilter.toISOString() },
+                success: function (data) {
+                    $("#register-count").text(data);
+                    hideLoading(parentElement);
+                },
+                error : function(){
+                     hideLoading(parentElement);
+                }
+            });
+        }
+
+        function refreshStandsVisitedCount() {
+            var parentElement = $("#stand-visit-count").parents("[content-data]");
+            showLoading(parentElement);
+
+            $.ajax({
+                type: "GET",
+                url: '@Html.Raw(Url.Action("GetStandsVisitCount","Report"))',
+                data: { dateFrom: startFilter.toISOString(), dateTo: endFilter.toISOString() },
+                success: function (data) {
+                    $("#stand-visit-count").text(data);
+                    hideLoading(parentElement);
+                },
+                error : function(){
+                     hideLoading(parentElement);
+                }
+            });
+        }
+
+        function hideLoading(element) {
+            if (!element) {
+                element = $("main.content");
+            }
+
+            element.waitMe('hide');
+        }
+
+        function showLoading(element, text) {
+            if (!element) {
+                element = $("main.content");
+            }
+
+            if (!text) {
+                if (element.parent().height() > 200)
+                    text = "Cargando...";
+            }
+
+            element.waitMe({
+                //none, rotateplane, stretch, orbit, roundBounce, win8, 
+                //win8_linear, ios, facebook, rotation, timer, pulse, 
+                //progressBar, bouncePulse or img
+                effect: 'bounce',
+                //place text under the effect (string).
+                text: text,
+                //background for container (string).
+                bg: 'rgba(32, 38, 52,0.5)',
+                //color for background animation and text (string).
+                color: '#3680BF',
+                //change width for elem animation (string).
+                sizeW: '',
+                //change height for elem animation (string).
+                sizeH: '',
+                // url to image
+                source: ''
+            });
+        }
+
+
+        var table = $("#datatable-stand-visits").DataTable(
+            {
+                orderCellsTop: true,
+                fixedHeader: false,
+                "order": [[1, 'dsc']],
+                "ordering": true,
+                 "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "Nada para mostrar",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                },
+                "columns": [
+                    { "data": "provider", "name": "Provider", visible: true, "searchable": true, "orderable": true },
+                    { "data": "visitCount", "name": "VisitCount", orderable: true, "searchable": true }
+                ],
+                "ajax": {
+                    "url": '@Html.Raw(Url.Action("GetProviderVisitCount","Report"))',
+                    "data": function (data) {
+                        data.dateFrom = startFilter.toISOString();
+                        data.dateTo = endFilter.toISOString();
+                        dataTableRequest = data;
+                        //return { dateFrom: startFilter.toISOString(), dateTo: endFilter.toISOString() };
+                    }
+                }
+            }
+        );
+
+        function refreshProviderVisitCount() {
+            table.ajax.reload();
+        }
+    });
+
+</script>
+}

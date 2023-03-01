@@ -1,0 +1,32 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var shop = true;
+    - var active = 'category'
+    - var current = 'category-full.html'
+
+block content
+
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Shop'})
+    - var heroHeading = 'Jackets and tops'
+    - var heroText = '<p class="lead text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>'
+    
+    include _pug-includes/inc-hero.pug
+
+    .container-fluid
+        .px-xl-5
+            .row
+                - var gridClass = 'col-xl-9 col-lg-8 order-lg-2'
+                - var itemClass = 'col-xl-3 col-lg-4 col-sm-6'
+                - var doNotDisplayView = true
+
+                include _pug-includes/inc-grid.pug
+
+                - var sidebarClass = 'pr-xl-5 order-lg-1'
+                - var sidebarBlockClass = ''
+                include _pug-includes/inc-sidebar.pug
+                
+    
+    include _pug-includes/inc-modal.pug

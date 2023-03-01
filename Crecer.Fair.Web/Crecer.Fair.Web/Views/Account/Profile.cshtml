@@ -1,0 +1,150 @@
+@model UserProfileViewModel
+@{
+    ViewData["Title"] = $"{User.Identity.Name} - Perfil";
+}
+
+<section class="hero mt-5">
+    <div class="container">
+        <!-- Breadcrumbs -->
+        <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item active">Perfil</li>
+        </ol>
+        <!-- Hero Content-->
+        <div class="hero-content pb-5 text-center">
+            <h1 class="hero-heading">Perfil</h1>
+            @* <div class="row">
+                <div class="col-xl-8 offset-xl-2">
+                <p class="lead text-muted">El contenido al que intenta acceder no esta autorizado para su usuario</p>
+                </div>
+                </div> *@
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-xl-8">
+
+                <div class="block mb-5">
+                    <div class="block-header"><strong class="text-uppercase">Cambiar Contraseña</strong></div>
+                    <div class="block-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-4">
+                                        <label class="form-label" for="CurrentPassword">Contraseña Actual</label>
+                                        <input class="form-control" id="CurrentPassword" type="password">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-4">
+                                        <label class="form-label" for="NewPassword">Nueva Contraseña</label>
+                                        <input class="form-control" id="NewPassword" type="password">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-4">
+                                        <label class="form-label" for="ConfirmNewPassword">Confirmar Contraseña</label>
+                                        <input class="form-control" id="ConfirmNewPassword" type="password">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <button id="change-password-button" class="btn btn-outline-dark" type="submit"><i
+                                        class="far fa-save me-2"></i>Cambiar Contraseña</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-lg-5 mb-5">
+                <div class="align-items-center p-2 p-xl-5 bg-gray-100 h-100">
+                    <div>
+                        <h5 class="text-center text-uppercase">@Model.Name</h5>
+                        <p class="text-center text-muted text-sm mb-0">@Model.LogonName</p>
+                        @* <div class="row">
+                            <div class="col-xl-6">
+                            <p class="text-lg text-muted mb-lg-0">One morning, when Gregor Samsa woke from
+                            troubled dreams, he found himself transformed in his bed into a horrible vermin.
+                            He lay on his armour-like ba</p>
+                            </div>
+                            <div class="col-xl-6">
+                            <p class="text-lg text-muted mb-0">The bedding was hardly able to cover it and
+                            seemed ready to slide off any moment. His many legs, pitifully thin compared
+                            with the size of the rest of </p>
+                            </div>
+                            </div> *@
+                        @* <hr class="my-5">
+                            <div class="row">
+                            <div class="col-xl-6">
+                            <h6 class="text-uppercase mb-4">Get in touch</h6>
+                            <p class="text-lg text-muted mb-4 mb-xl-0">123 Firebrigade St<br>San Antonio,
+                            CA<br>U.S.A.</p>
+                            </div>
+                            <div class="col-xl-6">
+                            <h6 class="text-uppercase mb-4">Company details</h6>
+                            <p class="text-lg text-muted mb-0">Reg.Id: 15456456<br>VAT Id: 646643463546</p>
+                            </div>
+                            </div> *@
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<vc:footer-section></vc:footer-section>
+
+@section Scripts
+{
+
+
+
+<script>
+    $(function () {
+        $("#change-password-button").on("click", function (e) {
+
+            e.preventDefault();
+
+            var requestModel = {
+                currentPassword: $("#CurrentPassword").val(),
+                newPassword: $("#NewPassword").val(),
+                confirmNewPassword: $("#ConfirmNewPassword").val()
+            };
+
+            // Create an instance of Notyf
+            var notyf = new Notyf({ position: { x: 'right', y: 'top' } });
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ChangePassword","Account")',
+                data: requestModel,
+                success: function (data) {
+
+                    $("#CurrentPassword").val('');
+                    $("#NewPassword").val('');
+                    $("#ConfirmNewPassword").val('');
+
+                    if (data.isValid) {
+                        notyf.success(data.messages[0].text);
+                        //location.href = data.redirectUrl;
+                    }
+                    else {
+                        notyf.error(data.messages[0].text);
+                    }
+                },
+                error: function () {
+                    notyf.error("No se pudo completar la transacción");
+                },
+                dataType: 'json'
+            });
+            
+        });
+    });
+</script>
+}

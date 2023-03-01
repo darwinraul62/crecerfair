@@ -1,0 +1,185 @@
+/**********STAND-7*********************/
+
+.stand-7 .stand-contact-content {
+    color: #343a40 !important;
+}
+
+.stand-7 .stand-text li {
+    color: #343a40 !important;
+    font-size: 17px !important;
+    font-weight: 500;
+}
+
+.stand-7 .stand-photo-content .stand-photo {
+    width: 160px !important;
+    height: 160px !important;
+}
+
+.stand-7 .stand-photo-title {    
+    top: 0px;
+    left: 0px;
+    z-index: 999;
+    display: inline-block;
+    font-family: "HK Grotesk", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 3px 15px 5px;
+    color: #fff;
+    text-align: center;
+    font-size: large;
+    font-weight: 600;
+    width: 100%;
+
+    text-shadow: 1px 1px 4px #212529;
+    background-color: rgba(15, 43, 116, 0.5) !important;
+    margin-bottom: 10px;
+}
+
+
+.stand-7 .stand-contact-title {
+    cursor: pointer;
+
+    top: 0px;   
+    z-index: 999;
+    display: inline-block;
+    font-family: "HK Grotesk", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 3px 4px 5px;
+    color: #fff;
+    text-align: center;
+    font-size: large;
+    font-weight: 600;
+
+    box-sizing: content-box;
+    background-color: rgba(15, 43, 116, 0.5) !important;
+    text-shadow: 1px 1px 4px #212529;
+    width: 100%;
+}
+
+.stand-7 .stand-contact-title:hover {    
+    background-color: rgba(15, 43, 116, 0.8) !important;    
+}
+
+.stand-7 .stand-text-item-label {
+    margin: 5px 5px;
+}
+.stand-7 .stand-text-item {
+    margin-top: 10px;
+    width: 100%;
+    padding: 0;    
+
+    cursor: pointer;
+    /* position: absolute; */
+    top: 0px;    
+    z-index: 999;
+    display: inline-block;
+    font-family: "HK Grotesk", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+
+    color: #fff;
+    text-align: center;
+    font-size: small;
+    font-weight: 600;
+
+    box-sizing: content-box;
+    border: 1px solid #dee2e6 !important;
+  
+    background-color: rgba(15, 43, 116, 0.5) !important;
+    text-shadow: 1px 1px 4px #212529;
+
+    word-wrap: break-word;
+}
+
+
+.stand-7 .stand-text-item:hover {
+    background-color: rgba(15, 43, 116, 0.8) !important;
+}
+
+
+.stand-7 .contact-field-label {
+    color: #1460a0;
+    /* text-shadow: 1px 1px 1px grey; */
+    font-weight: 700;
+    font-family: "HK Grotesk", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: left;
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+
+.stand-7 .contact-field-value {
+    text-align: left;
+    padding-left: 1px;
+    padding-right: 1px;    
+    word-break: break-all;
+}
+
+.stand-7 .contact-field-value span{    
+    word-break: break-all;
+}
+
+
+.stand-7 .stand-contact-row {
+    color: inherit;
+    overflow-wrap: break-word;
+    margin-top: 10px;
+}
+
+.stand-7 .stand-contact-row {
+    color: inherit;
+    overflow-wrap: break-word;
+    margin-top: 10px;
+}
+
+.stand-7 .stand-contact-social {
+    color: inherit;
+}
+
+.stand-7 .stand-contact-address-row {
+    display: inherit;
+}
+
+.stand-7 .stand-contact-more {
+    color: black;
+    
+}
+
+.stand-7 .stand-document-button-content,
+.stand-7 .stand-link-button-content,
+.stand-7 .stand-calendar-button-content {
+    border: 1px solid #dee2e6 !important;        
+    background-color: rgba(172, 167, 163, 0.8);
+    border-radius: 12px;
+}
+
+.stand-7 .stand-document-link,
+.stand-7 .stand-link,
+.stand-7 .stand-calendar {
+    color: black !important;
+    text-shadow: 1px 1px 4px white;
+}
+
+
+.stand-7 .stand-document-button-content:hover,
+.stand-7 .stand-link-button-content:hover,
+.stand-7 .stand-calendar-button-content:hover {
+    background-color: rgba(172, 167, 163, 1);
+}
+
+.stand-7 .stand-title {
+    border: 1px solid #dee2e6 !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    background-color: #49a4b9;
+    /* background-color: rgba(255, 255, 255, 0.9); */
+    border-radius: 4px;
+    /* color: rgba(15, 43, 116, 0.7) !important; */
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-align: center;
+    vertical-align: middle;
+    text-shadow: 1px 1px 4px #343a40;
+    font-size: x-large;
+}

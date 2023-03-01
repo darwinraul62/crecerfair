@@ -1,0 +1,1 @@
+import "script-loader!croppie/croppie.min.js";

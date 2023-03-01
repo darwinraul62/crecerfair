@@ -1,0 +1,39 @@
+// Top Bar
+.top-bar
+    .container-fluid
+        .row.d-flex.align-items-center
+            .col-sm-7.d-none.d-sm-block
+                ul.list-inline.topbar-text.mb-0
+                    li.list-inline-item.pe-3.me-0
+                        +svgIcon('calls-1', 'me-2')
+                        | 020-800-456-747
+                    li.list-inline-item.px-3.border-start.d-none.d-lg-inline-block Free shipping on orders over $300
+            
+            .col-sm-5.d-flex.justify-content-end
+                // Language Dropdown
+                .dropdown.border-end.px-3
+                    a#langsDropdown.dropdown-toggle.topbar-link(href="#", data-bs-toggle='dropdown', data-bs-display='static', aria-haspopup='true', aria-expanded='false')
+                        img.topbar-flag(src=path + "img/flag/gb.svg", alt="english") 
+                        | English
+                    .dropdown-menu.dropdown-menu-end.dropdown-menu-animated(aria-labelledby='langsDropdown')
+                        a.dropdown-item.text-sm(href='#')
+                            img.topbar-flag(src=path + "img/flag/de.svg", alt="german")
+                            | German
+                        a.dropdown-item.text-sm(href='#') 
+                            img.topbar-flag(src=path + "img/flag/fr.svg", alt="french")
+                            | French
+
+                // Currency Dropdown
+                .dropdown.ps-3.ms-0
+                    a#currencyDropdown.dropdown-toggle.topbar-link(href='#', data-bs-toggle='dropdown', data-bs-display='static',  aria-haspopup='true', aria-expanded='false') 
+                        i.fas.fa-dollar-sign.text-xs.align-middle.mt-n1.me-2 
+                        | USD
+                    .dropdown-menu.dropdown-menu-end.dropdown-menu-animated(aria-labelledby='currencyDropdown')
+                        a.dropdown-item.text-sm(href='#') 
+                            i.fas.fa-euro-sign.text-xs.align-middle.mt-n1.me-2 
+                            | EUR
+                        a.dropdown-item.text-sm(href='#')
+                            i.fas.fa-pound-sign.text-xs.align-middle.mt-n1.me-2 
+                            | GBP
+
+// Top Bar End

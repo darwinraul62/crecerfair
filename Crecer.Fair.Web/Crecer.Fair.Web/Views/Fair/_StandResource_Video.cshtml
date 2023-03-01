@@ -1,0 +1,32 @@
+@model StandResourceCoordViewModel
+
+<div id="videoPlayer-content" class="stand-video-content owl-carousel owl-theme owl-dots-modern">
+    @foreach (var item in Model.StandModel.Videos.OrderBy(p => p.Priority))
+    {
+        @* <div class="item-video"><a class="owl-video" href="@item.Url"></a></div> *@
+        <div class="item-video" style="width=@{@Model.Width}px height=@{@Model.Height}px">
+            <video  controls preload="auto" width="@Model.Width" height="@Model.Height" poster=""
+                data-description="@Html.Raw(item.Name)">
+                <source src="@item.Url" type="@item.MimeType" />
+            </video>
+        </div>
+    }
+</div>
+
+<style>
+    .stand-video-content .owl-dots {
+        top: @{@Model.Height}px;
+    }
+
+    .stand-video-content .owl-nav {
+        top: 30px;
+    }
+
+    .stand-video-content .owl-nav .owl-next {
+        right: -20px;
+    }
+
+    .stand-video-content .owl-nav .owl-prev {
+        left: -20px;
+    }
+</style>

@@ -1,0 +1,51 @@
+{
+  "name": "sell_template",
+  "version": "2.0.0",
+  "title": "Sell – Bootstrap 5 e-commerce template",
+  "description": "",
+  "homepage": "https://themes.getbootstrap.com/product/sell-bootstrap-4-e-commerce-template/",
+  "author": "Bootstrapious - https://bootstrapious.com",
+  "contact": "hello@bootstrapious.com",
+  "bugs": "",
+  "keywords": [],
+  "contributors": [
+    "Ondrej Svestka <hello@bootstrapious.com>"
+  ],
+  "dependencies": {
+    "bootstrap": "^5.0.1",
+    "glightbox": "^3.0.9",
+    "imagesloaded": "^4.1.4",
+    "jquery": "^3.6.0",
+    "jquery-parallax.js": "^1.5.0",
+    "jquery-zoom": "^1.7.21",
+    "jquery.cookie": "^1.4.1",
+    "masonry-layout": "^4.2.2",
+    "nouislider": "^14.7.0",
+    "object-fit-images": "^3.2.4",
+    "owl.carousel": "^2.3.4",
+    "owl.carousel2.thumbs": "^0.1.8",
+    "prismjs": "^1.23.0",
+    "smooth-scroll": "^16.1.3"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.14",
+    "chalk": "^4.1.1",
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-cached": "^1.1.1",
+    "gulp-cdnizer": "^2.2.0",
+    "gulp-changed": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-if": "^3.0.0",
+    "gulp-filter": "^7.0.0",
+    "gulp-npm-dist": "^1.0.3",
+    "gulp-plumber": "^1.2.1",
+    "gulp-print": "^5.0.2",
+    "gulp-pug": "^5.0.0",
+    "gulp-pug-inheritance": "^1.0.0-beta10",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-sourcemaps": "^3.0.0"
+  }
+}

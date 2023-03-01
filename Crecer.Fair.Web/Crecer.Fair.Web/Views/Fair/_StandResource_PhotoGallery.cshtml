@@ -1,0 +1,19 @@
+@model StandResourceCoordViewModel
+
+<div class="stand-photo-content">
+
+        <div class="stand-photo-title">Galería</div>        
+        @* <h4 class="stand-photo-title">Galería</h2> *@
+
+    <div class="stand-photo-content-area stand-resource-item">
+        @foreach (var item in Model.StandModel.Photos.OrderBy(p => p.Priority))
+        {
+            <div
+            class="item-photo left d-inline-block text-center justify-content-center align-items-center border border-secondary p-1 ml-1 mb-3">
+                <a data-fancybox="photo-gallery" data-src="@Html.Raw(item.Url)">
+                    <img class="stand-photo" src="@Html.Raw(item.ThumbnailUrl)">
+                </a>
+            </div>
+        }
+    </div>
+</div>

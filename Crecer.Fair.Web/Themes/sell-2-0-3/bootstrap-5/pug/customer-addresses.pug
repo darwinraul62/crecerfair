@@ -1,0 +1,28 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var active = 'customer-addresses.html'  
+    - var customerZone = true
+
+block content
+       
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Your addresses'})
+    - var heroHeading = 'Your addresses'
+    
+    include _pug-includes/inc-hero.pug
+
+    section
+        .container
+            .row.mb-5
+                .col-lg-8.col-xl-9
+                    form(action="#")
+                        include _pug-includes/inc-customer-addresses.pug
+
+                        .mb-4.mt-3.text-center
+                            button.btn.btn-outline-dark(type="submit")
+                                i.far.fa-save.me-2
+                                | Save changes
+
+                include _pug-includes/inc-customer-sidebar.pug

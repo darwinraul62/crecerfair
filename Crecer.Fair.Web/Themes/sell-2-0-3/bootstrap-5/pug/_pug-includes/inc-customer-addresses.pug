@@ -1,0 +1,55 @@
+
+.block
+    // Invoice Address
+    .block-header
+        h6.text-uppercase.mb-0 Invoice address                    
+    .block-body
+        .row
+
+            - var fields = []
+            - fields.push({name: 'Full Name', columns: 6, placeholder: 'Joe Black'})
+            - fields.push({name: 'Email Address', columns: 6, placeholder: 'joe.black@gmail.com'})
+            - fields.push({name: 'Street', columns: 6, placeholder: '123 Main St.'})
+            - fields.push({name: 'City', columns: 6, placeholder: 'City'})
+            - fields.push({name: 'ZIP', columns: 6, placeholder: 'Postal code'})
+            - fields.push({name: 'State', columns: 6, placeholder: 'State'})
+            - fields.push({name: 'Phone Number', columns: 6, placeholder: 'Phone Number'})
+
+            - var suffix = 'invoice'
+
+            each val, index in fields
+                - var id = val.name.replace(' ','').toLowerCase() + '_' + suffix
+                div(class="form-group col-md-" + val.columns)
+                    label.form-label(for=id) #{val.name}
+                    input.form-control(type="text", name=id, placeholder=val.placeholder, id=id)
+
+            .mb-4.col-12.mt-3
+                .form-check
+                    input.form-check-input(id="show-shipping-address", type="checkbox", name="clothes-brand")
+                    label.form-check-label.align-middle(for='show-shipping-address',data-bs-toggle="collapse", data-bs-target="#shippingAddress") Use a different shipping address
+                
+        // /Invoice Address
+
+    // Shippping Address
+    .collapse#shippingAddress
+        .block
+            .block-header
+                h6.text-uppercase.mb-0 Shipping address 
+
+            .block-body
+                .row
+                    - var fields = []
+                    - fields.push({name: 'Street', columns: 6, placeholder: '123 Main St.'})
+                    - fields.push({name: 'City', columns: 6, placeholder: 'City'})
+                    - fields.push({name: 'ZIP', columns: 6, placeholder: 'Postal code'})
+                    - fields.push({name: 'State', columns: 6, placeholder: 'State'})
+                    - fields.push({name: 'Phone Number', columns: 6, placeholder: 'Phone Number'})
+
+                    - var suffix = 'shipping'
+
+                    each val, index in fields
+                        - var id = val.name.replace(' ','').toLowerCase() + '_' + suffix
+                        div(class="form-group col-md-" + val.columns)
+                            label.form-label(for=id) #{val.name}
+                            input.form-control(type="text", name=id, placeholder=val.placeholder, id=id) 
+        // /Shipping Address

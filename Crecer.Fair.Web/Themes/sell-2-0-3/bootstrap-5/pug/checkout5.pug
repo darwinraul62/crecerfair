@@ -1,0 +1,21 @@
+extends _pug-includes/layout.pug
+
+block content
+   
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Order confirmed'})
+    - var heroHeading = 'Order confirmed'
+    
+    include _pug-includes/inc-hero.pug   
+                                    
+    
+    section.pb-5
+        .container.text-center
+            .icon-rounded.bg-primary-light.mb-3.mx-auto.text-primary
+                +svgIcon('checkmark-1', 'w-2rem h-2rem align-middle')
+            
+            h4.mb-3.ff-base Thank you, Julie. Your order is confirmed.
+            p.text-muted.mb-5 Your order hasn't shipped yet but we will send you ane email when it does.
+            p 
+                a.btn.btn-outline-dark(href="customer-order.html") View or manage your order

@@ -1,0 +1,15 @@
+@model StandResourceCoordViewModel
+@if (Model.StandModel.Links.Any())
+{
+    <div class="stand-link-button-content">
+        <h5 id="stand-links-trigger" class="stand-link">Enlaces</h5>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                $("#stand-links-trigger").on('click', function () {
+                    $('#modal-stand-links').modal('show');
+                });
+            });
+        </script>
+    </div>
+}

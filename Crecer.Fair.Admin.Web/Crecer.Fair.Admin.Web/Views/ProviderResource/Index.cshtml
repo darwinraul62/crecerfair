@@ -1,0 +1,56 @@
+@model ProviderResourceIndexViewModel
+@{
+    this.ViewBag.Title = "Recursos";
+}
+@*
+    <style>
+    .clear-area {
+    all: initial;
+    }
+
+    .clear-area * {
+    all: unset
+    }
+    </style> *@
+
+@section TopLeftArea{
+
+<div class="btn-group">
+    <button type="button" class="btn btn-primary float-end mt-n1 dropdown-toggle" data-bs-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-plus"></i> Nuevo</button>
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" asp-action="EditGeneral" asp-controller="ProviderResource" asp-route-type="TEXT"
+            asp-route-providerId="@Model.ProviderId">Contenido</a>
+        <a class="dropdown-item" asp-action="EditGeneral" asp-controller="ProviderResource" asp-route-type="LINK"
+            asp-route-providerId="@Model.ProviderId">Link</a>
+    </div>
+</div>
+
+}
+
+
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Inicio</a></li>
+            @if(!User.GetFairProviderId().HasValue)
+            {
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Provider">Proveedores</a></li>
+            }
+            <li class="breadcrumb-item active">Recursos</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        @*<div class="card">
+            <div class="card-body"> *@
+        @foreach (var resourceType in Model.ResourceTypes.OrderBy(p => p.Priority))
+        {
+            <partial name="ResourcePreview" model="resourceType"></partial>
+        }
+    </div>
+</div>

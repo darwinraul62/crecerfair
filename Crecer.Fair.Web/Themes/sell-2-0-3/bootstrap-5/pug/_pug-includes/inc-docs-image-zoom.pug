@@ -1,0 +1,7 @@
+- var images = ['img/product/kyle-loftus-596319-unsplash-cropped-2.jpg']
+
+.row
+    .col-md-6
+        each image, index in images
+            div(data-bs-toggle="zoom", data-image=path + image)
+                img.img-fluid(src=path + image, alt='Modern Jacket')

@@ -1,0 +1,331 @@
+.logo-home {
+    /* background-image: url("../../img/logo_crecer.png"); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 90px;
+    height: 90px;
+}
+
+.logo-home.small {
+    /* background-image: url("../../img/logo_crecer.png"); */
+    width: 90px;
+    height: 90px;
+}
+
+.home-title-wrapper {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.btn.btn-big{
+    font-size: 1rem!important;
+}
+
+.p-welcome-text{
+    font-size: 2rem !important;
+}
+
+@media (min-width: 992px) {
+    .home-title-wrapper {
+        margin-left: 8rem !important;
+    }
+}
+
+@media (min-width: 820px) {
+    .fixed-top .home-header-title,
+    .navbar.navbar-hover-light:hover .home-header-title {
+        display: block !important;
+    }
+}
+
+@media (max-width: 1090px) {
+    h3.home-header-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 950px) {
+    h3.home-header-title {
+        font-size: 1.2rem;
+    }
+}
+/* }
+@media (min-width: 1200px) {
+    h3.hero-heading,
+    .hero-heading.h3 {
+        font-size: 1.3rem;
+    }
+} */
+
+.navbar.navbar-hover-light:hover .btn-light.btn-signin,
+.navbar.fixed-top .btn-light.btn-signin {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+}
+
+.navbar-user-dropdown-item {
+    display: flex;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 0.7875rem;
+    justify-content: space-between;
+}
+
+.navbar {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.explanade-bg-content {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    /* position: absolute;
+    top: 0;
+    left: 0; */
+}
+
+.explanade-bg {
+    height: 1080px;
+    width: 1920px;
+    max-width: 1920px !important;
+}
+
+.stand-item-map {
+    position: absolute;
+
+    /* z-index: 100; */
+    cursor: pointer;
+}
+/* 
+.stand-item-map:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+} */
+.area-map {
+    position: absolute;
+}
+.stand-map {
+    position: absolute;
+    z-index: 100;
+    width: 1920px;
+    max-width: 1920px !important;
+    height: 1080px;
+}
+
+.stand-item-map img {
+    font-family: "object-fit: contain;";
+    object-fit: contain;
+}
+
+/*Stand*/
+
+.stand-bg-content {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    /* position: absolute;
+    top: 0;
+    left: 0; */
+}
+
+.stand-bg {
+    height: 1080px;
+    width: 1920px;
+}
+
+.stand-resources-map {
+    position: absolute;
+    z-index: 1000;
+    width: 1920px !important;
+    height: 1080px;
+}
+
+.stand-resource-map {
+    position: absolute;
+}
+
+.stand-Logo {
+    font-family: "object-fit: contain;";
+    object-fit: contain;
+}
+
+.stand-photo-content {
+    height: 100%;
+    width: 100%;
+    display: flex;    
+    flex-flow: column;
+}
+
+.stand-photo-content-area{   
+    overflow-x: hidden;
+    flex: 1 1 auto;
+}
+
+.stand-text-content { 
+    height: 100%;   
+    overflow-y: auto;
+}
+
+.stand-text-content.nav {
+    display: block;
+}
+
+/* .stand-text-content .list-group-item {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+} */
+
+.stand-photo {
+    height: 40px;
+    width: 40px;
+    font-family: "object-fit: cover;";
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.stand-video-content {
+    height: 100%;
+    width: 100%;
+}
+
+.stand-modal {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+.stand-text-content{
+    overflow-x:hidden;
+}
+
+.stand-document-button-content,
+.stand-link-button-content,
+.stand-calendar-button-content {
+    height: 100%;
+    text-align: center;
+}
+.stand-document-button-content h6,
+.stand-link-button-content h6,
+.stand-calendar-button-content h6 {
+    width: 100%;    
+}
+
+.stand-document-link,
+.stand-link,
+.stand-calendar {
+    cursor: pointer;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+
+    width: 100%;
+}
+
+
+.stand-title {
+    height: 100%;
+}
+.stand-title .stand-title-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    width: 100%;
+}
+
+.stand-modal .nav-link:hover {
+    background-color: #343a40;
+    color: #fff;
+}
+.stand-contact-content{
+    overflow-x: hidden;
+}
+.stand-photo-title {
+    color: rgba(255, 255, 255, 0.6);
+}
+.stand-contact-content ul {
+    margin-bottom: 0px;
+}
+
+.stand-contact-content a {
+    color: inherit;
+}
+
+/* .stand-modal .nav {
+    border-left: 1px solid #343a40 !important;
+} */
+
+.stand-banner-item img {
+    font-family: "object-fit: contain;";
+    object-fit: contain;
+    cursor: pointer;
+}
+.stand-banner-content {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.stand-contact-row {
+    overflow-wrap: break-word;    
+}
+
+.stand-text-content li{
+    overflow-wrap: break-word;    
+}
+
+.stand-social-networks-content .social-items-content{
+    text-align: center !important;
+    background-color:rgba(255, 255, 255, 0.4);
+    border-radius: 15px;
+}
+
+.stand-contact-social {
+    font-size: 3em;
+}
+.stand-contact-social.facebook a{
+    color: rgb( 24,119,242,1) !important;
+}
+.stand-contact-social.facebook a:hover{
+    color: rgb( 24,119,242,0.7) !important;
+}
+.stand-contact-social.youtube a{
+    color: rgb(204,0,0,1) !important;
+}
+.stand-contact-social.youtube a:hover{
+    color: rgb(204,0,0,0.7) !important;
+}
+.stand-contact-social.instagram a{
+    color: rgba(0, 0, 0, 1) !important;
+}
+.stand-contact-social.instagram a:hover{
+    color: rgba(0, 0, 0, 0.7) !important;
+}
+.stand-contact-social.twitter a{
+    color: rgb(29, 155, 240,1)!important;
+}
+.stand-contact-social.twitter a:hover{
+    color: rgb(29, 155, 240,0.7)!important;
+}

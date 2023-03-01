@@ -1,0 +1,117 @@
+@model ProviderResourceGeneralEditViewModel
+@{
+    string[] allowedTypes = null;
+    string[] allowedExtensions = null;
+
+    if (Model.ResourceTypeId == ResourceTypes.PhotoGallery ||
+        Model.ResourceTypeId == ResourceTypes.Banner ||
+        Model.ResourceTypeId == ResourceTypes.FairBanner)
+    {
+        allowedTypes = new string[] { "image" };
+        allowedExtensions = new string[] { "png", "jpg", "jpeg", "bmp", "tiff", "psd" };
+    }
+    else if (Model.ResourceTypeId == ResourceTypes.Video)
+    {
+        allowedTypes = new string[] { "video" };
+    }
+
+    object initialConfig = Model.ResourceCollection.OrderBy(p => p.Priority).Select(p =>
+    new
+    {
+        key = p.ResourceId,
+        caption = p.Name,
+        providerId = Model.ProviderId,
+        downloadUrl = p.Value,
+        filetype = Ecubytes.Image.MimeTypeUtility.GetMimeType(System.IO.Path.GetExtension(p.FileName)),                 
+        type = Ecubytes.Image.MimeTypeUtility.GetTemplateType(System.IO.Path.GetExtension(p.FileName))
+    }
+    ).ToArray();
+
+    string[] filesUrl = Model.ResourceCollection.OrderBy(p => p.Priority).Select(p => p.Value).ToArray();
+
+    //string[] allowedTypes = new string[] { "image","html","text","video","audio" };
+}
+
+
+<input id="file-input" type="file" multiple>
+
+<script>
+
+    @if (Model.IsAjaxRequest)
+    {
+        @:initFileInput();
+    }
+
+        function initFileInput() {
+
+            var btns = `<button type="button" 
+                class="kv-cust-btn btn btn-sm btn-kv btn-default btn-outline-secondary" 
+                title="Edit"{dataKey}data-caption="{caption}"
+                data-bs-toggle="modal" data-bs-target="#sizedModalSm">
+                <i class="fas fa-edit"></i>
+                </button>`;
+            // note the tag/token {dataKey}
+
+            $("#file-input").fileinput({
+                language: "es",
+                theme: "fas",
+                maxFileSize: 20000,
+                showRemove: true,
+                showDrag: true,
+                uploadUrl: '@Url.Action("EditResourceMedia","ProviderResource")',
+                deleteUrl: '@Url.Action("DeleteResourceMedia","ProviderResource")',
+                uploadExtraData: {
+                    providerId: '@Model.ProviderId',
+                    resourceType: '@Model.ResourceTypeId'
+                },
+                deleteExtraData: {
+                    providerId: '@Model.ProviderId',
+                    resourceType: '@Model.ResourceTypeId'
+                },
+                retainErrorHistory: false,
+                resumableUploadOptions: {
+                    retainErrorHistory: false,
+                },
+                otherActionButtons: btns,
+                overwriteInitial: false,
+                initialPreviewShowDelete: true,
+                showDownload: true,
+                showUpload: false, // hide upload button
+                minFileCount: 1,
+                maxFileCount: 5,
+                initialPreviewAsData: true, // identify if you are sending preview data only and not the raw markup
+                initialPreviewConfig: @Html.Raw(Ecubytes.Json.JsonUtility.Serialize(initialConfig)),
+                allowedFileExtensions: @Html.Raw(Ecubytes.Json.JsonUtility.Serialize(allowedExtensions)),
+                allowedFileTypes: @Html.Raw(Ecubytes.Json.JsonUtility.Serialize(allowedTypes)),
+                initialPreview: @Html.Raw(Ecubytes.Json.JsonUtility.Serialize(filesUrl))
+    @* enableResumableUpload: true *@
+     });
+
+            $('.kv-cust-btn').on('click', function () {
+                var $btn = $(this), key = $btn.data('key'), caption = $btn.data('caption');
+                $("#modal-provider-resource-id").val(key);
+                $("#modal-provider-resource-name").val(caption);
+            });
+
+            $("#file-input").on("filebatchselected", function (event, files) {
+                $("#file-input").fileinput("upload");
+            });
+
+            $("#file-input").on('filebatchuploadcomplete', function (event, preview, config, tags, extraData) {
+                refreshFileContent();
+            });
+    @*
+        $("#file-input").on('filebatchuploadsuccess', function (event, preview, config, tags, extraData) {
+        refreshFileContent();
+        });
+
+        $('#file-input').on('fileuploaded', function (event, previewId, index, fileId) {
+        refreshFileContent();
+        }); *@
+    @*
+        .on('filesorted', function (e, params) {
+        console.log('File sorted params', params);
+        }); *@
+    }
+
+</script>

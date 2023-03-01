@@ -1,0 +1,222 @@
+@model ProviderResourceGeneralEditViewModel
+@{
+    ViewBag.Title = $"{Model.ProviderName} - Editar {@Model.ResourceTypeName}";
+}
+<style>
+    .file-input .file-caption,
+    .file-input .file-caption-name {
+        width: auto;
+    }
+</style>
+
+<partial name="_BreadCrumbProviderResource" model="@Model"></partial>
+
+<div class="col-12 col-xl-12">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Editar (@Model.ResourceTypeName)</h5>
+            @if(Model.ResourceTypeId == ResourceTypes.Banner)
+            {
+                <p>(Se recomienda Imagen rectangular, medidas mínimas recomendadas 800px de ancho. Formatos sugeridos png, jpg)</p>
+            }
+            else @if(Model.ResourceTypeId == ResourceTypes.FairBanner)
+            {
+                <p>(Medidas mínimas recomendadas 1920px de ancho x 1200px de alto. Formatos sugeridos png, jpg)</p>
+            }
+            else @if(Model.ResourceTypeId == ResourceTypes.PhotoGallery)
+            {
+                <p>(Imagen cuadrada medidas mínimas recomendadas 600px x 600px, Imagen rectangular medidas mínimas recomendadas 800px ancho por 600px de alto / 400px de ancho x 600px de alto. Formatos sugeridos png, jpg)</p>
+            }
+        </div>
+        <div id="resource-file-content" class="card-body pt-0">
+            <partial name="_Edit_FileUpload" />
+        </div>
+    </div>
+    <button id="post-order-button" class="btn btn-primary float-end">
+        <i class="fas fa-sort-numeric-up-alt"></i> Guardar Ordenamiento</button>
+
+    <button id="refresh-button" class="btn btn-primary me-1 float-end">
+        <i class="fas fa-sync"></i> Refrescar</button>
+
+</div>
+
+<div class="modal fade" id="sizedModalSm" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Nombre</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body m-3">
+                <div class="row">
+                    <div class="mb-3 col-md-12">
+                        <input type="hidden" id="modal-provider-resource-id">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="modal-provider-resource-name">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button id="modal-provider-resource-save-button" type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script>
+    function hideLoading(element, text) {
+        if (!element) {
+            element = $("main.content");
+        }
+
+        element.waitMe('hide');
+    }
+
+    function showLoading(element, text) {
+        if (!element) {
+            element = $("main.content");
+        }
+
+        if (!text) {
+            if (element.parent().height() > 200)
+                text = "Cargando...";
+        }
+
+        element.waitMe({
+            //none, rotateplane, stretch, orbit, roundBounce, win8, 
+            //win8_linear, ios, facebook, rotation, timer, pulse, 
+            //progressBar, bouncePulse or img
+            effect: 'bounce',
+            //place text under the effect (string).
+            text: text,
+            //background for container (string).
+            bg: 'rgba(32, 38, 52,0.5)',
+            //color for background animation and text (string).
+            color: '#3680BF',
+            //change width for elem animation (string).
+            sizeW: '',
+            //change height for elem animation (string).
+            sizeH: '',
+            // url to image
+            source: ''
+        });
+    }
+
+    function postUpdateResourceName(id, name) {
+        var contentElement = $('#sizedModalSm .modal-content');
+
+        showLoading(contentElement);
+
+        var model = {
+            providerId : '@Model.ProviderId',
+            resourceId : id,
+            name : name
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '@Html.Raw(Url.Action("UpdateResourceName","ProviderResource"))',
+            data: model,
+            success: function (data) {
+                hideLoading(contentElement);
+                if(data.isValid){
+                    $('#sizedModalSm').modal('hide');
+                    refreshFileContent();
+                }else{
+                    window.notyf.open({
+                    type: 'error',
+                    message: data.messages[0].text
+                    });
+                }                
+            },
+            error: function () {
+                hideLoading(contentElement);
+                window.notyf.open({
+                    type: 'error',
+                    message: "No se pudo actualizar el nombre"
+                });
+            },
+            dataType: 'json'            
+        });
+    }
+
+    function refreshFileContent() {
+        try {
+            showLoading();
+
+            $.get('@Html.Raw(Url.Action("PartialEditFiles","ProviderResource", new { providerId = Model.ProviderId, type = Model.ResourceTypeId } ))', function (content) {
+                $('#resource-file-content').html(content);
+                hideLoading();
+            });
+
+        }
+        catch (ex) {
+            window.notyf.open({
+                type: 'error',
+                message: ex.message
+            });
+            hideLoading();
+        }
+
+    }
+    $(function () {
+
+
+        initFileInput();
+
+        $("#modal-provider-resource-save-button").on('click', function(e){
+            e.preventDefault();
+            var name = $("#modal-provider-resource-name").val();
+            var resourceId = $("#modal-provider-resource-id").val();
+
+            postUpdateResourceName(resourceId,name);
+        });
+
+        $("#refresh-button").on('click', function () {
+            refreshFileContent();
+        });        
+
+        $("#post-order-button").on('click', function () {
+
+            showLoading();
+
+            var files = $('#file-input').fileinput('getPreview');
+
+            var fstack = [];
+            var index = 1;
+
+            $.each(files.config, function (fileId, fileObj) {
+                if (fileObj !== undefined) {
+                    fstack.push({
+                        resourceId: fileObj.key,
+                        priority: index++
+                    });
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: '@Html.Raw(Url.Action("UpdateResourcesPriority","ProviderResource", new { providerId = Model.ProviderId, type = Model.ResourceTypeId } ))',
+                data: JSON.stringify(fstack),
+                success: function (data) {
+                    hideLoading();
+                },
+                error: function () {
+                    hideLoading();
+                    window.notyf.open({
+                        type: 'error',
+                        message: "No se pudo actualizar el ordenamiento"
+                    });
+                },
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+            });
+
+        });
+
+    });
+
+</script>
+}

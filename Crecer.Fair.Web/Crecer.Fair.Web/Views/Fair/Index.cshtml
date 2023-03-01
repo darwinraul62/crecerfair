@@ -1,0 +1,82 @@
+@model StandIndexViewModel
+@{
+  ViewData["Title"] = "Feria Virtual";
+  ChatMode chatMode = ChatMode.OnlyAllowedConversations;
+  
+  if(User.GetFairProviderId()!=null)
+  {
+     chatMode = ChatMode.All;
+  }
+}
+
+<partial name="_FairHeader" />
+
+<!-- Hero Section-->
+<section>
+  <vc:chat chat-mode="@chatMode"></vc:chat>
+
+  <div id="fair-map-content" class="explanade-bg-content" style="background: #f8d5cf;">
+    <img id="fairMap" class="area-map explanade-bg" src="@Url.Content("~/img/fair/explanade.jpg")" alt="">
+    <div id="map-items" class="stand-map area-map">
+      <partial name="_StandMapItems" model="Model.Stands"></partial>
+    </div>
+  </div>
+
+</section>
+
+<vc:footer-section></vc:footer-section>
+
+@section Scripts{
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+    $(window).resize(function () {
+      fitExplanade()
+    });
+
+    fitExplanade();
+
+    @* $(".stand-item-map[standId]").on("click", function (e) {
+      e.preventDefault();
+
+      var providerId = $(this).attr('providerId');
+      var standId = $(this).attr('standId');     
+
+      modalSetProvider.modal('show');
+    }); *@
+
+    function fitExplanade() {
+      var fairMap = $("#fairMap");
+      var parentArea = fairMap.parent();
+
+      if (fairMap.width() > parentArea.width()) {
+        let gap = 0;
+        if (parentArea.width() < 1300 && parentArea.width() > 1180)
+          gap = 50;          
+        else if (parentArea.width() < 1180)
+          gap = 100;
+        
+        let excessWidth = fairMap.width() - parentArea.width();        
+        let marginLeft = parseInt(excessWidth / 2.00) + gap;        
+
+        $(".area-map").css('margin-left', -marginLeft + 'px');        
+      }
+      else{
+        $(".area-map").css('margin-left', '0px');        
+      }
+
+      if (fairMap.height() > parentArea.height()) {        
+        let gap = 100;
+        let excessHeight = fairMap.height() - parentArea.height() - gap;
+        let marginTop = parseInt(excessHeight / 2.00);
+
+        $(".area-map").css('margin-top', -marginTop + 'px');
+      }
+      else{
+         $(".area-map").css('margin-top', '0px');
+      }
+    }
+  });
+</script>
+}

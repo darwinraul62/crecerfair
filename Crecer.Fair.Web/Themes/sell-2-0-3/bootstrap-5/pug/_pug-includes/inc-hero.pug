@@ -1,0 +1,27 @@
+-var breadcrumbClass = 'justify-content-center'
+
+if (heroImage)
+    - breadcrumbClass = 'justify-content-center no-border mb-0'
+
+if (!heroHeadingClass)
+    - var heroHeadingClass = 'hero-heading'    
+
+// Hero Section
+if (heroHeading)
+    section.hero
+        .container
+            // Breadcrumbs 
+            ol(class="breadcrumb " + breadcrumbClass)
+                each val in breadcrumbs
+                    if (val.link)
+                        li.breadcrumb-item
+                            a(href=val.link) #{val.name}
+                    else
+                        li.breadcrumb-item.active #{val.name}        
+            // Hero Content
+            .hero-content.pb-5.text-center
+                h1(class=heroHeadingClass) #{heroHeading}
+                if heroText
+                    .row    
+                        .col-xl-8.offset-xl-2 !{heroText}
+

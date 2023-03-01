@@ -1,0 +1,46 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var shop = true;
+    - var breadcrumbClass = 'justify-content-center no-border mb-0'
+    - var current = 'category-banner.html'
+
+block content
+
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Ladies'})
+    - var heroHeading = 'Ladies'
+    - var heroHeadingClass = 'hero-heading'
+    - var heroText = '<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>'
+    - var heroImage = 'img/banner-transparent.png'
+    
+    // Breadcrumbs + Hero
+    section.position-relative.dark-overlay.py-3.py-lg-7.overflow-hidden(data-parallax="scroll", data-image-src='img/photo/erii-gutierrez-487083-unsplash.jpg', data-speed="0.3", data-position-x="right")
+        //- img.bg-image(src="img/photo/erii-gutierrez-487083-unsplash.jpg", alt="")
+        .container.overlay-content.hero.hero-page
+            ul(class="breadcrumb " + breadcrumbClass)
+                each val in breadcrumbs
+                    if (val.link)
+                        li.breadcrumb-item
+                            a.text-white(href=val.link) #{val.name}
+                    else
+                        li.breadcrumb-item.text-white.active #{val.name}
+            .hero-content.pb-5.text-center.text-white
+                h1(class=heroHeadingClass) #{heroHeading}
+                if heroText
+                    | !{heroText}                        
+
+    
+    .container.mt-5
+        .row
+            - var gridClass = 'col-xl-9 col-lg-8 order-lg-2'
+            - var itemClass = 'col-xl-4 col-sm-6'
+
+            include _pug-includes/inc-grid.pug
+
+            - var sidebarClass = 'order-lg-1'
+            - var sidebarBlockClass = 'me-lg-4'
+            include _pug-includes/inc-sidebar.pug
+
+    include _pug-includes/inc-modal.pug

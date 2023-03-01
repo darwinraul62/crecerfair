@@ -1,0 +1,37 @@
+// Customer Sidebar
+
+- var customerSidebar = []
+- customerSidebar.push({name: 'Orders', link: 'customer-orders.html', icon: 'paper-bag-1', count: '5'})
+- customerSidebar.push({name: 'Profile', link: 'customer-account.html', icon: 'male-user-1'})
+- customerSidebar.push({name: 'Addresses', link: 'customer-addresses.html', icon: 'navigation-map-1'})
+- customerSidebar.push({name: 'Log out', link: 'customer-login.html', icon: 'exit-1'})
+
+if (!customerSidebarClass)
+    - var customerSidebarClass = 'col-xl-3 col-lg-4 mb-5'
+
+div(class=customerSidebarClass)
+    .customer-sidebar.card.border-0 
+        .customer-profile
+            a.d-inline-block(href="#")
+                img.img-fluid.rounded-circle.customer-image.shadow(src=path + "img/photo/kyle-loftus-589739-unsplash-avatar.jpg", alt="")
+            
+            h5 Julie Trnka
+            p.text-muted.text-sm.mb-0 Ostrava, Czech Republic
+
+        nav.list-group.customer-nav
+            each val in customerSidebar
+                if (active == val.link)
+                    a.active.list-group-item.d-flex.justify-content-between.align-items-center.text-decoration-none(href=path + val.link)
+                        span
+                            +svgIcon(val.icon, 'svg-icon-heavy me-2')
+                            | #{val.name}
+                        if (val.count)
+                            .badge.rounded-pill.bg-light.text-dark.fw-normal.px-3 #{val.count}
+                else            
+                    a.list-group-item.d-flex.justify-content-between.align-items-center.text-decoration-none(href=path + val.link)
+                        span
+                            +svgIcon(val.icon, 'svg-icon-heavy me-2')
+                            | #{val.name}
+                        if (val.count)
+                            .badge.rounded-pill.bg-dark.fw-normal.px-3 #{val.count}
+// /Customer Sidebar

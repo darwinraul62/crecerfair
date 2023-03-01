@@ -1,0 +1,72 @@
+// Footer
+footer.main-footer
+    // Services block
+    .bg-gray-100.text-dark-700.py-6
+        .container
+            include inc-services
+                    
+    // Main block - menus, subscribe form
+    .py-6.bg-gray-300.text-muted 
+        .container
+            .row
+                .col-lg-4.mb-5.mb-lg-0
+                    .fw-bold.text-uppercase.text-lg.text-dark.mb-3 Sell<span class="text-primary">.</span>
+
+                    p Lorem ipsum dolor sit amet, consectetur adipisicing.
+                    
+                    ul.list-inline
+                        - social = ['twitter', 'facebook', 'instagram', 'pinterest', 'vimeo']
+                        each val in social
+                            li.list-inline-item
+                                a.text-muted.text-primary-hover(href="#", target="_blank", title=val)
+                                    i(class=`fab fa-${val}`)
+                        
+                .col-lg-2.col-md-6.mb-5.mb-lg-0
+                    h6.text-uppercase.text-dark.mb-3 Shop
+                    ul.list-unstyled
+                        - menu = ['For Women', 'For Men', 'Stores', 'Our Blog', 'Shop']
+                        each val in menu
+                            li 
+                                a.text-muted(href="#") #{val}
+                
+                .col-lg-2.col-md-6.mb-5.mb-lg-0
+                    h6.text-uppercase.text-dark.mb-3 Company
+                    ul.list-unstyled
+                        - menu = ['Login', 'Register', 'Wishlist', 'Our Products', 'Checkouts']
+                        each val in menu
+                            li 
+                                a.text-muted(href="#") #{val}                    
+                
+
+                .col-lg-4
+                    h6.text-uppercase.text-dark.mb-3 Daily Offers & Discounts
+                    p.mb-3  Lorem ipsum dolor sit amet, consectetur adipisicing elit. At itaque temporibus.
+                    
+                    form(action="#", id="newsletter-form")
+                        .input-group.mb-3
+                            input.form-control.bg-transparent.border-secondary.border-end-0(type='email', placeholder="Your Email Address", aria-label="Your Email Address")
+                            .input-group-append
+                                button.btn.btn-outline-secondary.border-start-0(type='submit') 
+                                    i.fa.fa-paper-plane.text-lg.text-dark
+
+
+    // Copyright section of the footer
+
+    .py-4.fw-light.bg-gray-800.text-gray-300
+        .container
+            .row.align-items-center
+                .col-md-6.text-center.text-md-start
+                    p.mb-md-0 &copy; 2020 Your company.  All rights reserved.
+                
+                .col-md-6
+                    ul.list-inline.mb-0.mt-2.mt-md-0.text-center.text-md-end
+                        li.list-inline-item
+                            img.w-2rem(src=path + "img/visa.svg", alt="...")
+                        li.list-inline-item
+                            img.w-2rem(src=path + "img/mastercard.svg", alt="...")
+                        li.list-inline-item
+                            img.w-2rem(src=path + "img/paypal.svg", alt="...")
+                        li.list-inline-item
+                            img.w-2rem(src=path + "img/western-union.svg", alt="...")
+                    
+// /Footer end

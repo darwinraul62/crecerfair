@@ -1,0 +1,13 @@
+li.nav-item.dropdown
+    if active == 'category'
+        - activeClass = 'active'
+    else
+        - activeClass = ''
+
+    - links = {'category.html': 'Category - left sidebar', 'category-right.html': 'Category - right sidebar', 'category-no-sidebar.html': 'Category - no sidebar', 'category-full.html' : 'Category - full width', 'category-masonry.html' : 'Category - masonry items','category-banner.html' : 'Category - w/ banner', 'detail.html' : 'Product detail', 'detail-2.html' : 'Product detail - v.2', 'detail-3.html' : 'Product detail - v.3 <span class="badge badge-warning ms-1">New</span>'}
+
+    a#categoryDropdownMenuLink(href="category.html", data-bs-target="#" class="nav-link dropdown-toggle " + activeClass, data-bs-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Shop
+    .dropdown-menu.dropdown-menu-animated(aria-labelledby='categoryDropdownMenuLink')
+        each name, link in links
+            a.dropdown-item(href=path + link) !{name}   
+         

@@ -1,0 +1,47 @@
+#accordion(role='tablist')
+    .block.mb-3
+        #headingOne.block-header(role='tab')
+            strong
+                a.accordion-link(data-bs-toggle='collapse', href='#collapseOne', aria-expanded='true', aria-controls='collapseOne')
+                    | Credit Card
+        #collapseOne.collapse.show(role='tabpanel', aria-labelledby='headingOne',  data-parent='#accordion')
+            .block-body
+                form(action="#")
+                    .row
+                        .mb-4.col-md-6
+                            label.form-label(for="card-name") Name on Card
+                            input.form-control(type="text", name="card-name", placeholder="Name on card", id="card-name")
+                        .mb-4.col-md-6
+                            label.form-label(for="card-number") Card Number
+                            input.form-control(type="text", name="card-number", placeholder="Card number", id="card-number")
+                        .mb-4.col-md-4
+                            label.form-label(for="expiry-date") Expiry Date
+                            input.form-control(type="text", name="expiry-date", placeholder="MM/YY", id="expiry-date")
+                        .mb-4.col-md-4
+                            label.form-label(for="cvv") CVC/CVV
+                            input.form-control(type="text", name="cvv", placeholder="123", id="cvv")
+                        .mb-4.col-md-4
+                            label.form-label(for="zip") ZIP
+                            input.form-control(type="text", name="zip", placeholder="123", id="zip")
+    .block.mb-3
+        #headingTwo.block-header(role='tab')
+            strong
+                a.accordion-link.collapsed(data-bs-toggle='collapse', href='#collapseTwo', aria-expanded='false', aria-controls='collapseTwo')
+                    | Paypal
+        #collapseTwo.collapse(role='tabpanel', aria-labelledby='headingTwo', data-parent='#accordion')
+            .block-body.py-5.d-flex.align-items-center
+                input(type="radio", name="shippping", id="payment-method-1")
+                label.ms-3(for="payment-method-1")
+                    strong.d-block.text-uppercase.mb-2  Pay with PayPal
+                    span.text-muted.text-sm Lorem ipsum dolor sit amet, consectetur adipisicing elit.                                          
+    .block.mb-3
+        #headingThree.block-header(role='tab')
+            strong
+                a.accordion-link.collapsed(data-bs-toggle='collapse', href='#collapseThree', aria-expanded='false', aria-controls='collapseThree')
+                    | Pay on delivery
+        #collapseThree.collapse(role='tabpanel', aria-labelledby='headingThree', data-parent='#accordion')
+            .block-body.py-5.d-flex.align-items-center
+                input(type="radio", name="shippping", id="payment-method-2")
+                label.ms-3(for="payment-method-2")
+                    strong.d-block.text-uppercase.mb-2  Pay on delivery
+                    span.text-muted.text-sm Lorem ipsum dolor sit amet, consectetur adipisicing elit.    

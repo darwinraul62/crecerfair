@@ -1,0 +1,119 @@
+// JavaScript files
+
+script.
+    // ------------------------------------------------------- //
+    //   Inject SVG Sprite - 
+    //   see more here 
+    //   https://css-tricks.com/ajaxing-svg-sprite/
+    // ------------------------------------------------------ //
+    function injectSvgSprite(path) {
+
+        var ajax = new XMLHttpRequest();
+        ajax.open("GET", path, true);
+        ajax.send();
+        ajax.onload = function(e) {
+        var div = document.createElement("div");
+        div.className = 'd-none';
+        div.innerHTML = ajax.responseText;
+        document.body.insertBefore(div, document.body.childNodes[0]);
+        }
+    }
+    // this is set to Bootstrapious website as you cannot 
+    // inject local SVG sprite (using only 'icons/orion-svg-sprite.svg' path)
+    // while using file:// protocol
+    // pls don't forget to change to your domain :)
+    injectSvgSprite('https://demo.bootstrapious.com/sell/1-2-0/icons/orion-svg-sprite.svg'); 
+
+// jQuery
+script(src=path + 'vendor/jquery/jquery.min.js')
+// Bootstrap JavaScript Bundle (Popper.js included)
+script(src=path + 'vendor/bootstrap/js/bootstrap.bundle.min.js')
+// Owl Carousel
+script(src=path + 'vendor/owl.carousel/owl.carousel.js')
+script(src=path + 'vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.min.js')
+// NoUI Slider (price slider)
+script(src=path + 'vendor/nouislider/nouislider.min.js')
+// Smooth scrolling
+script(src=path + 'vendor/smooth-scroll/smooth-scroll.polyfills.min.js')
+// Lightbox gallery
+script(src=`${path}vendor/glightbox/js/glightbox.min.js`) 
+// Object Fit Images - Fallback for browsers that don't support object-fit
+script(src=path + 'vendor/object-fit-images/ofi.min.js')
+
+if (path === '')
+    script.
+        var basePath = ''
+else 
+    script.
+        var basePath = '../'
+
+script(src=path + 'js/theme.js')
+
+if (masonry)
+    // Masonry layout scripts
+    script(src=path + 'vendor/masonry-layout/masonry.pkgd.min.js')
+    script(src=path + 'vendor/imagesloaded/imagesloaded.pkgd.min.js')
+    script(src=path + 'js/masonry-init.js')
+
+if (shop)
+    script.
+        var snapSlider = document.getElementById('slider-snap');
+
+        noUiSlider.create(snapSlider, {
+        	start: [ 40, 110 ],
+        	snap: false,
+        	connect: true,
+            step: 1,
+        	range: {
+        		'min': 0,
+        		'max': 250
+        	}
+        });
+        var snapValues = [
+        	document.getElementById('slider-snap-value-lower'),
+        	document.getElementById('slider-snap-value-upper')
+        ];
+        var inputValues = [
+        	document.getElementById('slider-snap-input-lower'),
+        	document.getElementById('slider-snap-input-upper')
+        ];
+        snapSlider.noUiSlider.on('update', function( values, handle ) {
+        	snapValues[handle].innerHTML = values[handle];
+        });        
+
+        snapSlider.noUiSlider.on('change', function( values, handle ) {
+            inputValues[handle].value = values[handle];
+        });        
+
+if (current == 'index4.html' || current == 'category-banner.html' )
+    script(src=path + 'vendor/jquery-parallax.js/parallax.min.js')
+
+if (current == 'detail-3.html' || active == 'docs')
+    script(src=path + 'vendor/jquery-zoom/jquery.zoom.min.js')
+
+if (active == 'docs')
+    script(src=path + 'vendor/prismjs/prism.js')
+    script(src=path + 'vendor/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.js')
+    script(type='text/javascript').
+        // Optional
+        Prism.plugins.NormalizeWhitespace.setDefaults({
+        'remove-trailing': true,
+        'remove-indent': true,
+        'left-trim': true,
+        'right-trim': true,
+        });
+
+if (map)
+    // Leaflet Map library
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.4.0/leaflet.js') 
+    // Map config
+    script.
+        var mapId = 'map',
+            mapCenter = [53.14, 8.22],
+            mapMarker = true;
+    // Map init
+    script(src=path + 'js/map.js')
+
+if (locals.styleSwitcher)
+    script(src=path + 'vendor/jquery.cookie/jquery.cookie.js') 
+    script(src=path + 'js/demo.js')

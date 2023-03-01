@@ -1,0 +1,19 @@
+.card.mb-3
+    .card-body
+        - bgs = ['primary', 'secondary', 'success', 'warning', 'info', 'danger']
+
+
+        h6.text-uppercase.mb-3 Classic Badges
+        .mb-4
+            each val in bgs 
+                span.badge.me-2.p-2(class=`bg-${val}`) #{val}
+
+        h6.text-uppercase.mb-3 Pill Badges
+        .mb-4
+            each val in bgs 
+                span.badge.rounded-pill.me-2.p-2(class=`bg-${val}`) #{val}
+
+        h6.text-uppercase.mb-3 Light Badges
+        .mb-4
+            each val in bgs 
+                span.badge.rounded-pill.me-2.p-2.text-uppercase(class=`badge-${val}-light`) #{val}

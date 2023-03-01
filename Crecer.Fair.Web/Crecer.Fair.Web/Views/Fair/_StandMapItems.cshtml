@@ -1,0 +1,18 @@
+@model IEnumerable<StandCoordViewModel>
+
+@foreach (var item in Model)
+{
+    <a asp-action="Stand" asp-controller="Fair" asp-route-id = "@item.StandId">
+        <div standId="@item.StandId" providerId="@item.ProviderId" class="stand-item-map text-center"
+        style="width: @{@item.Width}px; left: @{@item.X}px; top:@{@item.Y}px; height: @{@item.Height}px; border:1px;">
+            @if (!string.IsNullOrWhiteSpace(item.LogoUrl))
+            {
+                <img src="@item.LogoUrl" width="100px" height="50px">
+            }
+            else
+            {
+                <h4>@item.ProviderName</h4>
+            }
+        </div>
+    </a>
+}

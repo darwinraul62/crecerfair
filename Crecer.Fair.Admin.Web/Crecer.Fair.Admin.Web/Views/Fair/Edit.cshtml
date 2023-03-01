@@ -1,0 +1,47 @@
+@model FairEditViewModel
+@{
+    ViewBag.Title = "Editar datos de Feria";
+}
+
+@section TopLeftArea{
+@if(Model.HostProviderId.HasValue)
+{
+    <a asp-action="Edit" asp-controller="ProviderResource"
+        asp-route-providerId="@Model.HostProviderId.Value" asp-route-type="@ResourceTypes.FairBanner">
+        
+        <button class="btn btn-primary float-end mt-n1">
+            <i class="far fa-images"></i> Editar Banners</button>
+
+    </a>
+}
+}
+
+<div class="col-12 col-xl-12">
+    <div class="card">
+        <div class="card-body">
+            <form method="post" asp-action="Edit" asp-controller="Fair">
+
+                <div class="mb-3">
+                    <msgblock></msgblock>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label" asp-for="Title"></label>
+                        <input type="text" class="form-control" asp-for="Title">
+                        <span asp-validation-for="Title"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-md-12">
+                        <label class="form-label" asp-for="WelcomeText"></label>
+                        <textarea class="form-control" asp-for="WelcomeText"></textarea>
+                        <span asp-validation-for="WelcomeText"></span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,155 @@
+mixin megamenuList(heading, links)
+    // Megamenu list
+    h6.text-uppercase #{heading}
+    
+    ul.megamenu-list.list-unstyled
+        each name, link in links
+            li.megamenu-list-item
+                a.megamenu-list-link(href=path + link) !{name}   
+
+mixin dropdownList(heading, links)
+    h6.dropdown-header.fw-normal #{heading}
+    each name, link in links
+        a.dropdown-item(href=path + link) !{name} 
+
+
+mixin docsSidebarLink(link, name, current)
+
+    - var activeClass = ''
+    
+    if current == link 
+        - activeClass = 'active'
+        
+    a.nav-link.mb-2(class=activeClass, href=path + link) !{name}  
+
+mixin product(val, itemClass, additionalButtons, doNotDisplayView, masonry)
+            
+    // product
+    div(class=itemClass)
+        .product
+            .product-image
+                if (val.sale !== '')
+                    .ribbon.ribbon-primary #{val.sale}
+                if (val.new !== '')
+                    .ribbon.ribbon-success #{val.new}
+                if (val.fresh !== '')
+                    .ribbon.ribbon-info #{val.fresh}
+                if (val.sold !== '')
+                    .ribbon.ribbon-danger #{val.sold}
+                
+                if (val.imgCropped && masonry)
+                    - var imgUrl = val.imgCropped
+                else
+                    - var imgUrl = val.img
+
+                img.img-fluid(src=path + imgUrl, alt=val.alt)
+                .product-hover-overlay
+                    a.product-hover-overlay-link(href=path + val.url)
+                    .product-hover-overlay-buttons
+                        if (additionalButtons)
+                            a.btn.btn-outline-dark.btn-product-left.d-none.d-sm-inline-block(href="#")
+                                i.fa.fa-shopping-cart
+
+                        a.btn.btn-dark.btn-buy(href=path + val.url)
+                            i.fa-search.fa
+                            if (!doNotDisplayView)
+                                span.btn-buy-label.ms-2 View
+
+                        if (additionalButtons)
+                            a.btn.btn-outline-dark.btn-product-right.d-none.d-sm-inline-block(href="#", data-bs-toggle='modal', data-bs-target='#exampleModal')
+                                i.fa.fa-expand-arrows-alt
+                            
+            .py-2
+                p.text-muted.text-sm.mb-1 #{val.category}
+                h3.h6.text-uppercase.mb-1
+                    a.text-dark(href=path + val.url) #{val.name}
+                span.text-muted #{val.price}
+    // /product
+
+mixin productMasonry(val, itemClass, additionalButtons)
+            
+    // product masonry
+    .product.card.border-0
+        .product-image
+            if (val.sale !== '')
+                .ribbon.ribbon-primary #{val.sale}
+            if (val.new !== '')
+                .ribbon.ribbon-success #{val.new}
+            if (val.fresh !== '')
+                .ribbon.ribbon-info #{val.fresh}
+            if (val.sold !== '')
+                .ribbon.ribbon-danger #{val.sold}
+
+            if (val.imgCropped)
+                - var imgUrl = val.imgCropped
+            else
+                - var imgUrl = val.img
+
+            img.img-fluid(src=imgUrl, alt=val.name)
+            .product-hover-overlay
+                a.product-hover-overlay-link(href=val.url)
+                .product-hover-overlay-buttons
+                    if (additionalButtons)
+                        a.btn.btn-outline-dark.btn-product-left(href="#")
+                            i.fa.fa-shopping-cart
+
+                    a.btn.btn-dark.btn-buy(href=val.url)
+                        i.fa-search.fa.me-2
+                        | View
+
+                    if (additionalButtons)
+                        a.btn.btn-outline-dark.btn-product-right(href="#", data-bs-toggle='modal', data-bs-target='#exampleModal')
+                            i.fa.fa-expand-arrows-alt
+                        
+        .py-2
+            p.text-muted.text-sm.mb-1 #{val.category}
+            h3.h6.text-uppercase.mb-1
+                a.text-dark(href=val.url) #{val.name}
+            span.text-muted #{val.price}
+    // /product masonry
+
+mixin svgIcon(icon, iconClass)
+    if (!iconClass)
+        - iconClass = ''
+    svg.svg-icon(class=iconClass)
+        use(xlink:href=`#${icon}`)  
+
+
+mixin componentDocNav(name)
+    
+    - var componentId = name.split(' ').join('').toLowerCase()
+
+    a.nav-link(data-smooth-scroll, href=`#${componentId}`) #{name}
+
+mixin componentDocItem(name, desc, showCode)
+    
+    - var componentId = name.split(' ').join('').toLowerCase()
+
+    .docs-item(id=componentId)
+        h5.text-uppercase.mb-4 #{name}
+        div.docs-desc !{desc}
+        
+        if showCode
+            a.btn.btn-link.ps-0(data-bs-toggle="collapse", data-bs-target=`#${componentId}code`) Show code 
+                i.fa-arrow-right.fa.ms-2
+
+        if block
+            .mt-5        
+                block
+
+    
+
+mixin componentDocCode(name)
+    - var codeId = name.split(' ').join('').toLowerCase() + 'code'
+
+    pre.collapse(id=`${codeId}`)
+        code.language-html
+            +escape()
+                block
+
+mixin escape()
+    - var oldBuf = buf;
+    - buf = [];
+    block
+    - buf  = oldBuf.concat(buf.map(jade.escape));
+

@@ -1,0 +1,92 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var active = 'about'  
+    - var navbarClass = 'bg-transparent navbar-sticky navbar-airy navbar-dark bg-hover-white bg-fixed-white navbar-hover-light navbar-fixed-light'  
+    - var headerClass = 'header header-absolute'  
+    - var hideTopbar = true
+
+block content
+    // Hero Section
+    section.mh-full-screen.dark-overlay.py-7.d-flex.align-items-center.justify-content-center
+        img.bg-image(src="img/photo/photo-1534126511673-b6899657816a.jpg", alt="")
+        .overlay-content.w-100
+            .container
+                .row
+                    .col-xl-6.text-white
+                        h6.text-uppercase.text-white.letter-spacing-5.mb-3  About us
+                        h1.display-3.fw-bold.text-shadow.mb-5 We are Sell
+                        p.text-lg #{dummyText[0]}
+    
+    section
+        .container-fluid
+            .row
+                .col-lg-6.about-text-column.bg-gray-100
+                    .about-text
+                        h6.text-uppercase.text-muted.letter-spacing-5.mb-1 Humble beginnings
+                        h2.mb-4 We started as little
+                        p.text-lg.text-muted #{dummyText[1]}
+                .col-lg-6.p-lg-0.about-image-column
+                    img.bg-image(src="img/photo/ian-dooley-347942-unsplash.jpg", alt="")
+            .row
+                .col-lg-6.about-text-column.order-lg-2
+                    .about-text
+                        h6.text-uppercase.text-muted.letter-spacing-5.mb-1 Sell today
+                        h2.mb-4 And then we grew a bit
+                        p.text-lg.text-muted #{dummyText[1]}              
+                .col-lg-6.p-lg-0.about-image-column.order-lg-1
+                    img.bg-image(src="img/photo/ian-dooley-347962-unsplash.jpg", alt="")                        
+
+            .row
+                .col-lg-6.about-text-column.bg-gray-100
+                    .p-5
+                        blockquote.mb-5
+                            p.text-xl.text-serif.mb-4 #{dummyText[3]}   
+                            h6.text-lg.text-uppercase.text-primary — Franz Kafka, Founder
+                        p.text-lg.text-muted #{dummyText[4]}  
+                .col-lg-6.p-lg-0.about-image-column
+                    img.bg-image(src="img/photo/marco-xu-496929-unsplash.jpg", alt="")
+
+    section.py-6
+        .container
+            .row
+                .col-lg-5
+                    h6.text-uppercase.text-muted.letter-spacing-5.mb-1 Our history
+                    h2.mb-4 Sell Milestones
+                    p.text-lg.text-muted #{dummyText[5]} 
+
+                - var milestones = [1995, 2000, 2010, 2018]
+                .col-lg-6.ms-lg-auto
+                    .row
+                        each val, index in milestones
+                            .col-sm-6.mb-4
+                                h4 #{val}
+                                p.text-muted #{dummyText[index].substr(0, 120)} 
+
+    section
+        .container
+            .row.justify-content-center
+                .col-lg-6.d-flex.align-items-center
+                    .w-100
+                        img.img-fluid(src="img/photo/christopher-campbell-28571-unsplash.jpg", alt="")            
+                .col-lg-5.d-none.d-lg-block
+                    img.img-fluid(src="img/photo/noah-buscher-400915-unsplash.jpg", alt="")
+                
+        
+
+    section.py-6
+        .container
+            .row
+                .col-lg-8.mx-auto
+                    h2.mb-6 At Sell, we want the right choice to be as easy as putting on a great T-shirt
+
+                .col-lg-6
+                    p.text-lg.text-muted #{dummyText[5]} 
+                .col-lg-6 
+                    p.text-lg.text-muted #{dummyText[1]} 
+                
+
+
+
+
+            

@@ -1,0 +1,226 @@
+@{
+    this.ViewBag.Title = "Stands Visitados";
+}
+@section TopLeftArea{
+
+<div id="reportrange" class="overflow-hidden form-control float-end ms-2 " style="width: 250px; cursor: pointer;">
+    <i class="far fa-calendar"></i>&nbsp;
+    <span></span> <i class="fas fa-caret-down"></i>
+</div>
+
+<button id="export-button" class="btn btn-secondary float-end">
+    <i class="far fa-file-excel"></i> Exportar</button>
+}
+<div class="row">
+    <msgblock></msgblock>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="datatables-report" class="table table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Socio ID</th>
+                            <th>Proveedor ID</th>
+                            <th>Socio</th>
+                            <th>Identificación</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Stand</th>
+                            <th>Visitas</th>
+                        </tr>
+                        <tr class="filters">
+                            <th></th>
+                            <th></th>
+                            <th><input type="text" class="form-control" placeholder="Filtrar" /></th>
+                            <th><input type="text" class="form-control" placeholder="Filtrar" /></th>
+                            <th><input type="text" class="form-control" placeholder="Filtrar" /></th>
+                            <th><input type="text" class="form-control" placeholder="Filtrar" /></th>
+                            <th><input type="text" class="form-control" placeholder="Filtrar" /></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+
+    var startFilter = moment();
+    var endFilter = moment();
+
+    $(function () {
+
+        $("#export-button").on("click", function () {
+            dataTableRequest.export = true;
+            dataTableRequest.length = table.page.info().recordsTotal;  //all records
+            var queryString = $.param(dataTableRequest);
+            window.open('@Url.Action("GetPartnertStandVisit","Report")?' + queryString, "_blank")
+        });
+
+        function cb(start, end, reload) {
+            startFilter = start;
+            endFilter = end;
+
+            $("#reportrange span").html(start.format("D/MM/YYYY") + " - " + end.format("D/MM/YYYY"));
+
+            if (reload) {
+                refresh();
+            }
+        }
+        $("#reportrange").daterangepicker({
+            startDate: startFilter,
+            endDate: endFilter,
+            ranges: {
+                "Hoy": [moment(), moment()],
+                "Ayer": [moment().subtract(1, "days"), moment().subtract(1, "days")],
+                "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+                "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+                "Este Mes": [moment().startOf("month"), moment().endOf("month")],
+                "Último Mes": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
+            },
+            "locale": {
+                "format": "MM/DD/YYYY",
+                "separator": " - ",
+                "applyLabel": "Aplicar",
+                "cancelLabel": "Cancelar",
+                "fromLabel": "De",
+                "toLabel": "Hasta",
+                "customRangeLabel": "Personalizado",
+                "daysOfWeek": [
+                    "Do",
+                    "Lu",
+                    "Ma",
+                    "Mi",
+                    "Ju",
+                    "Vi",
+                    "Sa"
+                ],
+                "monthNames": [
+                    "Enero",
+                    "Febrero",
+                    "Marzo",
+                    "Abril",
+                    "Mayo",
+                    "Junio",
+                    "Julio",
+                    "Agosto",
+                    "Septiembre",
+                    "Octubre",
+                    "Noviembre",
+                    "Diciembre"
+                ],
+                "firstDay": 1
+            }
+        }, cb);
+
+        cb(startFilter, endFilter, false);
+
+        var dataTableRequest = {};
+
+        var table = $("#datatables-report").DataTable(
+            {
+                orderCellsTop: true,
+                fixedHeader: true,
+                //"deferLoading": 0,
+                "order": [[4, 'dsc']],
+                "searching": true,
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "Nada para mostrar",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                },
+                "columns": [
+                    { "data": "partnertId", "name": "PartnertId", visible: false },
+                    { "data": "providerId", "name": "ProviderId", visible: false },
+                    { "data": "partnert", "name": "Partnert", orderable: true, "searchable": true },
+                    { "data": "partnertIdentification", "name": "PartnertIdentification", orderable: true, "searchable": true },
+                    { "data": "partnertEmail", "name": "PartnertEmail", orderable: true, "searchable": true },
+                    { "data": "partnertPhoneNumber", "name": "PartnertPhoneNumber", orderable: true, "searchable": true },
+                    { "data": "provider", "name": "Provider", orderable: true, "searchable": true },
+                    { "data": "visitCount", "name": "VisitCount", orderable: true, "searchable": false }
+                ],
+                "ajax": {
+                    "url": '@Html.Raw(Url.Action("GetPartnertStandVisit","Report"))',
+                    @* "fnServerParams": function (aoData) {
+                aoData.push({ "name": "dateFrom", "value" : startFilter.toISOString() });
+                } *@
+
+            "data": function (data) {
+                data.dateFrom = startFilter.toISOString();
+                data.dateTo = endFilter.toISOString();
+                dataTableRequest = data;
+                //return { dateFrom: startFilter.toISOString(), dateTo: endFilter.toISOString() };
+            },
+            @* dataFilter: function (data) {
+                var json = jQuery.parseJSON(data);
+                json.recordsTotal = json.total;
+                json.recordsFiltered = json.total;
+                json.data = json.list;
+
+                return JSON.stringify(json); // return JSON string
+                } *@
+                }
+            }
+    );
+
+    function refresh() {
+        table.ajax.reload();
+    }
+
+
+    // Apply the search
+    table.columns().eq(0).each(function (colIdx) {
+        $('input',
+            $('#datatables-report .filters th').eq($(table.column(colIdx).header()).index())
+        ).on('keyup',
+
+            ecubytes.functions.delay(
+                function () {
+
+                    table
+                        .column(colIdx)
+                        .search(this.value)
+                        .draw();
+                }
+                , 1000)
+        );
+    });
+
+    $("#datatables-report_filter").hide();
+    });
+
+    var ecubytes = {
+        functions:
+        {
+            delay: function (callback, ms) {
+                var timer = 0;
+                return function () {
+                    var context = this, args = arguments;
+                    clearTimeout(timer);
+                    timer = setTimeout(function () {
+                        callback.apply(context, args);
+                    }, ms || 0);
+                };
+            }
+        }
+    }
+
+</script>
+}

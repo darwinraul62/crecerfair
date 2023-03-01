@@ -1,0 +1,78 @@
+if (!navbarClass)
+    - var navbarClass = 'navbar-sticky navbar-airy navbar-light bg-white bg-fixed-white'
+if (!headerClass)
+    - var headerClass = 'header'
+
+header(class=headerClass)
+    if (!hideTopbar)
+        include inc-topbar.pug
+
+    // Navbar
+    nav(class="navbar navbar-expand-lg " + navbarClass)
+        .container-fluid   
+            // Navbar Header  
+            a.navbar-brand(href=path + "index.html")
+                include inc-logo.pug
+            
+            button.navbar-toggler.navbar-toggler-right(type="button", data-bs-toggle="collapse", data-bs-target="#navbarCollapse", aria-controls="navbarCollapse", aria-expanded="false", aria-label="Toggle navigation")
+                i.fa.fa-bars
+            
+            // Navbar Collapse 
+            #navbarCollapse.collapse.navbar-collapse
+                ul.navbar-nav.mx-auto
+                    
+                    include inc-home-dropdown.pug
+                        
+                    include inc-shop-dropdown.pug
+
+                    include inc-megamenu.pug
+
+                    include inc-multilevel.pug
+                    
+                    li.nav-item
+                        if active == 'contact'
+                            a.nav-link.active(href=path + "contact.html") Contact
+                        else
+                            a.nav-link(href=path + "contact.html") Contact
+
+                    li.nav-item.dropdown
+                        if active == 'docs'
+                            - var docsActiveClass = 'active'
+                        else
+                            - var docsActiveClass = ''
+
+                        a#docsDropdownMenuLink.dropdown-toggle(href="#", class="nav-link " + docsActiveClass, data-bs-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                            | Docs
+                        .dropdown-menu.dropdown-menu-animated.dropdown-menu-end(aria-labelledby='docsDropdownMenuLink')
+                            +dropdownList('Documentation', docLinks)    
+                            .dropdown-divider
+                            +dropdownList('Components', componentLinks)
+                    
+                
+                .d-flex.align-items-center.justify-content-between.justify-content-lg-end.mt-1.mb-2.my-lg-0
+                    // Search Button
+                    .nav-item.navbar-icon-link(data-bs-toggle="search")
+                        +svgIcon('search-1')
+                            
+                    include inc-customer-dropdown.pug
+        
+                    include inc-cart-dropdown.pug
+
+                                
+    // /Navbar 
+
+
+    // Fullscreen search area
+    .search-area-wrapper
+        .search-area.d-flex.align-items-center.justify-content-center
+            .close-btn
+                +svgIcon('close-1', 'svg-icon-light w-3rem h-3rem')
+            
+            form.search-area-form(action="#")
+                .mb-4.position-relative
+                    input.search-area-input(type="search", name="search", id="search", placeholder="What are you looking for?")
+                    button.search-area-button(type="submit")
+                        +svgIcon('search-1')
+    // /Fullscreen search area
+                                
+            

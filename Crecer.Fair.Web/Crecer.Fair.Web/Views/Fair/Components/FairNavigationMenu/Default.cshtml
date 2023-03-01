@@ -1,0 +1,38 @@
+@model FairNavigationMenuViewModel
+
+<ul class="navbar-nav mx-auto">
+    <!-- Megamenu-->
+    <li class="nav-item dropdown position-static">
+        <a class="nav-link dropdown-toggle " href="#" data-bs-toggle="dropdown">
+            Stands</a>
+        <div class="dropdown-menu dropdown-menu-animated megamenu py-lg-0">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="row p-3 pe-lg-0 ps-lg-5 pt-lg-5">
+                        @foreach (var category in Model.Categories.OrderBy(p => p.Name))
+                        {
+                            <div class="col-lg-6">
+                                <h6 class="text-uppercase">@category.Name</h6>
+                                <ul class="megamenu-list list-unstyled">
+                                    @foreach (var item in category.Stands.OrderBy(p => p.Name))
+                                    {
+                                        <li class="megamenu-list-item"><a class="megamenu-list-link"
+                                        href="@item.Url">@item.Name </a></li>
+                                    }                                    
+                                </ul>
+                            </div>
+                        }                                            
+                    </div>                  
+                </div>
+                <div class="col-lg-3 d-none d-lg-block position-relative">
+                    <a href="@Url.Action("Index","Fair")">
+                        <img class="bg-image" src="@Url.Content("~/img/fair/explanade.jpg")" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </li>
+    <!-- /Megamenu end-->
+    @* <li class="nav-item"><a class="nav-link" href="../contact.html">Contact</a>
+    </li> *@
+</ul>

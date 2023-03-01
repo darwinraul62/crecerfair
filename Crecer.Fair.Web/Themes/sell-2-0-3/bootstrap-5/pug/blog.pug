@@ -1,0 +1,69 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var active = 'blog'  
+
+block content
+    
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Blog'})
+    - var heroHeading = 'Blog'
+    - var heroText = '<p class="lead text-muted">As am hastily invited settled at limited civilly fortune me. Really spring in extent an by. Judge but built party world. Of so am he remember although required. Bachelor unpacked be advanced at. Confined in declared marianne is vicinity.</p>'
+
+    section.position-relative.py-6.mb-4
+        img.bg-image(src="img/photo/matese-fields-233175-unsplash.jpg", alt="")
+        .container.position-relative
+            .row
+                .col-lg-6
+                    .bg-white.p-5
+                        strong.text-uppercase.text-muted.d-inline-block.mb-2.text-sm Featured
+                        h2.mb-3 Fashion, purpose & freedom
+                        p.text-muted As am hastily invited settled at limited civilly fortune me. Really spring in extent an by. Judge but built party world. Of so am he remember although required. Bachelor unpacked be advanced at. Confined in declared marianne is vicinity
+                        a.btn.btn-link.text-dark.p-0(href="post.html") Continue reading 
+                            i.fa.fa-long-arrow-alt-right
+
+
+
+    - var posts = []
+    - posts.push({name: 'Pellentesque habitant morbi', image: 'img/photo/kyle-loftus-596319-unsplash.jpg', intro: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Aenean ultricies mi vitae est. ', author: 'John Slim', category: 'Fashion and style'})
+    - posts.push({name: 'Best books about Fashion', image: 'img/photo/marion-michele-330691-unsplash.jpg', intro: 'Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.  Mauris placerat eleifend leo.', author: 'John Slim', category: 'Fashion and style'})
+    - posts.push({name: 'Best books about Fashion', image: 'img/photo/kyle-loftus-589739-unsplash-cropped.jpg', intro: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.  Aenean ultricies mi vitae est. Mauris placerat eleifend leo.', author: 'John Slim', category: 'Fashion and style'})
+    - posts.push({name: 'Autumn fashion tips and tricks', image: 'img/photo/kyle-loftus-589739-unsplash-cropped.jpg', intro: 'Pellentesque habitant morbi tristique senectus. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.  Mauris placerat eleifend leo.', author: 'John Slim', category: 'Fashion and style'})        
+    - posts.push({name: 'Newest photo apps', image: 'img/photo/averie-woodard-319832-unsplash.jpg', intro: 'ellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Aenean ultricies mi vitae est. ', author: 'John Slim', category: 'Fashion and style'})
+    - posts.push({name: 'Best books about Photography', image: 'img/photo/alex-holyoake-571682-unsplash-cropped.jpg', intro: 'Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.  Mauris placerat eleifend leo.', author: 'John Slim', category: 'Fashion and style'})
+
+    section
+        .container
+            .row
+                each val in posts
+                    // post
+                    .col-lg-4.col-6
+                        .mb-4
+                            a(href="post.html")
+                                img.img-fluid(src=val.image, alt="...")   
+                            .mt-3
+                                small.text-uppercase.text-muted #{val.category} 
+                                h5.my-2
+                                    a.text-dark(href="post.html") #{val.name}          
+                                p.text-gray-500.text-sm.my-3
+                                    i.far.fa-clock.me-2
+                                    | January 16, 2016
+                                p.my-2.text-muted #{val.intro}
+                                a.btn.btn-link.text-gray-700.ps-0(href="post.html") Read more
+                                    i.fa.fa-long-arrow-alt-right.ms-2
+                    // /post end
+
+        
+                
+            // Pagination 
+            nav(aria-label='Blog pagination')
+                ul.pagination.justify-content-between.mb-5
+                    li.page-item
+                        a.page-link(href='#') 
+                            i.fa.fa-chevron-left.me-1
+                            | Older posts
+                    
+                    li.page-item.disabled
+                        a.page-link(href='#', tabindex='-1') Newer posts  
+                            i.fa.fa-chevron-right.ms-1

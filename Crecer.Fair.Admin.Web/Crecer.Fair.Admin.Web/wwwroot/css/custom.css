@@ -1,0 +1,73 @@
+.logo-home {
+    /* background-image: url("../../img/logo_crecer.png"); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 100px;
+    height: 100px;
+}
+
+table.dataTable.fixedHeader-floating, table.dataTable.fixedHeader-locked {
+    background-color: #343a4b;
+}
+
+.navbar {
+    box-shadow: 0 0 0 0;
+}
+
+.content {
+    padding: 1rem 2.5rem 1.5rem;
+}
+
+.explanade-bg-content {
+    width: 100%;
+    height: 1080px;
+    overflow: hidden;
+    position: relative;
+    /* position: absolute;
+    top: 0;
+    left: 0; */
+}
+
+.explanade-bg {
+    /* font-family: "object-fit: cover;";
+    object-fit: cover; */   
+    height: 1080px;
+    width: 1920px;
+    max-width: 1920px!important;
+}
+
+.stand-item-map{
+    position: absolute;
+    /* border: 1px solid red!important; */
+    /* z-index: 100; */
+    cursor: pointer;
+}
+
+/* .stand-item-map:hover{
+    background-color:rgba(0, 0, 0, 0.2);
+} */
+
+.stand-map{
+    position: absolute;
+    z-index: 100;
+    width: 1920px;
+    max-width: 1920px!important;
+    height: 1080px; 
+}
+
+.stand-item-map img{
+    font-family: "object-fit: contain;";
+    object-fit: contain;
+}
+
+#fairmap:hover {
+    border: 2px solid blue !important;
+    cursor: pointer;
+}
+
+/* #fair-map-content img {
+    position: absolute;
+    border: 2px solid blue !important;
+    cursor: pointer;
+} */

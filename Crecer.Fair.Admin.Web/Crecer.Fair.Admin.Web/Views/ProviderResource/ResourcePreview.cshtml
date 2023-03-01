@@ -1,0 +1,40 @@
+@model ResourceTypeViewModel
+
+@if (Model.ResourceTypeId == ResourceTypes.Text)
+{
+    <partial name="Preview_Text" model="Model" />
+}
+else if (Model.ResourceTypeId == ResourceTypes.Link)
+{
+    <partial name="Preview_Link" model="Model" />
+}
+else if (Model.ResourceTypeId == ResourceTypes.Logo)
+{
+    <partial name="Preview_Logo" model="Model" />
+}
+else if (Model.ResourceTypeId == ResourceTypes.PhotoGallery)
+{
+    <partial name="Preview_PhotoGallery" model="Model" />
+}
+else if (Model.ResourceTypeId == ResourceTypes.Documents 
+    || Model.ResourceTypeId == ResourceTypes.Banner
+    || Model.ResourceTypeId == ResourceTypes.FairBanner 
+    || Model.ResourceTypeId == ResourceTypes.Video)
+{
+    <partial name="Preview_Documents" model="Model" />
+}
+@* else if (string.IsNullOrWhiteSpace(Model.Value))
+{
+    <div class="card-body">
+        <h5 class="card-title placeholder-glow">
+            <span class="placeholder col-12"></span>
+        </h5>
+        <p class="card-text placeholder-glow">
+            <span class="placeholder col-12"></span>
+            <span class="placeholder col-12"></span>
+            <span class="placeholder col-12"></span>
+            <span class="placeholder col-12"></span>
+            <span class="placeholder col-12"></span>
+        </p>
+    </div>
+} *@

@@ -1,0 +1,18 @@
+if customerZone
+    // User Logged: Dropdown 
+    .nav-item.dropdown
+        a#userdetails.navbar-icon-link(href="#", data-bs-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            +svgIcon('male-user-1')                                
+        
+        .dropdown-menu.dropdown-menu-animated.dropdown-menu-end(aria-labelledby='userdetails') 
+            a.dropdown-item(href=path + "customer-orders.html") Orders
+            a.dropdown-item(href=path + "customer-addresses.html") Addresses
+            a.dropdown-item(href=path + "customer-account.html") Profile
+            .dropdown-divider.my-0
+            a.dropdown-item(href="#") Logout                     
+else
+    // User Not Logged - link to login page
+    .nav-item
+        a.navbar-icon-link(href= path + 'customer-login.html')
+            +svgIcon('male-user-1')      
+            span.text-sm.ms-2.ms-lg-0.text-uppercase.text-sm.fw-bold.d-none.d-sm-inline.d-lg-none Log in    

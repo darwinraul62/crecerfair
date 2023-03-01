@@ -1,0 +1,64 @@
+@model UserEditGroupViewModel
+@{
+    ViewBag.Title = "Asignar Grupo de Usuario";
+}
+
+<div class="col-12 col-xl-12">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Editar Usuario</h5>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-action="EditUserGroup" asp-controller="User">
+
+                <div class="mb-3">
+                    <msgblock></msgblock>
+                </div>
+                <input type="hidden" asp-for="UserId">
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label" asp-for="Email"></label>
+                        <input type="text" class="form-control" asp-for="Email" disabled>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label" asp-for="FullName"></label>
+                        <input type="text" class="form-control" asp-for="FullName">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label" asp-for="UserGroupId"></label>
+                        <select class="form-control select2" data-toggle="select2" asp-for="UserGroupId"
+                            asp-items="Model.UserGroupSelectList" placeholder="Seleccione un Grupo de Usuario"
+                            aria-placeholder="Seleccione una Categoría">
+                            <option value=""></option>
+                            </select>
+                        <span asp-validation-for="UserGroupSelectList"></span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $(function () {
+        $(".select2").each(function () {
+            $(this)
+                .wrap("<div class=\"position-relative\"></div>")
+                .select2({
+                    placeholder: "Seleccione un Grupo",
+                    dropdownParent: $(this).parent(),
+                    allowClear: true
+                });
+        })
+    });
+</script>
+}

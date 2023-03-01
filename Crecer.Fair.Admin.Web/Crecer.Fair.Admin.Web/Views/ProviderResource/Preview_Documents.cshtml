@@ -1,0 +1,91 @@
+@model ResourceTypeViewModel
+@{
+    object initialConfig = Model.Resources.OrderBy(p => p.Priority).Select(p =>
+            new
+            {
+                key = p.ResourceId,
+                caption = p.Name,
+                providerId = Model.MainData.ProviderId,
+                downloadUrl = p.Value,
+                filetype = Ecubytes.Image.MimeTypeUtility.GetMimeType(System.IO.Path.GetExtension(p.FileName)), 
+                type = Ecubytes.Image.MimeTypeUtility.GetTemplateType(System.IO.Path.GetExtension(p.FileName))
+            }
+            ).ToArray();
+
+    string[] filesUrl = Model.Resources.OrderBy(p => p.Priority).Select(p => p.Value).ToArray();
+}
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-actions float-end mt-0">
+            <a edit-files="@Model.ResourceTypeId" action-type="EDIT" asp-action="Edit" asp-controller="ProviderResource"
+                asp-route-providerId="@Model.MainData.ProviderId" asp-route-type="@Model.ResourceTypeId">
+                <i class="align-middle me-2 far fa-fw fa-edit"></i></a>
+        </div>
+
+        <h4 class="mt-1">
+            @Model.Name
+        </h4>
+    </div>
+
+    <div class="card-body">
+        
+            <input file-input="@Model.ResourceTypeId" type="file" >
+        
+    </div>
+</div>
+
+<script>
+    
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+
+    @* $("[edit-files='@Model.ResourceTypeId']").on('click', function(e){
+        e.preventDefault();
+        location.href = ''
+        }); *@
+    @*
+        $(window).bind('beforeunload', function (e) {
+        e.preventDefault();
+        e = null; // i.e; if form state change show warning box, else don't show it.
+        }); *@
+
+            initFileInputDocs_@{@Model.ResourceTypeId}();
+
+        function initFileInputDocs_@{@Model.ResourceTypeId}() {
+            $("[file-input='@{@Model.ResourceTypeId}']").fileinput({
+                language: "es",
+                theme: "fas",
+                uploadUrl: '/',
+                deleteUrl: '/',
+                retainErrorHistory: false,
+                resumableUploadOptions: {
+                    retainErrorHistory: false,
+                },
+                showRemove: false,
+                showDrag: false,
+                showUpload: false,
+                showBrowse: false,
+                showClose: false,
+                overwriteInitial : false,
+                dropZoneEnabled: false,
+                showCaption: false,
+                initialPreviewShowDelete: false,
+                initialPreviewAsData: true, // identify if you are sending preview data only and not the raw markup
+                initialPreviewConfig: @Html.Raw(Ecubytes.Json.JsonUtility.Serialize(initialConfig)),
+                initialPreview: @Html.Raw(Ecubytes.Json.JsonUtility.Serialize(filesUrl)),
+                fileActionSettings: {
+                    showRemove: false,
+                    showDrag: false,
+                    showUpload: false,                   
+                    showDownload: true
+                },
+            });
+
+
+        }
+    });
+
+
+
+</script>

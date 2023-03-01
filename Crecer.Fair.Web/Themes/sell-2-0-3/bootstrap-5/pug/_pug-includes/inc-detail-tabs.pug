@@ -1,0 +1,105 @@
+section.mt-5
+    .container
+        ul.nav.nav-tabs.flex-column.flex-sm-row(role='tablist')
+            li.nav-item
+                a.nav-link.detail-nav-link.active(data-bs-toggle='tab', href='#description', role='tab') Description
+            li.nav-item
+                a.nav-link.detail-nav-link(data-bs-toggle='tab', href='#additional-information', role='tab') Additional Information
+            li.nav-item
+                a.nav-link.detail-nav-link(data-bs-toggle='tab', href='#reviews', role='tab') Reviews
+
+        .tab-content.py-4
+            #description.tab-pane.active.px-3(role='tabpanel')
+                p.text-muted Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. LOLUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. LOLDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                
+                p.text-muted Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. LOLUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. LOLDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                
+            #additional-information.tab-pane(role='tabpanel')
+                - var additional = []
+                - additional.push({name: 'Product #', value: 'Lorem ipsum dolor sit amet'})
+                - additional.push({name: 'Available packaging', value: 'LOLDuis aute irure dolor in reprehenderit'})
+                - additional.push({name: 'Weight', value: 'dolor sit amet'})
+                - additional.push({name: 'Sunt in culpa qui', value: 'Lorem ipsum dolor sit amet'})
+
+                - var additional2 = []
+                - additional2.push({name: 'Weight', value: 'dolor sit amet'})
+                - additional2.push({name: 'Sunt in culpa qui', value: 'Lorem ipsum dolor sit amet'})                
+                - additional2.push({name: 'Product #', value: 'Lorem ipsum dolor sit amet'})
+                - additional2.push({name: 'Available packaging', value: 'LOLDuis aute irure dolor in reprehenderit'})
+
+                .row
+                    .col-lg-6
+                        table.table.text-sm
+                            tbody
+                                each val,index in additional
+                                    - var cellClass = ''
+                                    if (index == 0)
+                                        - var cellClass = 'border-0' 
+                                    tr
+                                        th(class="text-uppercase fw-normal " + cellClass) #{val.name}
+                                        td(class="text-muted " + cellClass) #{val.value}
+                    .col-lg-6
+                        table.table.text-sm
+                            tbody
+                                each val,index in additional2
+                                    - var cellClass = ''
+                                    if (index == 0)
+                                        - var cellClass = 'border-0' 
+                                    tr
+                                        th(class="text-uppercase fw-normal " + cellClass) #{val.name}
+                                        td(class="text-muted " + cellClass) #{val.value}                                
+                                    
+            #reviews.tab-pane(role='tabpanel')
+                - var reviews = []
+                - reviews.push({name: 'Han Solo', role: 'founder', image: 'img/person-1.jpg', date: 'Dec 2018', stars: 5})
+                - reviews.push({name: 'Luke Skywalker', role: 'CTO', image: 'img/person-2.jpg', date: 'Dec 2018', stars: 4})
+                - reviews.push({name: 'Princess Leia', role: 'Team Leader', image: 'img/person-3.jpg', date: 'Dec 2018', stars: 3})
+                - reviews.push({name: 'Jabba Hut', role: 'Lead developer', image: 'img/person-4.jpg', date: 'Dec 2018', stars: 5})
+                
+                - stars = [1,2,3,4,5]
+
+                .row.mb-5
+                    .col-lg-10.col-xl-9
+                        each val, index in reviews
+                            .review.d-flex
+                                .flex-shrink-0.text-center.me-4.me-xl-5
+                                    img.review-image(src=val.image, alt=val.name)
+                                    span.text-uppercase.text-muted #{val.date}
+                                div
+                                    h5.mt-2.mb-1 #{val.name}
+                                    .mb-2
+                                        for star, starIndex in stars
+                                            if (starIndex + 1 <= val.stars)
+                                                i.fa.fa-xs.fa-star.text-warning
+                                            else
+                                                i.fa.fa-xs.fa-star.text-gray-200
+                                    p.text-muted #{dummyText[index]}     
+
+                        
+                        .py-5.px-3
+                            h5.text-uppercase.mb-4 Leave a review
+
+                            form(id="contact-form", method="post", action="contact.php",class="form")
+                                .row
+                                    .col-sm-6
+                                        .mb-4
+                                            label.form-label(for="name") Your name *
+                                            input(type="text", name="name", id="name", class="form-control", placeholder="Enter your name", required="required")
+                                    .col-sm-6
+                                        .mb-4
+                                            label.form-label(for="rating") Your rating *
+                                            select.custom-select.focus-shadow-0(name="rating", id="rating")
+                                                option(value='5') &#9733;&#9733;&#9733;&#9733;&#9733; (5/5)
+                                                option(value='4') &#9733;&#9733;&#9733;&#9733;&#9734; (4/5)
+                                                option(value='3') &#9733;&#9733;&#9733;&#9734;&#9734; (3/5)
+                                                option(value='2') &#9733;&#9733;&#9734;&#9734;&#9734; (2/5)
+                                                option(value='1') &#9733;&#9734;&#9734;&#9734;&#9734; (1/5)
+
+                                .mb-4
+                                    label.form-label(for="email") Your email *
+                                    input(type="email", name="email", id="email", class="form-control", placeholder="Enter your  email", required="required")
+                                .mb-4
+                                    label.form-label(for="review") Review text *
+                                    textarea(rows="4", name="review", id="review", class="form-control", placeholder="Enter your review", required="required")
+                                
+                                button(type="submit", class="btn btn-outline-dark") Post review

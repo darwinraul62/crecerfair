@@ -1,0 +1,50 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var active = 'category'  
+    - var current = 'detail.html'
+
+block content
+
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Tops and Jackets', link: 'category.html'})
+    - breadcrumbs.push({name: 'Modern Jacket'})
+    
+    - var images = ['img/photo/kyle-loftus-596319-detail-1.jpg', 'img/photo/kyle-loftus-596319-detail-2.jpg', 'img/photo/kyle-loftus-596319-detail-3.jpg', 'img/photo/kyle-loftus-594535-unsplash-detail-3.jpg', 'img/photo/kyle-loftus-594535-unsplash-detail-4.jpg']
+
+    section.product-details
+        .container
+            .row
+                .col-lg-7.pt-4.order-2.order-lg-1
+                    .row    
+                        .d-none.d-md-block.col-md-2.pe-0
+                            .owl-thumbs(data-slider-id='1')
+                                each image, index in images
+                                    button.owl-thumb-item.detail-thumb-item.mb-3
+                                        img.img-fluid(src=image, alt=`Modern Jacket ${index}`)                        
+                        .col-12.col-md-10.detail-carousel
+                            .ribbon.ribbon-info Fresh
+                            .ribbon.ribbon-primary Sale
+                            .owl-carousel.detail-slider.owl-theme.owl-dots-modern(data-slider-id='1')
+                                each image, index in images
+                                    - var number = index + 1
+                                    .item
+                                        a.glightbox(href=image, data-title=`Modern Jacket ${number} - Caption text`, data-gallery="product-gallery")
+                                            img.img-fluid(src=image, alt=`Modern Jacket ${number}`)
+    
+                .col-lg-5.ps-lg-4.order-1.order-lg-2
+                        ul(class="breadcrumb " + breadcrumbClass)
+                            each val in breadcrumbs
+                                if (val.link)
+                                    li.breadcrumb-item
+                                        a(href=val.link) #{val.name}
+                                else
+                                    li.breadcrumb-item.active #{val.name}    
+
+                        include _pug-includes/inc-detail-main.pug
+
+    include _pug-includes/inc-detail-tabs.pug
+    
+    include _pug-includes/inc-similar.pug
+    

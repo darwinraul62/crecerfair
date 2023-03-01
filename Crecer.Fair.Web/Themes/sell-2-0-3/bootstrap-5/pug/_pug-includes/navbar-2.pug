@@ -1,0 +1,66 @@
+if (!navbarClass)
+    - var navbarClass = 'justify-content-between navbar-sticky navbar-light bg-white bg-fixed-white'
+if (!headerClass)
+    - var headerClass = 'header'
+
+header(class=headerClass)
+    if (!hideTopbar)
+        include inc-topbar.pug
+
+    // Navbar
+    nav(class="navbar navbar-expand-lg " + navbarClass)
+        .container-fluid   
+            button.navbar-toggler(type="button", data-bs-toggle="collapse", data-bs-target=".dual-nav", aria-controls="navbarCollapse", aria-expanded="false", aria-label="Toggle navigation")
+                i.fa.fa-bars
+            
+            // Navbar Collapse 
+            .collapse.navbar-collapse.dual-nav.w-50.order-1.order-lg-0
+                ul.navbar-nav
+                    include inc-home-dropdown.pug
+                        
+                    li.nav-item
+                        a.nav-link.px-xl-4(href=path + "category.html") Shop
+
+                    - var megamenuLinkClass = 'px-xl-4'
+                    include inc-megamenu.pug
+                    
+                    li.nav-item
+                        a.nav-link.px-xl-4(href=path + "blog.html") Contact
+
+
+            // Navbar Brand
+            a.navbar-brand.d-block.mx-auto.text-center.order-0.order-lg-1(href=path + "index.html")
+                include inc-logo.pug
+
+            // Navbar Collapse 
+            .collapse.navbar-collapse.dual-nav.w-50.order-2
+                .d-flex.w-100.align-items-center.justify-content-between.justify-content-lg-end.mt-1.mb-2.my-lg-0
+                    // Search Button
+                    .nav-item.navbar-icon-link(data-bs-toggle="search")
+                        +svgIcon('search-1')
+                            
+                    include inc-customer-dropdown.pug
+        
+                    include inc-cart-dropdown.pug
+            
+            // spacer to center the menu correctly on mobile 
+            // (compensates for the with of the navbar toggler appearing on the left)
+            .w-2rem                             
+                                
+    // /Navbar 
+
+
+    // Fullscreen search area
+    .search-area-wrapper
+        .search-area.d-flex.align-items-center.justify-content-center
+            .close-btn
+                +svgIcon('close-1', 'svg-icon-light w-3rem h-3rem')
+            
+            form.search-area-form(action="#")
+                .mb-4.position-relative
+                    input.search-area-input(type="search", name="search", id="search", placeholder="What are you looking for?")
+                    button.search-area-button(type="submit")
+                        +svgIcon('search-1')
+    // /Fullscreen search area
+                                
+            

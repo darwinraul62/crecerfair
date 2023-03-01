@@ -1,0 +1,220 @@
+.stand-12 .stand-contact-content {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.stand-12 .stand-photo-content{
+    border: 1px solid #dee2e6 !important;
+    border-color: #343a40 !important;
+    background-color: rgba(81,1,0, 0.95) !important;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.stand-12 .stand-text li {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 15px !important;
+}
+
+.stand-12 .stand-photo-content .stand-photo {
+    width: 120px !important;
+    height: 120px !important;
+}
+
+
+.stand-12 .stand-photo-title {
+    position: absolute;
+    top: -15px;
+    left: -11px;
+    z-index: 999;
+    display: inline-block;
+    font-family: "HK Grotesk", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 3px 15px 5px;
+    color: #fff;
+    text-align: center;
+    font-size: large;
+    font-weight: 600;
+
+    box-sizing: content-box;
+    background-color:rgba(155,65,64, 0.9);
+    text-shadow: 1px 1px 4px #212529;
+}
+
+.stand-12 .stand-photo-title::before {
+    content: '';
+    border-left: 12px solid transparent;
+    border-right: 0 solid transparent;
+    border-top: 14px solid #1460a0;
+    position: absolute;
+    bottom: -14px;
+    left: 0;
+    border-top-color: #212529;
+}
+
+.stand-12 .stand-photo-content-area{
+    margin-top: 20px;
+}
+
+
+.stand-12 .stand-text-item {
+    margin: 8px;
+    width: 80%;
+    padding: 5px;
+    cursor: pointer;
+    /* position: absolute; */
+    top: 0px;
+    z-index: 999;
+    display: inline-block;
+    font-family: "HK Grotesk", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #fff;
+    text-align: center;
+    font-size: small;
+    font-weight: 600;
+    box-sizing: content-box;
+    background-color:rgba(155,65,64, 0.9);
+    text-shadow: 1px 1px 4px #212529;
+    word-wrap: break-word;
+    border-radius: 5px;
+}
+
+.stand-12 .stand-text-item:hover {
+    background-color:rgba(155,65,64, 1); 
+}
+
+.stand-12 .stand-contact-title {
+    z-index: 999;
+    display: inline-block;
+    font-family: "HK Grotesk", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 3px 15px 5px;
+    color: #fff;
+    text-align: center;
+    font-size: large;
+    font-weight: 600;
+
+    box-sizing: content-box;
+    text-shadow: 1px 1px 4px #212529;
+    cursor: pointer;
+}
+
+
+.stand-12 .stand-contact-row {
+    color: inherit;
+    padding-left: 10px;
+    font-size: 14px;
+    overflow-wrap: break-word;
+    margin-top: 10px;
+}
+
+
+.stand-12 .contact-field-label {
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 1px 1px 1px #212529;
+    font-weight: 600;
+    font-family: "HK Grotesk", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+    padding-left: 1px;
+    padding-right: 1px;
+    font-size: large;
+}
+
+.stand-12 .contact-field-value {
+    text-align: center;
+    padding-left: 1px;
+    padding-right: 1px;
+    text-align: center;
+    word-break: break-all;
+}
+
+.stand-12 .stand-contact-social {
+    color: inherit;
+}
+
+.stand-12 .stand-contact-web-site-row {
+    text-align: center;
+    display: inherit;
+}
+
+.stand-12 .stand-contact-address-row {
+    display: none;
+}
+
+.stand-12 .stand-contact-phone-number-row {
+    display: none;
+}
+
+.stand-12 .stand-contact-email-row {
+    display: inherit;
+}
+
+.stand-12 .stand-contact-more {
+    color: inherit;
+    font-weight: bold;
+}
+
+
+.stand-12 .stand-document-button-content,
+.stand-12 .stand-link-button-content,
+.stand-12 .stand-calendar-button-content {
+    border: 1px solid #212529 !important;        
+    background-color:rgba(155,65,64, 0.9);    
+    border-radius: 5px;
+    padding: 8px;
+    text-shadow: 1px 1px 4px #212529;
+}
+
+.stand-12 .stand-document-button-content:hover,
+.stand-12 .stand-link-button-content:hover,
+.stand-12 .stand-calendar-button-content:hover {
+    background-color:rgba(155,65,64, 1);  
+}
+
+.stand-12 .stand-document-link,
+.stand-12 .stand-link,
+.stand-12 .stand-calendar {
+    color:  rgba(255, 255, 255, 0.7);
+    text-shadow: 1px 1px 4px #212529;
+}
+
+.stand-12 .stand-title {   
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-align: center;
+    vertical-align: middle;
+    text-shadow: 1px 1px 4px #212529;
+    font-size: x-large;
+}
+
+
+
+
+
+
+
+
+
+/* 
+.stand-12 .stand-contact-content {
+    color: rgba(255, 255, 255, 0.6) 
+}
+
+.stand-12 .stand-text-content {
+    border: 1px solid #dee2e6 !important;
+    border-color: #343a40 !important;
+    background-color: rgba(81,1,0, 0.95) !important;
+    border-radius: 2px;
+}
+
+.stand-12 .stand-photo-content{
+    border: 1px solid #dee2e6 !important;
+    border-color: #343a40 !important;
+    background-color: rgba(81,1,0, 0.95) !important;
+    border-radius: 4px;
+    padding: 5px;
+} */
+

@@ -1,0 +1,114 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var active = 'home'  
+    - var navbarClass = 'bg-transparent navbar-light navbar-airy bg-fixed-white'  
+    - var headerClass = 'header header-absolute'       
+
+block content
+    
+    include _pug-includes/inc-circle-slider.pug
+
+    section.py-6
+        .container
+
+            .row
+                .col-xl-8.mb-5
+                    p.text-uppercase.text-muted.fw-bold.mb-1 Top choices
+                    h3 Popular this week
+                    p.lead.text-muted Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.    
+
+            .row
+                .col-md-4.mb-4.mb-md-6.pt-lg-3
+                    a(href="detail-2.html")
+                        img.img-fluid(src="img/product/artboard-bag.jpg", alt="")
+                    .px-4.position-relative.z-index-2.mt-n3
+                        a.text-dark.text-decoration-none(href="detail-2.html")
+                            h3 Black<br>canvas<br>bag     
+                            p.text-muted $39.90
+                        p  
+                            a.btn.btn-link.text-dark.text-decoration-none.px-0(href="detail-2.html")  Shop now                       
+                .col-md-7.ms-auto.mb-4.mb-md-5
+                    .position-absolute.z-index-5.py-6
+                        a.text-dark.text-decoration-none(href="detail.html")
+                            h2 Sweaters<br>for<br>her     
+                            p.text-muted $39.90
+                        p  
+                            a.btn.btn-link.text-dark.text-decoration-none.px-0(href="detail.html")  Shop now      
+                    .ms-6
+                        a(href="detail.html")
+                            img.img-fluid(src="img/photo/matthew-kane-365718-unsplash-gray-square.jpg", alt="")
+            .row
+                .col-lg-7.mb-4.mb-lg-5
+                    .position-absolute.z-index-5.py-6
+                        a.text-dark.text-decoration-none(href="detail-2.html")
+                            h2 Skeleton<br>Tees<br>
+                            p.text-muted $39.90
+                        p  
+                            a.btn.btn-link.text-dark.text-decoration-none.px-0(href="detail-2.html")  Shop now                        
+                    .ms-6
+                        a(href="detail-2.html")
+                            img.img-fluid(src="img/photo/ian-dooley-347968-unsplash.jpg", alt="")
+                .col-lg-4.ms-auto.pt-lg-6.mb-4.mb-lg-5
+                        a.text-dark.text-decoration-none(href="detail.html")
+                            img.img-fluid(src="img/product/artboard-sunglasses.jpg", alt="")
+                        .px-4.position-relative.z-index-2.mt-n3
+                            a.text-dark.text-decoration-none(href="detail.html")
+                                h3 Retro<br>sunglasses
+                                p.text-muted $39.90
+                            p  
+                                a.btn.btn-link.text-dark.text-decoration-none.px-0  Shop now     
+
+            .row
+                .col-lg-3.pt-lg-3.mb-4.mb-lg-5
+                    a(href="detail-2.html")
+                        img.img-fluid(src="img/product/artboard-watch.jpg", alt="")
+                
+                    .px-4.position-relative.z-index-2.mt-n3
+                        a.text-dark.text-decoration-none(href="detail-2.html")
+                            h3 Swiss<br>All<br>Black     
+                            p.text-muted $149.90
+                        p  
+                            a.btn.btn-link.text-dark.text-decoration-none.px-0(href="detail-2.html")  Shop now                       
+                .col-lg-8.ms-auto
+                    .position-absolute.z-index-5.py-6
+                        a.text-dark.text-decoration-none(href="detail.html")
+                            h2 Ethnic<br>design<br>everywhere     
+                            p.text-muted $39.90
+                        p  
+                            a.btn.btn-link.text-dark.text-decoration-none.px-0(href="detail.html")  Shop now      
+                    .ms-6
+                        a(href="detail.html")
+                            img.img-fluid(src="img/photo/serrah-galos-494279-unsplash-square.jpg", alt="")                                          
+
+
+    section.bg-danger
+        .container
+            .row
+                .col-lg-6.text-white.text-center.py-7
+                    h2.display-4.text-uppercase.mb-4 Final sales
+                    p.mb-0
+                        | Up to
+                    h2.display-1.fw-bold.mb-3 70%
+                    p.mb-5 * Free shipping on orders over $70.
+                    p
+                        a.btn.btn-outline-light(href="#") Shop now
+                .col-lg-6(style=`background: right bottom url(${path}img/photo/sale-circle.jpg) no-repeat; background-size: contain;`)
+
+    section.py-6
+        .container
+
+            .row
+                .col-xl-8.mx-auto.text-center.mb-5
+                    h3.text-uppercase Last viewed products
+
+            include _pug-includes/inc-var-shopitems.pug
+            - var itemClass = 'product-slider-item'
+            - var additionalButtons = false
+                // Products Slider
+                .owl-carousel.owl-theme.product-slider
+                    each val, index in shopItems
+                        if (index > 3 && index <= 12)
+                            +product(val, itemClass, additionalButtons)                  
+
+                    

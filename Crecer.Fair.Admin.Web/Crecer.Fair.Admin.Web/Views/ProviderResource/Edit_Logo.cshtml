@@ -1,0 +1,145 @@
+@model ProviderResourceGeneralEditViewModel
+@{
+	ViewBag.Title = $"{Model.ProviderName} - Editar {@Model.ResourceTypeName}";
+}
+
+<partial name="_BreadCrumbProviderResource" model="@Model"></partial>
+
+<div class="col-12 col-xl-12">
+	<div class="card">
+		<div class="card-header">
+			<h5 class="card-title">Editar @Model.ResourceTypeName</h5>
+			<p>(Imagen cuadrada medidas mínimas recomendadas 250px x 250x, Imagen rectangular medidas mínimas recomendadas 250px de ancho)</p>
+		</div>
+		<div class="card-body pt-0">
+			<form method="post" asp-action="EditLogo" asp-controller="ProviderResource">
+				<input type="hidden" asp-for="ProviderId">
+				<input type="hidden" asp-for="ResourceId">
+				<hr>
+				<div class="row justify-content-center align-items-center" style="height: 420px;">
+					<h4 id="logo-place-holder" class="text-center">Agregue el Logo Aquí</h2>
+						<div id="logo-resource" style="display: none;"></div>
+				</div>
+
+				<hr>
+
+				<button id="upload-button" class="btn btn-secondary mt-3"><i class="fas fa-plus"></i>
+					Elegir Archivo
+				</button>			
+
+				<input class="d-none" type="file" id="upload" value="Choose a file" accept="image/*">
+
+
+				<button id="post-save-button" class="btn btn-primary mt-3 float-end"><i class="fas fa-save"></i>
+					Guardar</button>
+
+			</form>
+		</div>
+	</div>
+</div>
+
+
+@section Scripts{
+<script>
+
+	$(function () {
+		var $uploadCrop = null;
+
+		$("#post-save-button").on('click', function (e) {
+			e.preventDefault();
+			postResource();
+		});
+
+		function readFile(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function (e) {
+					$('#logo-resource').show();
+					$('#logo-place-holder').hide();
+					$uploadCrop.croppie('bind', {
+						url: e.target.result
+					}).then(function () {
+						console.log('jQuery bind complete');
+					});
+				}
+
+				reader.readAsDataURL(input.files[0]);
+			}
+			else {
+				window.notyf.open({
+					type: 'error',
+					message: "Sorry - you're browser doesn't support the FileReader API"
+				});
+			}
+		}
+
+		function postResource() {
+
+			$uploadCrop.croppie('result', 'blob').then(function (blob) {
+				let providerId = $("#ProviderId").val();
+				let resourceId = $("#ResourceId").val();
+
+				var formData = new FormData();
+				formData.append('blob', blob);
+				formData.append('fileName', $('#upload').val());
+				formData.append('resourceType', '@ResourceTypes.Logo');
+				formData.append('providerId', providerId);
+				formData.append('resourceId', resourceId);
+
+				$.ajax({
+					type: "POST",
+					url: '@Url.Action("EditResourceMedia","ProviderResource")',
+					data: formData,
+					success: function (data) {
+						if (data.isValid) {
+							location.href = data.redirectUrl;
+						}
+						else {
+							window.notyf.open({
+								type: 'error',
+								message: data.messages[0].text
+							});
+						}
+					},
+					error: function () {
+						window.notyf.open({
+							type: 'error',
+							message: "No se pudo completar la transacción"
+						});
+					},
+					dataType: 'json',
+					processData: false,
+					contentType: false
+				});
+
+				@* var request = new XMLHttpRequest();
+						request.open('POST', '@Url.Action("EditResourceMedia","ProviderResource")');
+						request.send(formData); *@
+			});
+		}
+
+		$uploadCrop = $('#logo-resource').croppie({
+			viewport: {
+				width: 200,
+				height: 200,
+				//type: 'circle'
+			},
+			enableResize : true
+		});
+
+		$('#upload-button').on('click', function (e) {
+			e.preventDefault();
+			$('#upload').click();
+		});
+
+		$('#upload').on('change', function () { readFile(this); });
+
+	});
+
+
+
+
+
+</script>
+}

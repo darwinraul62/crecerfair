@@ -1,0 +1,231 @@
+@model ProviderResourceGeneralEditViewModel
+@{
+	ViewBag.Title = $"{Model.ProviderName} - Editar Recurso";
+	string titleAction = "Crear";
+
+	if (Model.IsDelete)
+	{
+		titleAction = "Eliminar";
+	}
+	else if (Model.ResourceId != Guid.Empty)
+	{
+		titleAction = "Actualizar";
+	}
+}
+
+<partial name="_BreadCrumbProviderResource" model="@Model"></partial>
+
+<div class="col-12 col-xl-12">
+	<div class="card">
+		<div class="card-header">
+			<h5 class="card-title">@titleAction Recurso (@Model.ResourceTypeName)</h5>
+		</div>
+		<div class="card-body pt-0">
+			<form method="post" asp-action="EditGeneral" asp-controller="ProviderResource">
+				@* <div class="mb-3">
+					<msgblock></msgblock>
+					</div> *@
+				<input type="hidden" asp-for="ProviderId">
+				<input type="hidden" asp-for="ResourceId">
+				<input type="hidden" asp-for="ResourceTypeId">
+				@if (Model.ResourceTypeId == ResourceTypes.Text)
+				{
+					<div class="row">
+						<div class="mb-3 col-md-6">
+							<label class="form-label" asp-for="Name"></label>
+							<input type="text" class="form-control" asp-for="Name" editfield>
+							<span asp-validation-for="Name"></span>
+
+						</div>
+					</div>
+				}
+				<div class="row">
+					<div class="mb-3 col-md-6">
+						<label class="form-label" asp-for="Priority">Prioridad</label>
+						<input type="number" class="form-control" asp-for="Priority" editfield>
+						<span asp-validation-for="Priority"></span>
+
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-12">
+						<div class="clearfix">
+							<div id="quill-toolbar">
+								<span class="ql-formats">
+									<select class="ql-font"></select>
+									<select class="ql-size"></select>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-bold"></button>
+									<button class="ql-italic"></button>
+									<button class="ql-underline"></button>
+									<button class="ql-strike"></button>
+								</span>
+								<span class="ql-formats">
+									<select class="ql-color"></select>
+									<select class="ql-background"></select>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-script" value="sub"></button>
+									<button class="ql-script" value="super"></button>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-header" value="1"></button>
+									<button class="ql-header" value="2"></button>
+									<button class="ql-blockquote"></button>
+									<button class="ql-code-block"></button>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-list" value="ordered"></button>
+									<button class="ql-list" value="bullet"></button>
+									<button class="ql-indent" value="-1"></button>
+									<button class="ql-indent" value="+1"></button>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-direction" value="rtl"></button>
+									<select class="ql-align"></select>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-link"></button>
+									<button class="ql-image"></button>
+									<button class="ql-video"></button>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-clean"></button>
+								</span>
+							</div>
+							<div id="quill-editor"></div>
+						</div>
+					</div>
+				</div>
+
+				@if (Model.IsDelete)
+				{
+					<button id="post-delete-button" type="submit" class="btn btn-danger mt-3">@titleAction</button>
+				}
+				else if (!Model.IsReadOnly)
+				{
+					<button id="post-resource-button" type="submit" class="btn btn-primary mt-3">@titleAction</button>
+				}
+
+
+			</form>
+		</div>
+	</div>
+</div>
+
+
+@section Scripts{
+<script>
+	var editor = null;
+
+	$(function () {
+		$("#post-resource-button").on('click', function (e) {
+			e.preventDefault();
+			postResource();
+		});
+		$("#post-delete-button").on('click', function (e) {
+			e.preventDefault();
+			deleteResource();
+		});
+
+		@if(Model.IsReadOnly)
+		{
+			@: $("[editfield]").attr("readonly","readonly");		
+		}
+	});
+
+
+	document.addEventListener("DOMContentLoaded", function () {
+		if (!window.Quill) {
+			return $("#quill-editor,#quill-toolbar,#quill-bubble-editor,#quill-bubble-toolbar").remove();
+		}
+		editor = new Quill("#quill-editor", {
+			modules: {
+				toolbar: "#quill-toolbar"
+			},			
+			readOnly: @{@(Model.IsReadOnly?"true":"false")},
+			@if(!Model.IsReadOnly)
+			{
+				 @:placeholder: "Ingrese aquí el contenido",
+			}
+			theme: "snow"
+		});
+
+		editor.root.innerHTML = '@Html.Raw(Model.Value)';
+	});
+
+	function deleteResource(){
+		$.ajax({
+			type: "POST",
+			url: '@Html.Raw(Url.Action("DeleteResource","ProviderResource", new { providerId = Model.ProviderId, resourceId = Model.ResourceId } ))',			
+			success: function (data) {
+				if (data.isValid) {
+					location.href = data.redirectUrl;
+				}
+				else {
+					window.notyf.open({
+						type: 'error',
+						message: data.messages[0].text
+					});
+				}
+			},
+			error: function () {
+				window.notyf.open({
+					type: 'error',
+					message: "No se pudo eliminar el registro"
+				});
+			},
+			dataType: 'json'
+		});
+	}	
+
+	function postResource() {
+		let providerId = $("#ProviderId").val();
+		let resourceId = $("#ResourceId").val();
+		let name = $("#Name").val();
+		let resourceTypeId = $("#ResourceTypeId").val();
+		let priority = $("#Priority").val();
+
+		let delta = editor.getContents();
+		var text = editor.getText();
+		var justHtml = editor.root.innerHTML;
+		@* preciousContent.innerHTML = JSON.stringify(delta);
+				justTextContent.innerHTML = text;
+				justHtmlContent.innerHTML = justHtml; *@
+
+			let model = {
+				providerId: providerId,
+				resourceId: resourceId,
+				resourceTypeId: resourceTypeId,
+				name: name,
+				priority: priority,
+				value: justHtml
+			}
+		$.ajax({
+			type: "POST",
+			url: '@Url.Action("EditGeneral","ProviderResource")',
+			data: model,
+			success: function (data) {
+				if (data.isValid) {
+					location.href = data.redirectUrl;
+				}
+				else {
+					window.notyf.open({
+						type: 'error',
+						message: data.messages[0].text
+					});
+				}
+			},
+			error: function () {
+				window.notyf.open({
+					type: 'error',
+					message: "No se pudo completar la transacción"
+				});
+			},
+			dataType: 'json'
+		});
+	}
+</script>
+}

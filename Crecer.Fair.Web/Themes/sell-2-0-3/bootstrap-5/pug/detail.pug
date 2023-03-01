@@ -1,0 +1,39 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var active = 'category'  
+
+block content
+
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Tops and Jackets', link: 'category.html'})
+    - breadcrumbs.push({name: 'Modern Jacket'})
+    
+    -var breadcrumbClass = 'justify-content-start'
+
+    section.product-details
+        .container-fluid
+            .row
+                .col-lg-6.py-3.order-2.order-lg-1
+                        - var images = ['img/photo/kyle-loftus-596319-detail-1.jpg', 'img/photo/kyle-loftus-596319-detail-2.jpg', 'img/photo/kyle-loftus-596319-detail-3.jpg', 'img/photo/kyle-loftus-594535-unsplash-detail-3.jpg', 'img/photo/kyle-loftus-594535-unsplash-detail-4.jpg']
+
+                        .owl-carousel.owl-theme.owl-dots-modern.detail-full(data-slider-id='1')
+                            each image, index in images
+                                .detail-full-item(style=`background: center center url(${image}) no-repeat; background-size: cover;`)      
+        
+                .d-flex.align-items-center.col-lg-6.col-xl-5.ps-lg-5.mb-5.order-1.order-lg-2
+                    div
+                        ul(class="breadcrumb " + breadcrumbClass)
+                            each val in breadcrumbs
+                                if (val.link)
+                                    li.breadcrumb-item
+                                        a(href=val.link) #{val.name}
+                                else
+                                    li.breadcrumb-item.active #{val.name}
+
+                        include _pug-includes/inc-detail-main.pug
+
+    include _pug-includes/inc-detail-tabs.pug
+            
+    include _pug-includes/inc-similar.pug

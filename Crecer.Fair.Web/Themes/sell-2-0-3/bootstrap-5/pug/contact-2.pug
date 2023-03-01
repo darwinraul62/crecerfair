@@ -1,0 +1,60 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var map = true
+    - var active = 'contact'
+
+block content
+    
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Contact'})
+    - var heroHeading = 'Contact'
+    
+    -var breadcrumbClass = 'justify-content-start'
+
+    section
+        .container-fluid
+            .row
+                .col-lg-6.col-xl-5.mx-auto
+                    ul(class="breadcrumb " + breadcrumbClass)
+                        each val in breadcrumbs
+                            if (val.link)
+                                li.breadcrumb-item
+                                    a(href=val.link) #{val.name}
+                            else
+                                li.breadcrumb-item.active #{val.name}
+
+                    h4.mb-4.text-uppercase Contact us
+
+                    p.lead.mb-5 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+
+                    .row.mb-5
+                        include _pug-includes/inc-contact-main.pug
+
+                    hr.mb-5
+
+                    form.mb-5(id="contact-form", method="get", action="#",class="")
+                        h4.mb-4 Contact form
+
+                        .row
+                            .col-sm-6
+                                .mb-4
+                                    label.form-label(for="name") Your name *
+                                    input(type="text", name="name", id="name", class="form-control", placeholder="Enter your firstname", required="required")
+                            .col-sm-6
+                                .mb-4
+                                    label.form-label(for="email") Your email *
+                                    input(type="email", name="email", id="email", class="form-control", placeholder="Enter your  email", required="required")
+                        
+                        .mb-4
+                            label.form-label(for="message") Your message for us *
+                            textarea(rows="4", name="message", id="message", class="form-control", placeholder="Enter your message", required="required")
+                        
+                        button(type="submit", class="btn btn-outline-dark") Send message                                    
+
+
+                .col-lg-6
+                    #map.full-screen.my-3
+                
+

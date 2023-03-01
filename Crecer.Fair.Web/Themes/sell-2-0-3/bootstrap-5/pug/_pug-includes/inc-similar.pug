@@ -1,0 +1,14 @@
+section.my-5
+    .container
+        header.text-center
+            h6.text-uppercase.mb-5 You might also like
+
+        include inc-var-shopitems
+        
+        - var itemClass = 'col-lg-2 col-md-4 col-6'
+        - var additionalButtons = false
+        
+        .row
+            each val,index in shopItems
+                if (index < 6)
+                    +product(val, itemClass, additionalButtons)

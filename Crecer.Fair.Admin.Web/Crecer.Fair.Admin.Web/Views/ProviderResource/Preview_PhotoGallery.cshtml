@@ -1,0 +1,39 @@
+@model ResourceTypeViewModel
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-actions float-end mt-0">
+            <a action-type="EDIT" asp-action="Edit" asp-controller="ProviderResource"
+                asp-route-providerId="@Model.MainData.ProviderId" 
+                asp-route-type="@Model.ResourceTypeId"><i
+                class="align-middle me-2 far fa-fw fa-edit"></i></a>
+        </div>
+
+        <h4 class="mt-1">
+            Galería de Fotos
+        </h4>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            @foreach (var item in Model.Resources.OrderBy(p=>p.Priority))
+            {
+                <div style="width: 180px;" class="left d-inline-block text-center justify-content-center align-items-center border border-secondary p-3 mx-1 mb-3">
+                    <a data-fancybox="photo-gallery" data-src="@Html.Raw(item.Value)" >
+                        <img src="@Html.Raw(item.ThumbnailPath)">
+                    </a>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+@* <script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+
+         Fancybox.bind("[data-fancybox]", {
+            // Your options go here
+        }); 
+    });
+</script> *@

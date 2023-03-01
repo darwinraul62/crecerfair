@@ -1,0 +1,20 @@
+@model ProviderResourceViewModel
+
+<div class="clearfix">
+    <div quill-viewer="@Model.ResourceId"></div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var editor = new Quill("[quill-viewer='@Model.ResourceId']", {
+            readOnly: true,
+            theme: "bubble",
+            "modules": {
+                "toolbar": false
+            }
+        });
+
+        editor.root.innerHTML = '@Html.Raw(Model.Value)';
+    });
+</script>

@@ -1,0 +1,31 @@
+@model StandResourceCoordViewModel
+
+<div class="row mt-2 stand-social-networks-content">
+    <div class="col-sm-12 text-center">
+        <div class="social-items-content">
+            <ul class="list-inline">
+                @if (!string.IsNullOrWhiteSpace(Model.StandModel.ContactData.TwitterAddress))
+                {
+                    <li class="list-inline-item stand-contact-social twitter"><a href="@Model.StandModel.ContactData.TwitterAddress"
+                        target="_blank"><i class="fab fa-twitter"></i></a></li>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.StandModel.ContactData.FacebookAddress))
+                {
+                    <li class="list-inline-item stand-contact-social facebook"><a
+                        href="@Model.StandModel.ContactData.FacebookAddress" target="_blank"><i
+                            class="fab fab fa-facebook"></i></a></li>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.StandModel.ContactData.InstagramAddress))
+                {
+                    <li class="list-inline-item stand-contact-social instagram"><a href="@Model.StandModel.ContactData.InstagramAddress" target="_blank"><i
+                            class="fab fab fa-instagram"></i></a></li>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.StandModel.ContactData.YoutubeAddress))
+                {
+                    <li class="list-inline-item stand-contact-social youtube"><a href="@Model.StandModel.ContactData.YoutubeAddress" target="_blank"><i
+                            class="fab fa-youtube"></i></a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

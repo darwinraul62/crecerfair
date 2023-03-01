@@ -1,0 +1,28 @@
+extends _pug-includes/layout.pug
+
+block content
+
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Shopping cart'})
+    - var heroHeading = 'Shopping cart'
+    - var heroText = '<p class="lead text-muted">You have 3 items in your shopping cart</p>'
+    
+    include _pug-includes/inc-hero.pug
+    
+    // Shopping Cart Section
+    section
+        .container
+            .row.mb-5 
+                .col-lg-8
+                    include _pug-includes/inc-checkout-cart.pug
+
+                    .my-5.d-flex.justify-content-between.flex-column.flex-lg-row
+                        a.btn.btn-link.text-muted(href="category.html") <i class="fa fa-chevron-left"></i> Continue Shopping
+                        a.btn.btn-dark(href="checkout1.html") Proceed to checkout <i class="fa fa-chevron-right"></i>                                                     
+                .col-lg-4
+                    include _pug-includes/inc-checkout-summary.pug
+                            
+
+  
+                

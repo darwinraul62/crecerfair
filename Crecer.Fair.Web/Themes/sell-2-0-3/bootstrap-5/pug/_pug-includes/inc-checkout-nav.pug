@@ -1,0 +1,19 @@
+- var navLinks = []
+- navLinks.push({name: 'Address', link: 'checkout1.html'})
+- navLinks.push({name: 'Delivery Method', link: 'checkout2.html'})
+- navLinks.push({name: 'Payment Method ', link: 'checkout3.html'})
+- navLinks.push({name: 'Order Review', link: 'checkout4.html'})
+
+ul.custom-nav.nav.nav-pills.mb-5
+    each val, index in navLinks
+        - var navClass = ''
+        - var navLink = val.link
+
+        if (step == index)
+            - navClass = 'active'
+        else if (step < index)
+            - navClass = 'disabled'
+            - navLink = '#'
+
+        li.nav-item.w-25
+            a(class="nav-link text-sm " + navClass, href=navLink) #{val.name}

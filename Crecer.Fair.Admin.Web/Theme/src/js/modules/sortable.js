@@ -1,0 +1,1 @@
+import "script-loader!sortablejs/Sortable.min.js";

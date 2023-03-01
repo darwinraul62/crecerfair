@@ -1,0 +1,25 @@
+<header class="header header-absolute">
+    <!-- Navbar-->
+    <nav
+        class="navbar navbar-expand-lg bg-transparent navbar-sticky navbar-airy navbar-dark  bg-fixed-white navbar-fixed-light">
+        <div class="container-fluid">
+            <!-- Navbar Header  -->
+            <a class="navbar-brand" asp-action="Index" asp-controller="Home">
+                <img src="/img/logo_crecer.png" class="logo-home small">
+            </a>
+
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i></button>
+
+            <!-- Navbar Collapse -->
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <vc:fair-navigation-menu></vc:fair-navigation-menu>
+                <partial name="_NavUser" />
+
+            </div>
+        </div>
+    </nav>
+    <!-- /Navbar -->
+</header>

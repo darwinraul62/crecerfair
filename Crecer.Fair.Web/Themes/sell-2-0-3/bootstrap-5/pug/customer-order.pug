@@ -1,0 +1,65 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var active = 'customer-orders.html'  
+    - var customerZone = true
+
+block content
+       
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Orders', link: 'customer-orders.html'})
+    - breadcrumbs.push({name: 'Order #1735'})
+    - var heroHeading = 'Order #1735'
+    - var heroText ='<p class="lead text-muted">Order #1735 was placed on <strong>22/06/2021</strong> and is currently <strong>Being prepared</strong>.</p><p class="text-muted">If you have any questions, please feel free to <a href="contact.html">contact us</a>, our customer service center is working for you 24/7.</p>'
+    
+    include _pug-includes/inc-hero.pug
+
+    section
+        .container
+            .row
+                .col-lg-8.col-xl-9
+
+                    - var finalReview = true
+
+                    include _pug-includes/inc-checkout-cart.pug
+
+
+                    .row.my-5
+                        .col-md-6
+                            include _pug-includes/inc-checkout-summary.pug
+
+                        .col-md-6
+                            .block-header
+                                h6.text-uppercase.mb-0 Invoice address
+                            .block-body.bg-light.pt-1
+                                p
+                                    | John Brown
+                                    br
+                                    | 13/25 New Avenue
+                                    br
+                                    | New Heaven
+                                    br
+                                    | 45Y 73J
+                                    br
+                                    | England
+                                    br
+                                    strong Great Britain
+                            .block-header
+                                h6.text-uppercase.mb-0 Shipping address
+                            .block-body.bg-light.pt-1
+                                p
+                                    | John Brown
+                                    br
+                                    | 13/25 New Avenue
+                                    br
+                                    | New Heaven
+                                    br
+                                    | 45Y 73J
+                                    br
+                                    | England
+                                    br
+                                    strong Great Britain
+
+                include _pug-includes/inc-customer-sidebar.pug
+

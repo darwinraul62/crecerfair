@@ -1,0 +1,15 @@
+@model StandResourceCoordViewModel
+@if (Model.StandModel.CalendarItems.Any())
+{
+    <div class="stand-calendar-button-content">
+        <h5 id="stand-calendar-trigger" class="stand-calendar">Horario Chat</h5>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                $("#stand-calendar-trigger").on('click', function () {
+                    $('#modal-stand-calendar').modal('show');
+                });
+            });
+        </script>
+    </div>
+}

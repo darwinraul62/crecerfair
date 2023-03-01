@@ -1,0 +1,75 @@
+if (!megamenuLinkClass)
+    - var megamenuLinkClass = ''
+
+// Megamenu
+li.nav-item.dropdown.position-static
+    a.nav-link(href="#", data-bs-toggle='dropdown', class="dropdown-toggle " + megamenuLinkClass) Template
+    .dropdown-menu.dropdown-menu-animated.megamenu.py-lg-0
+        .row
+            .col-lg-9
+                    .row.p-3.pe-lg-0.ps-lg-5.pt-lg-5
+                        .col-lg-3
+                            - links = {'index.html': 'Fullscreen home + Lookbook', 'index2.html': 'Split-screen home', 'index3.html': 'Classic home', 'index4.html': 'Parallax sections  <span class="badge bg-warning ms-1">New</span>', 'index5.html': 'Slider + Broken grid  <span class="badge bg-warning ms-1">New</span>'}
+                            +megamenuList('Homepage', links)   
+
+                            - links = {'category.html': 'Category - left sidebar', 'category-right.html': 'Category - right sidebar', 'category-no-sidebar.html': 'Category - no sidebar', 'category-full.html' : 'Category - full width', 'category-masonry.html' : 'Category - masonry items','category-banner.html' : 'Category - w/ banner', 'detail.html' : 'Product detail', 'detail-2.html' : 'Product detail - v.2', 'detail-3.html' : 'Product detail - v.3 <span class="badge bg-warning ms-1">New</span>'}
+                            +megamenuList('Shop', links)                                                                                           
+
+                        .col-lg-3
+                            - links = {'cart.html': 'Shopping cart', 'cart-2.html': 'Shopping cart - v. 2 <span class="badge bg-warning ms-1">New</span>',  'checkout1.html': 'Checkout 1 - Address', 'checkout2.html' : 'Checkout 2 - Delivery', 'checkout3.html' : 'Checkout 3 - Payment', 'checkout4.html' : 'Checkout 4 - Review  ', 'checkout5.html' : 'Checkout 5 - Confirmation'}
+                            +megamenuList('Order process', links)
+                                    
+                            - links = {'blog.html': 'Blog', 'post.html': 'Post'}                                                
+                            +megamenuList('Blog', links)
+                                                
+                    
+                        .col-lg-3
+                            - links = {'about.html': 'About us <span class="badge bg-warning ms-1">New</span>', 'about-2.html': 'About us v.2 <span class="badge bg-warning ms-1">New</span>', 'contact.html': 'Contact',  'contact-2.html': 'Contact v.2', 'text.html' : 'Text page', 'faq.html' : 'F.A.Q.s', 'coming-soon.html' : 'Coming soon'}          
+                            +megamenuList('Pages', links)    
+                            
+                            - links = {'customer-login.html': 'Login/sign up', 'customer-orders.html': 'Orders', 'customer-order.html' : 'Order detail' , 'customer-addresses.html' : 'Addresses' , 'customer-account.html' : 'Profile'}          
+                            +megamenuList('Customer', links)                                                          
+
+                    
+                        .col-lg-3
+
+                            - var docLinks = {'docs/docs-introduction.html': 'Introduction', 'docs/docs-directory-structure.html': 'Directory structure', 'docs/docs-gulp.html': 'Gulp', 'docs/docs-customizing-css.html': 'Customizing CSS', 'docs/docs-credits.html': 'Credits', 'docs/docs-changelog.html': 'Changelog'}
+                            +megamenuList('Documentation', docLinks)    
+
+                            - var componentLinks = {'docs/components-bootstrap.html': 'Bootstrap', 'docs/components-sell.html': 'Theme', 'component-variants/header.html': 'Header variants <span class="badge bg-warning ms-1">New</span>'}
+                            +megamenuList('Components', componentLinks)
+
+                            
+                    .row.megamenu-services.d-none.d-lg-flex
+                        .col-xl-3.col-lg-6.d-flex
+                            .megamenu-services-item
+                                +svgIcon('delivery-time-1', 'megamenu-services-icon')
+                                div
+                                    h6.text-uppercase Free shipping &amp; return
+                                    p.mb-0.text-muted.text-sm Free Shipping over $300
+                            
+                        .col-xl-3.col-lg-6.d-flex
+                            .megamenu-services-item
+                                +svgIcon('money-1', 'megamenu-services-icon')
+                                div
+                                    h6.text-uppercase Money back guarantee
+                                    p.mb-0.text-muted.text-sm 30 Days Money Back
+                            
+                        .col-xl-3.col-lg-6.d-flex
+                            .megamenu-services-item
+                                +svgIcon('customer-support-1', 'megamenu-services-icon')
+                                div
+                                    h6.text-uppercase 020-800-456-747
+                                    p.mb-0.text-muted.text-sm 24/7 Available Support
+                    
+                        .col-xl-3.col-lg-6.d-flex
+                            .megamenu-services-item
+                                +svgIcon('secure-payment-1', 'megamenu-services-icon')
+                                div
+                                    h6.text-uppercase Secure Payment
+                                    p.mb-0.text-muted.text-sm Secure Payment
+
+            .col-lg-3.d-none.d-lg-block.position-relative
+                img.bg-image(src=path + "img/megamenu.jpg", alt="")
+
+// /Megamenu end

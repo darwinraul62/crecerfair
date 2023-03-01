@@ -1,0 +1,16 @@
+@model StandResourceCoordViewModel
+@if (Model.StandModel.Files.Any())
+{
+    <div class="stand-document-button-content">
+        <h5 id="stand-documents-trigger" class="stand-document-link">
+            DOCUMENTOS</h5>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            $("#stand-documents-trigger").on('click', function () {
+                $('#modal-stand-documents').modal('show');
+            });
+        });
+    </script>
+}

@@ -1,0 +1,106 @@
+extends _pug-includes/layout.pug
+
+block content
+    
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Blog', link: 'blog.html'})
+    - breadcrumbs.push({name: 'Fashion, purpose & freedom'})
+    - var heroHeading = 'Fashion, purpose & freedom'
+    - var heroHeadingClass = 'mb-5'
+    - var heroText ='<p class="text-muted mb-0"><a href=""><img src="img/person-3.jpg" alt="" class="w-2rem rounded-circle me-2"></a> By <a href="#" class="text-muted fw-bold">John Slim</a> <span class="mx-1">|</span> January 16, 2016 in <a href="blog.html" class="fw-bold">Fashion</a> <span class="mx-1">|</span> <a href="#" class="text-muted">2 comments</a></p>'
+    
+    include _pug-includes/inc-hero.pug
+
+    section
+        .container
+            .row
+                .col-xl-10.mx-auto
+                    img.img-fluid.mb-5(src="img/photo/kyle-loftus-589740-unsplash.jpg", alt="")
+            .row
+                .col-xl-8.col-lg-10.mx-auto            
+                    p.lead.mb-5
+                            | As am hastily invited settled at limited civilly fortune me. Really spring in extent an by. Judge but built party world. Of so am
+                            | he remember although required. Bachelor unpacked be advanced at. Confined in declared marianne is vicinity.    
+                    .text-content.text-lg
+                        p
+                            strong Pellentesque habitant morbi tristique
+                            |  senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. 
+                            em Aenean ultricies mi vitae est.
+                            |  Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, 
+                            code commodo vitae
+                            | , ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. 
+                            a(href='#') Donec non enim
+                            |  in turpis pulvinar facilisis. Ut felis.
+                        p.text-center.text-muted.text-sm
+                            img.img-fluid(src='img/photo/christopher-campbell-28571-unsplash.jpg', alt='Example blog post alt').mb-2
+                            br
+                            | Photo by Jack Tran, New York
+                        h2 Header Level 2
+                        ol
+                            li Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                            li Aliquam tincidunt mauris eu risus.
+                        blockquote.blockquote.blockquote-primary
+                            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.
+                        h3 Header Level 3
+                        p
+                            | Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus
+                        ul
+                            li Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                            li Aliquam tincidunt mauris eu risus.
+                        p
+                            img.img-fluid(src='img/photo/marco-xu-496929-unsplash.jpg', alt='Example blog post alt')
+                        p
+                            | Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus                   
+                    // comments
+                    .comments.mt-5
+                        h6.comments-heading.text-uppercase.text-muted.mb-4 2 comments
+
+                        - var comments = []
+                        - comments.push({name: 'Julie Alma', posted: 'September 23, 2017 at 12:00 am', image: 'img/photo/blog-avatar2.jpg', text: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.', })
+                        - comments.push({name: 'Louise Armero', posted: 'June 23, 2017 at 12:35 pm', image: 'img/photo/blog-avatar.jpg', text: 'Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. ', })
+
+                        each val in comments
+
+                            // comment
+                            .row.mb-4
+                                .col-3.col-md-2.text-center-xs
+                                    p
+                                        img.img-fluid.rounded-circle(src=val.image, alt='')
+                                .col-9.col-md-10
+                                    h5 #{val.name}
+                                    p.text-uppercase.text-sm.text-muted
+                                        i.far.fa-clock
+                                        |  #{val.posted}
+                                    p.text-muted #{val.text}
+                                    p
+                                        a.btn.btn-link.text-primary(href='#')
+                                            i.fa.fa-reply
+                                            |  Reply
+                            // /comment
+                    // /comments
+
+
+                    // comment form
+                    .comment-form.my-5
+                        h6.text-uppercase.mb-5 Leave a comment
+                        form(id="comment-form", method="post", action="#",class="form")
+                            .row
+                                .col-md-6                            
+                                    .mb-4
+                                        label.form-label(for='name') Name 
+                                            span.required *
+                                        input#name.form-control.form-control-underlined(type='text')
+                                .col-md-6                                               
+                                    .mb-4
+                                        label.form-label(for='email') Email 
+                                            span.required *
+                                        input#email.form-control.form-control-underlined(type='text')                                            
+                            .mb-4
+                                label.form-label(for='comment') Comment 
+                                    span.required *
+                                textarea#comment.form-control.form-control-underlined(rows='4')
+                            button.btn.btn-outline-dark(type="submit")
+                                i.far.fa-comment
+                                |  Comment                                   
+                    // /comment form

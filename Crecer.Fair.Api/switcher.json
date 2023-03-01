@@ -1,0 +1,24 @@
+{
+  "solution": "Crecer.Fair.Api.Full.sln",
+  "mappings": {
+    "Ecubytes.Data": "../../../EcubytesFramework/Common/Ecubytes.Data/Ecubytes.Data.csproj",
+    "Ecubytes.JsonUtilities": "../../../EcubytesFramework/Common/Ecubytes.JsonUtilities/Ecubytes.JsonUtilities.csproj",
+    "Ecubytes.Integration.Event.Repository.EntityFramework": "../../../EcubytesFramework/Common/Ecubytes.Integration.Event.Repository.Ef/Ecubytes.Integration.Event.Repository.EntityFramework.csproj",
+    "Ecubytes.Integration.Event.Repository.EntityFramework.Npgsql": "../../../EcubytesFramework/Common/Ecubytes.Integration.Event.Repository.Ef.Npgsql/Ecubytes.Integration.Event.Repository.EntityFramework.Npgsql.csproj",
+    "Ecubytes.Extensions.MassTransit.AwsSqs": "../../../EcubytesFramework/Common/Ecubytes.Extensions.MassTransit.AwsSqs/Ecubytes.Extensions.MassTransit.AwsSqs.csproj",
+    "Ecubytes.Extensions.MassTransit": "../../../EcubytesFramework/Common/Ecubytes.Extensions.MassTransit/Ecubytes.Extensions.MassTransit.csproj",
+    "Ecubytes.DependencyInjection": "../../../EcubytesFramework/Common/Ecubytes.DependencyInjection/Ecubytes.DependencyInjection.csproj",
+    "Ecubytes.Data.EntityFramework": "../../../EcubytesFramework/Common/Ecubytes.Data.EntityFramework/Ecubytes.Data.EntityFramework.csproj",
+    "Ecubytes.AspNetCore": "../../../EcubytesFramework/Common/Ecubytes.AspNetCore/Ecubytes.AspNetCore.csproj",
+    "Ecubytes.AspNetCore.Mvc": "../../../EcubytesFramework/Common/Ecubytes.AspNetCore.Mvc/Ecubytes.AspNetCore.Mvc.csproj",
+    "Ecubytes.AspNetCore.Http": "../../../EcubytesFramework/Common/Ecubytes.AspNetCore.Http/Ecubytes.AspNetCore.Http.csproj",
+    "Ecubytes.AspNetCore.Authorization": "../../../EcubytesFramework/Common/Ecubytes.AspNetCore.Authorization/Ecubytes.AspNetCore.Authorization.csproj",
+    "Ecubytes.AspNetCore.Authentication": "../../../EcubytesFramework/Common/Ecubytes.AspNetCore.Authentication/Ecubytes.AspNetCore.Authentication.csproj",
+    "Ecubytes.Integration.Messaging": "../../../EcubytesFramework/Common/Ecubytes.Integration.Messaging/Ecubytes.Integration.Messaging.csproj",
+    "Ecubytes.Integration.Event": "../../../EcubytesFramework/Common/Ecubytes.Integration.Event/Ecubytes.Integration.Event.csproj",
+    "Ecubytes.Sdk.Identity": "../../../EcubytesFramework/Sdk/Ecubytes.Sdk.Identity/Ecubytes.Sdk.Identity.csproj",
+    "Ecubytes.Extensions.Linq": "../../../EcubytesFramework/Common/Ecubytes.Extensions.Linq/Ecubytes.Extensions.Linq.csproj",
+    "Ecubytes.AspNetCore.Mvc.QueryRequestBinding": "../../../EcubytesFramework/Common/Ecubytes.AspNetCore.Mvc.QueryRequestBinding/Ecubytes.AspNetCore.Mvc.QueryRequestBinding.csproj"
+  },
+  "removeProjects": false
+}

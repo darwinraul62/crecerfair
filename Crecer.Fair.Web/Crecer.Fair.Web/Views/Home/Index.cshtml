@@ -1,0 +1,100 @@
+﻿@model HomeIndexViewModel
+@{
+    ViewData["Title"] = "Feria Virtual Crecer";
+}
+
+<header class="header header-absolute">
+    <!-- Navbar-->
+    <nav class="navbar navbar-sticky navbar-dark navbar-hover-light navbar-fixed-light bg-fixed-white bg-transparent bg-hover-white bg-fixed-white navbar-fullscreen navbar-fullscreen-light px-0 px-sm-3">
+        <div class="container-fluid">
+            <!-- Navbar Header  -->
+            <a class="navbar-brand" asp-action="Index" asp-controller="Home">
+                <img src="/img/logo_crecer.png" class="logo-home">
+            </a>
+
+            <h3 class="d-none mb-0 home-header-title text-uppercase mx-auto text-center">
+                COOPERATIVA DE AHORRO Y CREDITO CRECER
+                </h3>
+
+                <!-- Navbar Collapse -->
+                <div class="" id="navbarCollapse">
+                    <div
+                        class="d-flex align-items-center justify-content-between justify-content-lg-end mt-1 mb-2 my-lg-0">
+                        <a class="btn btn-big btn-light btn-signin" asp-controller="Fair" asp-action="Start">Ingresar</a>
+                    </div>
+                </div>
+        </div>
+    </nav>
+</header>
+
+<section class="home-full-slider-wrapper">
+
+
+
+    <!-- Hero Slider-->
+
+    <div class="home-title-wrapper col-lg-4 col-xl-5 row align-items-center position-absolute">
+        <div class="text-white text-center position-relative">
+            <h2 class="text-uppercase text-white fw-light mb-4 letter-spacing-5">Bienvenido</h2>
+            <h1 class="mb-5 display-2 fw-bold text-serif">@Model.Fair.Title</h1>
+            <p class="lead p-welcome-text mb-4 d-none d-lg-block">@Model.Fair.WelcomeText</p>
+            <p> <a class="btn btn-big btn-light" asp-controller="Fair" asp-action="Start">Ingresar a la Feria</a></p>
+        </div>
+    </div>
+    <div class="owl-carousel owl-theme owl-dots-modern home-full-slider">
+
+        @foreach (var item in Model.BannerItems)
+        {
+            <div class="item home-full-item" >
+                <img class="bg-image" src="@Url.Content(item.Url)" alt="">         
+            </div>
+        }
+
+        @* <div id="innerTitle" class="h-50 position-absolute container-fluid" style="z-index: 10;"> *@
+
+        @* </div> *@
+
+        @* <div class="container-fluid h-100 py-5">
+            <div class="row align-items-center h-100">
+            <div class="col-lg-8 col-xl-6 mx-auto text-white text-center position-relative">
+            <h5 class="text-uppercase text-white fw-light mb-4 letter-spacing-5"> Just arrived</h5>
+            <h1 class="mb-5 display-2 fw-bold text-serif">Denim Jackets</h1>
+            <p class="lead mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p> <a class="btn btn-light" href="category.html">View collection</a></p>
+            </div>
+            </div>
+            </div> *@
+
+
+
+
+        @* <div class="item home-full-item" >
+            <img class="bg-image" src="img/photo/matheus-ferrero-334418-unsplash.jpg" alt="">           
+        </div>
+        
+        <div class="item home-full-item">
+            <img class="bg-image" src="img/photo/ian-dooley-347942-unsplash.jpg" alt="">        
+        </div>
+        <div class="item home-full-item">
+            <img class="bg-image" src="img/photo/haley-phelps-62815-unsplash.jpg" alt="">           
+        </div> *@
+
+    </div>
+
+
+
+</section>
+
+<vc:footer-section></vc:footer-section>
+@* <partial name="_Footer" /> *@
+
+@section Scripts {
+@* <!-- Owl Carousel-->
+<script src="lib/owl.carousel/owl.carousel.js"></script>
+<script src="lib/owl.carousel2.thumbs/owl.carousel2.thumbs.min.js"></script>
+<!-- NoUI Slider (price slider)-->
+<script src="lib/nouislider/nouislider.min.js"></script>
+<!-- Lightbox gallery-->
+<script src="lib/glightbox/js/glightbox.min.js"> </script> *@
+}

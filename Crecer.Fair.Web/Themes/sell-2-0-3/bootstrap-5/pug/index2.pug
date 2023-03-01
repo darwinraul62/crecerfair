@@ -1,0 +1,95 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var active = 'home'  
+    - var navbarClass = 'bg-transparent navbar-sticky navbar-airy navbar-dark bg-hover-white bg-fixed-white navbar-hover-light navbar-fixed-light'  
+    - var headerClass = 'header header-absolute'  
+
+block content
+    // Split-screen Homepage
+    section
+        .container-fluid
+            .row
+                .col-lg-6.dark-overlay.split-screen-column.align-items-center.align-items-lg-end(style="background-image: url(img/photo/ian-dooley-347942-unsplash.jpg); background-color: #d2cecb;") 
+                    .overlay-content.py-6.mt-6.px-lg-5.mt-lg-0.mb-lg-5
+                        h1.display-3.mb-4.text-white.fw-bold.split-screen-heading.letter-spacing-1 Gentlemen              
+                        p.lead.mb-4 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        p 
+                            a.btn.btn-light.mx-1.mb-1(href="category.html") View collection      
+                            a.btn.btn-outline-light.mx-1.mb-1(href="category.html") See more      
+                .col-lg-6.split-screen-column.align-items-center.align-items-lg-end(style="background-image: url(img/photo/ian-dooley-347962-unsplash.jpg); background-color: #e5b6b4;") 
+                    .py-6.px-lg-5.mb-lg-5
+                        h1.display-3.mb-4.text-white.fw-bold.split-screen-heading.letter-spacing-1 Ladies              
+                        p.lead.mb-4 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        p 
+                            a.btn.btn-light.mx-1.mb-1(href="category.html") View collection      
+                            a.btn.btn-outline-light.mx-1.mb-1(href="category.html") See more                              
+
+    section.pt-6.pb-5
+        .container
+
+            .row
+                .col-xl-8.mx-auto.text-center.mb-5
+                    h2.text-uppercase Latest arrivals
+                    p.lead.text-muted Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+            include _pug-includes/inc-var-shopitems.pug
+            - var itemClass = 'col-lg-3 col-md-4 col-6'
+            - var additionalButtons = false
+                .row
+                    each val, index in shopItems
+                        if (index <= 3)
+                            +product(val, itemClass, additionalButtons)
+
+    section.py-6.bg-gray-100
+        .container
+            .row
+                .col-xl-8.mx-auto.text-center.mb-5
+                    h2 Spring 2018 Collection
+                    p.lead.text-muted Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+            - var tiles = []
+            - tiles.push({name: 'Men', text: '', link: 'category.html', image: 'img/photo/nordwood-themes-481980-unsplash-square.jpg'})
+            - tiles.push({name: 'Ladies', text: '', link: 'category.html', image: 'img/photo/malvestida-magazine-458585-unsplash.jpg'})
+            - tiles.push({name: 'Accessories', text: '', link: 'category.html', image: 'img/photo/heather-schwartz-528936-unsplash.jpg'})
+
+            .row
+                each val, index in tiles
+                    if (index == 0)            
+                        .col-md-6.d-flex.align-items-md-stretch.mb-4.mb-md-0
+                            .d-flex.align-items-center.text-white.dark-overlay.w-100.text-center.py-6.py-md-0(style=`background: center center url(${val.image}) no-repeat; background-size: cover;`)
+                                a.tile-link(href=val.link)  
+                                .card-img-overlay.w-100.overlay-content
+                                    h2.display-2.fw-bold.text-uppercase.mb-0 #{val.name} 
+
+                .col-md-6
+                    each val, index in tiles
+                        if (index > 0)
+                            if (index == tiles.length - 1)
+                                - var tileClass = ''
+                            else
+                                - var tileClass = 'mb-4'
+                            div(class=`card border-0 text-white text-center ${tileClass} dark-overlay`) 
+                                img.card-img(src=val.image, alt=val.name)
+                                a.tile-link(href=val.link) 
+                                .card-img-overlay.d-flex.align-items-center
+                                    .text-center.w-100.overlay-content
+                                        h2.display-4.fw-bold.text-uppercase.text-center.mb-0 #{val.name}                                               
+
+    section.pt-6.pb-5
+        .container
+
+            .row
+                .col-xl-8.mx-auto.text-center.mb-5
+                    h2.text-uppercase Your favourites
+                    p.lead.text-muted Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+                include _pug-includes/inc-var-shopitems.pug
+                - var itemClass = 'product-slider-item'
+                - var additionalButtons = false
+
+                // Products Slider
+                .owl-carousel.owl-theme.product-slider
+                    each val, index in shopItems
+                        if (index > 1)
+                            +product(val, itemClass, additionalButtons)                                          

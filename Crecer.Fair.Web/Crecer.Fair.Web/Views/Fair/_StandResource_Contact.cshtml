@@ -1,0 +1,101 @@
+@model StandResourceCoordViewModel
+
+<div class="stand-contact-content stand-resource-item">
+    <div class="stand-contact-title stand-contact-trigger">Contacto</div>
+    @* <div class="row">
+        <div class="col-sm-12 text-center">
+        <h6 class="provider-name stand-contact-title">@Model.StandModel.ProviderName</h6>
+        </div>
+        </div> *@
+    <div class="stand-contact-data-area">
+        @if (!string.IsNullOrWhiteSpace(Model.StandModel.ContactData.Address))
+        {
+            <div class="stand-contact-row stand-contact-address-row">
+                <div class="contact-field-label">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Dirección</span>
+                </div>
+                <div class="contact-field-value">                    
+                    <span>@Model.StandModel.ContactData.Address</span>
+                </div>
+            </div>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.StandModel.ContactData.WebSite))
+        {
+            <div class="stand-contact-row stand-contact-web-site-row">
+                <div class="contact-field-label">
+                    <i class="fas fa-globe"></i>
+                    <span>Sitio WEB</span>
+                </div>
+                <div class="contact-field-value">                    
+                     <a href="@Model.StandModel.ContactData.WebSite">@Model.StandModel.ContactData.WebSite.Replace("http://","").Replace("https://","")</a>
+                </div>
+            </div>            
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.StandModel.ContactData.PhoneNumber1))
+        {
+            <div class="stand-contact-row stand-contact-phone-number-row">
+                <div class="contact-field-label">
+                    <i class="fas fa-phone"></i>
+                    <span>Teléfono</span>
+                </div>
+                <div class="contact-field-value">                    
+                     @Model.StandModel.ContactData.PhoneNumber1
+                </div>
+            </div>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.StandModel.ContactData.Email))
+        {
+            <div class="stand-contact-row  stand-contact-email-row">
+                <div class="contact-field-label">
+                     <i class="far fa-envelope"></i>
+                    <span>Email</span>
+                </div>
+                <div class="contact-field-value">                    
+                     <span>@Model.StandModel.ContactData.Email</span>
+                </div>
+            </div>           
+        }
+        @* <div class="row mt-2">
+            <div class="col-sm-12 text-center">
+            <div class="text-center">
+            <ul class="list-inline">
+            @if (!string.IsNullOrWhiteSpace(Model.StandModel.ContactData.TwitterAddress))
+            {
+            <li class="list-inline-item stand-contact-social"><a href="@Model.StandModel.ContactData.TwitterAddress"
+            target="_blank"><i class="fab fa-twitter"></i></a></li>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.StandModel.ContactData.FacebookAddress))
+            {
+            <li class="list-inline-item stand-contact-social"><a href="@Model.StandModel.ContactData.FacebookAddress"
+            target="_blank"><i class="fab fab fa-facebook"></i></a></li>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.StandModel.ContactData.InstagramAddress))
+            {
+            <li class="list-inline-item"><a href="@Model.StandModel.ContactData.InstagramAddress"
+            target="_blank"><i class="fab fab fa-instagram"></i></a></li>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.StandModel.ContactData.YoutubeAddress))
+            {
+            <li class="list-inline-item"><a href="@Model.StandModel.ContactData.YoutubeAddress"
+            target="_blank"><i class="fab fa-youtube"></i></a></li>
+            }
+            </ul>
+            </div>
+            </div>
+            </div> *@
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="btn-link btn stand-contact-more stand-contact-trigger">Más</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        $(".stand-contact-trigger").on('click', function () {
+            $('#modal-stand-contact').modal('show');
+        });
+    });
+</script>

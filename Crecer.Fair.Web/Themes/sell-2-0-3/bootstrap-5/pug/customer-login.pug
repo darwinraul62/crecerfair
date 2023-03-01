@@ -1,0 +1,63 @@
+extends _pug-includes/layout.pug
+
+block content
+       
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Customer zone'})
+    - var heroHeading = 'Customer zone'
+    - var heroHeadingClass = 'hero-heading mb-0'
+
+    include _pug-includes/inc-hero.pug        
+        
+    // customer login
+    section
+        .container
+            .row.justify-content-center
+                .col-lg-5
+                    .block
+                        .block-header
+                            h6.text-uppercase.mb-0 Login
+                        .block-body
+                            p.lead Already our customer?
+                            p.text-muted
+                                | Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
+                            hr
+                            form(action='customer-orders.html', method='get')
+                                .mb-4
+                                    label.form-label(for='email1') Email
+                                    input#email1.form-control(type='text')
+                                .mb-4
+                                    label.form-label(for='password1') Password
+                                    input#password1.form-control(type='password')
+                                .mb-4.text-center
+                                    button.btn.btn-outline-dark(type='submit')
+                                        i.fa.fa-sign-in-alt.me-2
+                                        |  Log in
+                .col-lg-5
+                    .block
+                        .block-header
+                            h6.text-uppercase.mb-0 New account
+                        .block-body 
+                            p.lead Not our registered customer yet?
+                            p.text-muted
+                                | With registration with us new world of fashion, fantastic discounts and much more opens to you! The whole process will not take you more than a minute!
+                            p.text-muted
+                                | If you have any questions, please feel free to 
+                                a(href='contact.html') contact us
+                                | , our customer service center is working for you 24/7.
+                            hr
+                            form(action='customer-orders.html', method='get')
+                                .mb-4
+                                    label.form-label(for='name') Name
+                                    input#name.form-control(type='text')
+                                .mb-4
+                                    label.form-label(for='email') Email
+                                    input#email.form-control(type='text')
+                                .mb-4
+                                    label.form-label(for='password') Password
+                                    input#password.form-control(type='password')
+                                .mb-4.text-center
+                                    button.btn.btn-outline-dark(type='submit')
+                                        i.far.fa-user.me-2
+                                        | Register                                

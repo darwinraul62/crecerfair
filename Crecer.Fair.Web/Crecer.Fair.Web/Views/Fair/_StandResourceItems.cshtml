@@ -1,0 +1,53 @@
+@model StandViewModel
+
+
+@foreach (var item in Model.Coords)
+{
+    <div resourceTypeId="@item.ResourceTypeId" class="stand-resource-map" 
+        style="width: @{@item.Width}px; left: @{@item.X}px; top:@{@item.Y}px; height: @{@item.Height}px; border:1px;">
+        @if(item.ResourceTypeId == ResourceTypes.Logo)
+        {
+            <partial name="_StandResource_Logo" model="item"></partial>
+        }
+        else if(item.ResourceTypeId == ResourceTypes.PhotoGallery)
+        {
+            <partial name="_StandResource_PhotoGallery" model="item"></partial>
+        }
+        else if(item.ResourceTypeId == ResourceTypes.Banner)
+        {
+            <partial name="_StandResource_Banner" model="item"></partial>
+        }
+        else if(item.ResourceTypeId == ResourceTypes.Text)
+        {
+            <partial name="_StandResource_Content" model="item"></partial>
+        }
+        else if(item.ResourceTypeId == ResourceTypes.Documents)
+        {
+            <partial name="_StandResource_Documents" model="item"></partial>
+        }
+        else if(item.ResourceTypeId == ResourceTypes.Link)
+        {
+            <partial name="_StandResource_Links" model="item"></partial>
+        }
+        else if(item.ResourceTypeId == ResourceTypes.Calendar)
+        {
+            <partial name="_StandResource_Calendar" model="item"></partial>
+        }
+        else if(item.ResourceTypeId == ResourceTypes.Video)
+        {
+            <partial name="_StandResource_Video" model="item"></partial>
+        }
+        else if(item.ResourceTypeId == ResourceTypes.Contact)
+        {
+            <partial name="_StandResource_Contact" model="item"></partial>
+        }
+        else if(item.ResourceTypeId == ResourceTypes.Name)
+        {
+            <partial name="_StandResource_Name" model="item"></partial>
+        }
+        else if(item.ResourceTypeId == ResourceTypes.SocialNetworks)
+        {
+            <partial name="_StandResource_SocialNetworks" model="item"></partial>
+        }
+    </div>
+}

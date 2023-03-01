@@ -1,0 +1,293 @@
+@model ChatComponentViewModel
+@{
+    string baseStyle = "";
+    string auxStyle = "";
+    if (Model.ProviderId.HasValue)
+    {
+        auxStyle = "chat-button-with-text";
+        baseStyle = "floating-chat-with-text";
+    }
+    else
+    {
+        auxStyle = "chat-button-without-text";
+        baseStyle = "floating-chat-without-text";
+    }
+}
+
+<style>
+    .floating-chat{
+        cursor: pointer;
+        background-color: rgba(53, 182, 83, 1);
+        border-color: #35b653;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: fixed;
+        bottom: 100px;
+        right: 28px;
+        height: 50px;
+        transform: translateY(70px);
+        transition: all 250ms ease-out;
+        border-radius: 50% !important;
+        border-style: solid;
+        border-width: 1px;
+        z-index: 10000;
+        font-size: large;
+    }
+
+    .floating-chat.disable-chat{
+        background-color: #343a40 !important;
+        color: gray !important;
+    }
+
+    .floating-chat.active-chat:hover,
+    .floating-chat.chat-button-active {
+        color: #343a40 !important;
+        background-color: rgba(53, 182, 83, 0.9);
+    }
+
+    .floating-chat-without-text {
+        width: 50px;
+        border-radius: 50% !important;
+    }
+
+    .floating-chat-with-text {
+        font-size: 22px;
+        border-radius: 15px !important;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .chat-button-without-text {
+        display: none;
+    }
+
+    .chat-button-with-text {
+        display: block;
+    }
+
+    .floating-chat-with-text .button-chat-text {
+        letter-spacing: 1px;
+        margin-right: 10px;
+    }
+
+    .fair-chat-content {
+        display: none;
+        position: fixed;
+        bottom: 60px;
+        right: 15px;
+        z-index: 9;
+        width: 400px;
+        height: 550px;
+    }
+
+    #instantmessaging-notification {
+        display: none;
+    }
+
+    #instantmessaging-notification.has-unread {
+        display: block !important;
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: gray;
+        letter-spacing: 0;
+    }
+</style>
+
+<div class="floating-chat @{@baseStyle} btn btn-sm disable-chat" id="floating-chat-button">
+    <div id="instantmessaging-notification">
+    </div>
+    <span id="chat-button-text" class="button-chat-text @{@auxStyle}">Chatea conmigo</span>
+    <i id="icon-chat" class="fas fa-comments" aria-hidden="true"></i>
+    <div id="fair-chat-container" class="fair-chat-content">
+        <div id="weavy-chat" style="height: 100%; width: 100%;"></div>
+    </div>
+</div>
+
+<div class="floating-chat" id="close-floating-chat-button" style="display: none;">
+    <i class="fas fa-comments" aria-hidden="true"></i>
+</div>
+
+<script>
+    var weavy = null;    
+    document.addEventListener("DOMContentLoaded", function () {
+        var chatOk = false;
+
+        var getChatToken = function () {
+            return $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetChatToken","Account")'
+            });
+        };
+
+        $.getScript("@Model.ChatServerUrl/javascript/weavy.js", function (data, textStatus, jqxhr) {
+            @* console.log(data); // Data returned
+            console.log(textStatus); // Success
+            console.log(jqxhr.status); // 200
+            console.log("Load was performed."); *@
+            initChat();
+        });
+    @*
+        <script src= "@Model.ChatServerUrl/javascript/weavy.js"></script> *@
+
+
+            $("#floating-chat-button").on("click", function () {
+
+                if(chatOk){
+                    if ($("#fair-chat-container").is(":visible")) {
+                        $("#fair-chat-container").hide();
+                        $("#icon-chat").attr('class', 'fas fa-comments');
+                        $("#chat-button-text").text("Chatea Conmigo");
+                        $(this).removeClass('chat-button-active');
+
+                    }
+                    else {
+                        $("#fair-chat-container").show();
+                        $("#icon-chat").attr('class', 'fas fa-times');
+                        $("#chat-button-text").text("Ocultar Chat");
+                        $(this).addClass('chat-button-active');
+                    }
+                }
+            });
+
+        function enableChat(enable){
+            if(enable){
+                $("#floating-chat-button").removeClass('disable-chat');
+                $("#floating-chat-button").addClass('active-chat');
+            }else{
+                $("#floating-chat-button").removeClass('active-chat');
+                $("#floating-chat-button").addClass('disable-chat');
+            }
+        }
+
+        function initChat() {
+            //Chat        
+            //var jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZW1vdXNlciIsIm5hbWUiOiJEZW1vIFVzZXIiLCJleHAiOjI1MTYyMzkwMjIsImlzcyI6IjJjNTJiMDkzLTI5YjctNDk3Yi1hYWRlLTJjMWU2ZDliMzAyZSIsImVtYWlsIjoiZGFyd2luQGVjdWJ5dGVzLmNvbSIsInVzZXJuYW1lIjoiZGVtbyJ9.Z_GSUYn6KnnzLMupoyQ6_1hbdFvzaKej0dzNnnvfCHw";
+
+            weavy = new Weavy({ jwt: getChatToken, lang: "es", tz: "SA Pacific Standard Time" });
+            var space = weavy.space({ key: "crecer.fair.general", lang: "es", container: "#weavy-chat" });
+            space.app({
+                key: "crecer.fair.general.chat",
+                type: "messenger",
+                container: "#weavy-chat",
+                lang: "es",
+                controls: false
+            });
+
+            function updateUnread(unreadCount) {
+                var im = $("#instantmessaging-notification");
+                if (unreadCount > 0) {
+                    im.text(unreadCount);
+                    im.addClass("has-unread");
+                } else {
+                    im.text('');
+                    im.removeClass("has-unread");
+                }
+            }
+
+            weavy.on("badge", function (e, data) {
+                updateUnread(data.conversations);
+            });
+
+            weavy.on("client-data", function (e, data) {
+                weavy.ajax("/api/conversations/unread").then(function (count) {
+                    updateUnread(count);
+                });
+            });
+
+            weavy.on("load", function (e, data) {
+            setTimeout(function(){
+           
+            @if(Model.ChatMode == ChatMode.OnlyAllowedConversations
+                || Model.ChatMode == ChatMode.All)
+            {
+                <text>
+                
+                @if(Model.ChatMode == ChatMode.OnlyAllowedConversations)
+                {
+                    <text>
+                    weavy.space("crecer.fair.general").app("crecer.fair.general.chat").
+                                    panel.postMessage({ name: "hide-header-conversation-actions" });
+                                    
+                    weavy.space("crecer.fair.general").app("crecer.fair.general.chat").panel.on("panel-loading", function (e) {
+                            @* //if (!e.isLoading){ *@
+                            weavy.space("crecer.fair.general").app("crecer.fair.general.chat").
+                            panel.postMessage({ name: "hide-header-conversation-actions" });                             
+                        });
+                    </text>
+                }
+                
+                @if(Model.AllowedEmailConversations != null && Model.AllowedEmailConversations.Any())
+                {
+                    <text>                       
+                        var arrayUsers = new Array();
+                        @foreach (var item in Model.AllowedEmailConversations)
+                        {
+                            @:arrayUsers.push('@item');
+                        }
+
+                        weavy.ajax("/api/users/byemail", { emails : arrayUsers } ,'POST').then(function (users) {
+
+                            users.forEach(function (currentValue, index, array) {
+                                if(weavy.user.id != currentValue.id)
+                                    weavy.ajax("/api/conversations", { members : [ currentValue.id ] }, 'POST');                            
+                            });
+
+                            chatOk = true;
+                            enableChat(chatOk);
+
+                        @if (!string.IsNullOrWhiteSpace(Model.ProviderEmail))
+                        {
+                            <text>
+                      
+                                weavy.ajax("/api/users/byemail", { emails: [ '@Model.ProviderEmail' ] }, 'POST').then(function (providerUser) {
+
+                                    weavy.ajax("/api/conversations", { members : [ providerUser[0].id ] }, 'POST').then(function (data) {
+
+                                        var route = "/e/messenger/" + data.id;
+                                        weavy.space("crecer.fair.general").app("crecer.fair.general.chat").open(route);
+
+                                        @* weavy.space("crecer.fair.general").app("crecer.fair.general.chat").panel.on("panel-loading", function (e) {
+                                            weavy.space("crecer.fair.general").app("crecer.fair.general.chat").
+                                            panel.postMessage({ name: "hide-list-conversations" });
+
+                                            chatOk = true;
+                                            enableChat(chatOk);
+                                        }); *@
+
+                                    });
+
+                                });
+
+                            </text>
+                        }           
+            
+                        //fin email retrieve
+                        });
+                    </text>                    
+                }
+                else
+                {
+                    <text>
+                    //all                
+                    chatOk = true;
+                    enableChat(chatOk);
+                    </text>
+                }
+                                     
+                </text>
+            }            
+            },1500);
+
+            });
+
+
+
+        }
+    });
+</script>

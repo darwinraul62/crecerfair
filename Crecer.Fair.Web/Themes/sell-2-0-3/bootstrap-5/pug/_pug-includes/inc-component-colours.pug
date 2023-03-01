@@ -1,0 +1,17 @@
+ul.list-inline.mb-0.colours-wrapper
+    - var colours = {'Blue': '#668cb9', 'White': '#fff', 'Violet': '#8b6ea4', 'Red': '#dd6265'}
+    each colour, name in colours
+
+        if (coloursSidebar)
+            - name = 'sidebar_' + name
+
+        li.list-inline-item
+            if (coloursMultiple)
+                label.btn-colour(for=`colour_${name}`, style=`background-color: ${colour}`, data-allow-multiple) 
+            else
+                label.btn-colour(for=`colour_${name}`, style=`background-color: ${colour}`) 
+
+            if (coloursRequired)
+                input(type="radio", name="colour", value=`value_${name}`, id=`colour_${name}`, class="input-invisible", required)
+            else
+                input(type="checkbox", name="colour", value=`value_${name}`, id=`colour_${name}`, class="input-invisible")

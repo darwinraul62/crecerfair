@@ -1,0 +1,17 @@
+@model ProviderResourceGeneralEditViewModel
+
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Inicio</a></li>            
+            @if(!User.GetFairProviderId().HasValue)
+            {
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Provider">Proveedores</a></li>
+            }
+			<li class="breadcrumb-item active">
+				<a asp-action="Index" asp-controller="ProviderResource" asp-route-id="@Model.ProviderId">Recursos</a>
+			</li>
+            <li class="breadcrumb-item active">@Model.ResourceTypeName</li>
+        </ol>
+    </nav>
+</div>

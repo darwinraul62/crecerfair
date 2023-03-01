@@ -1,0 +1,21 @@
+// Quickview Modal    
+#exampleModal.modal.fade.quickview(tabindex='-1', role='dialog', aria-hidden='true')
+    .modal-dialog.modal-lg(role='document')
+        .modal-content
+            button.close.modal-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                +svgIcon('close-1', 'w-100 h-100 svg-icon-light align-middle')
+            .modal-body 
+                .ribbon.ribbon-primary Sale
+                
+                .row
+                    .col-lg-6
+                        - var images = ['img/photo/kyle-loftus-596319-detail-1.jpg', 'img/photo/kyle-loftus-596319-detail-2.jpg', 'img/photo/kyle-loftus-596319-detail-3.jpg', 'img/photo/kyle-loftus-594535-unsplash-detail-3.jpg', 'img/photo/kyle-loftus-594535-unsplash-detail-4.jpg']
+
+                        .owl-carousel.owl-theme.owl-dots-modern.detail-full(data-slider-id='1')
+                            each image, index in images
+                                .detail-full-item-modal(style=`background: center center url('${path}${image}') no-repeat; background-size: cover;`)   
+
+                    .col-lg-6.d-flex.align-items-center
+                        div
+                            - var detailInModal = true
+                            include inc-detail-main.pug

@@ -1,0 +1,73 @@
+- var descClass = 'mb-4 text-muted'
+
+if (!detailInModal && !detail3)
+    h1.mb-4 Modern Jacket
+else if (detail3) 
+    h1.h2.mb-4 Modern Jacket   
+else
+    h2.mb-4.mt-4.mt-lg-1 Modern Jacket
+    
+
+.d-flex.flex-column.flex-sm-row.align-items-sm-center.justify-content-sm-between.mb-4
+    ul.list-inline.mb-2.mb-sm-0
+        li.list-inline-item.h4.fw-light.mb-0 $65.00
+        li.list-inline-item.text-muted.fw-light 
+            del $90.00
+
+    .d-flex.align-items-center
+        ul.list-inline.me-2.mb-0
+            li.list-inline-item.me-0
+                i.fa.fa-star.text-primary
+            li.list-inline-item.me-0
+                i.fa.fa-star.text-primary
+            li.list-inline-item.me-0
+                i.fa.fa-star.text-primary
+            li.list-inline-item.me-0
+                i.fa.fa-star.text-primary
+            li.list-inline-item.me-0
+                i.fa.fa-star.text-gray-300
+                
+        span.text-muted.text-uppercase.text-sm 25 reviews
+
+p(class=descClass) Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+
+form(action="#")
+    .row
+        .col-sm-6.col-lg-12.detail-option.mb-3
+            h6.detail-option-heading Size <span>(required)</span>
+            - var sizes = ['Small', 'Medium', 'Large']
+            each val,index in sizes
+                label.btn.btn-sm.btn-outline-secondary.detail-option-btn-label(for=`size_${index}`) 
+                    | #{val}
+                    input(type="radio", name="size", value=`value_${index}`, id=`size_${index}`, class="input-invisible", required)
+        if (!detail3)
+            .col-sm-6.col-lg-12.detail-option.mb-3
+                h6.detail-option-heading Type <span>(required)</span>
+                - var materials = ['Hoodie', 'College']
+                each val,index in materials
+                    label.btn.btn-sm.btn-outline-secondary.detail-option-btn-label(for=`material_${index}`) 
+                        | #{val}
+                        input(type="radio", name="material", value=`value_${index}`, id=`material_${index}`, class="input-invisible", required)
+
+        .col-12.detail-option.mb-3
+            h6.detail-option-heading Colour <span>(required)</span>
+
+            - var coloursMultiple = false
+            - var coloursRequired = true
+            - var coloursSidebar = false
+
+            include inc-component-colours.pug
+
+        .col-12.col-lg-6.detail-option.mb-5
+            label.detail-option-heading.fw-bold Items <span>(required)</span>
+            input.form-control.detail-quantity(name="items", type='number', value="1")
+            
+    ul.list-inline
+        li.list-inline-item
+            button.btn.btn-dark.btn-lg.mb-1(type="submit") 
+                i.fa.fa-shopping-cart.me-2
+                | Add to Cart
+        li.list-inline-item
+            a.btn.btn-outline-secondary.mb-1(href="#") 
+                i.far.fa-heart.me-2
+                |Add to wishlist

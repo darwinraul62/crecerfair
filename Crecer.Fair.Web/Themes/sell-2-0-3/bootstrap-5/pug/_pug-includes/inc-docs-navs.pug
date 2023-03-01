@@ -1,0 +1,23 @@
+// Button trigger modal
+button.btn.btn-dark(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal')
+    | Launch demo modal
+// Modal
+#exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+    .modal-dialog(role='document')
+        .modal-content
+            button.close.modal-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                +svgIcon('close-1', 'w-100 h-100 svg-icon-light align-middle')
+            .modal-body.text-center
+                h2#exampleModalLabel.modal-title.mb-4 Modal title
+                p.text-muted
+                    strong Pellentesque habitant morbi tristique
+                    |  senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. 
+                    em Aenean ultricies mi vitae est.
+                    |  Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, 
+                    code commodo vitae
+                    | , ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. 
+                    a(href='#') Donec non enim
+                    |  in turpis pulvinar facilisis. Ut felis.
+            .modal-footer.justify-content-center
+                button.btn.btn-outline-dark(type='button', data-bs-dismiss='modal') Close
+                button.btn.btn-dark(type='button') Save changes

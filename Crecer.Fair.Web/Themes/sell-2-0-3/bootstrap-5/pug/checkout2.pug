@@ -1,0 +1,51 @@
+extends _pug-includes/layout.pug
+
+block content
+
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Checkout'})
+    - var heroHeading = 'Checkout'
+    - var heroText ='<p class="lead text-muted">Choose your delivery method.</p>'
+    
+    include _pug-includes/inc-hero.pug
+    
+    // Checkout
+    section
+        .container
+            .row
+                .col-lg-8
+
+                    - var step = 1
+                    include _pug-includes/inc-checkout-nav.pug
+                    
+                    .block.my-5
+                        .block-body
+                            .row
+                                - var options = []
+                                - options.push({name: 'Usps next day', description: 'Get it right on next day - fastest option possible.'})
+                                - options.push({name: 'Usps next day', description: 'Get it right on next day - fastest option possible.'})
+                                - options.push({name: 'Usps next day', description: 'Get it right on next day - fastest option possible.'})
+                                - options.push({name: 'Usps next day', description: 'Get it right on next day - fastest option possible.'})
+
+                                each val, index in options
+                                    .mb-4.col-md-6.d-flex.align-items-center
+                                        input(type="radio", name="shippping", id=`option${index}`)
+                                        label.ms-3(for=`option${index}`)
+                                            strong.d-block.text-uppercase.mb-2 #{val.name}
+                                            span.text-muted.text-sm #{val.description}
+                                    
+                            
+                        .mb-5.d-flex.justify-content-between.flex-column.flex-lg-row
+                            a.btn.btn-link.text-muted(href="cart.html") 
+                                i.fa.fa-angle-left.me-2
+                                | Back to the addresses
+                            a.btn.btn-dark(href="checkout3.html")
+                                | Choose payment method
+                                i.fa.fa-angle-right.ms-2
+                                        
+                                        
+                
+                .col-lg-4
+                    include _pug-includes/inc-checkout-summary.pug
+                        

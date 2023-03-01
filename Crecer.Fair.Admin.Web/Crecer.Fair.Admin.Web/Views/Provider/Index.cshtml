@@ -1,0 +1,216 @@
+@{
+	this.ViewBag.Title = "Proveedores";
+}
+
+@section TopLeftArea{
+<a class="float-end ms-2" asp-action="Create" asp-controller="Provider">
+	<button class="btn btn-primary">
+		<i class="fas fa-plus"></i> Nuevo</button>
+</a>
+
+<button id="export-button" class="btn btn-secondary float-end">
+    <i class="far fa-file-excel"></i> Exportar</button>
+
+}
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			@* <div class="card-header">
+				<h5 class="card-title">Responsive DataTables</h5>
+				<h6 class="card-subtitle text-muted">Highly flexible tool that many advanced features to any HTML table.
+				See official documentation <a href="https://datatables.net/extensions/responsive/" target="_blank"
+				rel="noopener noreferrer nofollow">here</a>.</h6>
+				</div> *@
+			<div class="card-body">
+				<table id="datatables-provider" class="table table-striped" style="width:100%">
+					<thead>
+						<tr>
+							<th style="min-width: 110px;"></th>
+							<th>ID</th>
+							<th>RUC</th>
+							<th>Nombre</th>
+							<th>Email</th>
+							<th>Dirección</th>
+							<th>Teléfono</th>
+							<th>Teléfono 2</th>
+							<th>Activo</th>
+						</tr>
+						<tr class="filters">
+							<th></th>
+							<th><input type="text" class="form-control" placeholder="Filtrar" /></th>
+							<th><input type="text" class="form-control" placeholder="Filtrar" /></th>
+							<th><input type="text" class="form-control" placeholder="Filtrar" /></th>
+							<th><input type="text" class="form-control" placeholder="Filtrar" /></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+<script>
+	$(function () {
+
+		var dataTableRequest = {};
+        $("#export-button").on("click", function () {
+            dataTableRequest.export = true;
+            dataTableRequest.length = table.page.info().recordsTotal;  //all records
+            var queryString = $.param(dataTableRequest);
+            window.open('@Url.Action("GetList","Provider")?' + queryString, "_blank")
+        });
+
+		@* $('#datatables-provider thead tr')
+				.clone(true)
+				.addClass('filters')
+				.appendTo('#datatables-provider thead'); *@
+
+		var table = $("#datatables-provider").DataTable(
+				{
+				"columnDefs": [ {
+					"targets": 8,
+					//"data": null,
+					//"defaultContent": "<button>Click!</button>"
+					"render": function (data, type, row){
+						if(data){
+							return '<div class="text-center"><i class="fas fa-check"></i></div>';
+						}
+						else{
+							return '<div class="text-center"><i class="fas fa-ban"></i></div>';
+						}
+						 
+					}
+				} 
+				], 
+					//dom : "lrtip",
+				//	dom: '<lf<t>ip>',
+				orderCellsTop: true,
+				fixedHeader: true,
+				"order": [[3, 'asc']],
+				"searching": true,
+				"processing": true,
+				"serverSide": true,
+				"ordering": true,
+				 "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "Nada para mostrar",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                },
+				"columns": [
+				{
+					"name": "actions",
+					"data": null,
+					"orderable": false,
+					"defaultContent": 
+						`
+						<div class="table-action">
+						<a action-type="EDITGENERAL" class="float-left" href="#"><i class="align-middle me-2 far fa-fw fa-edit"></i></a>
+						<a action-type="EDITRESOURCES" class="float-left" href="#"><i class="align-middle me-2 far fa-images"></i></a>
+						<a action-type="EDITUSERS" class="float-left" href="#"><i class="align-middle me-2 fas fa-users"></i></a>
+						<a action-type="EDITCALENDAR" class="float-left" href="#"><i class="align-middle me-2 far fa-calendar-alt"></i></a>						
+						</div>						
+						`
+				},
+				{ "data": "providerId", "name": "ProviderId", visible: false, "orderable": false },
+				{ "data": "identification", "name": "Identification", orderable: true, "searchable": true },
+				@* { "data": "tradename", "name": "Tradename", orderable: true, "orderSequence": [ "asc" ] }, *@
+				{ "data": "tradename", "name": "Tradename", orderable: true, "searchable": true },
+				{ "data": "email", "name": "Email", "searchable": true },
+				{ "data": "address", "name": "Address", "searchable": true },
+				{ "data": "phoneNumber1", "name": "PhoneNumber1", "searchable": true },
+				{ "data": "phoneNumber2", "name": "PhoneNumber2", "searchable": true },
+				{ "data": "active", "name": "active", "searchable": true }
+			],
+				@* "columnDefs": [
+					{
+					"targets": [ 2 ],
+					"visible": false,
+					"searchable": false
+					}
+					], *@
+				"ajax": {
+					"url": "/Provider/GetList",
+					"data": function (data) {                      
+                        dataTableRequest = data;                        
+                    }
+				}			
+		}
+	);
+
+		// Apply the search
+		table.columns().eq(0).each(function (colIdx) {
+			$('input',
+				$('#datatables-provider .filters th').eq($(table.column(colIdx).header()).index())
+			).on('keyup',
+
+				ecubytes.functions.delay(
+					function () {
+
+						table
+							.column(colIdx)
+							.search(this.value)
+							.draw();
+					}
+					, 1000)
+			);
+		});
+
+	$('#datatables-provider_filter').hide();
+
+	$('#datatables-provider tbody').on('click', 'a', function () {
+		@* var data = table.row($(this).parents('tr')).data();
+				alert(data[0] + "'s salary is: " + data[5]); *@
+		let data = $('#datatables-provider').DataTable().row($(this).parents('tr')).data();
+		let url = ''; 
+		let action = $(this).attr('action-type');
+
+		if(action == 'EDITGENERAL')
+			url = '@Url.Action("Edit","Provider")';
+		else if(action == 'EDITRESOURCES')
+			url = '@Url.Action("Index","ProviderResource")';
+		else if(action == 'EDITUSERS')
+			url = '@Url.Action("EditUsers","Provider")';
+		else if(action == 'EDITCALENDAR')
+			url = '@Url.Action("EditCalendar","Provider")';
+		
+		location.href = url + '?id=' + data["providerId"];
+	});
+	
+
+	});
+
+	var ecubytes = {
+        functions:
+        {
+            delay: function (callback, ms) {
+                var timer = 0;
+                return function () {
+                    var context = this, args = arguments;
+                    clearTimeout(timer);
+                    timer = setTimeout(function () {
+                        callback.apply(context, args);
+                    }, ms || 0);
+                };
+            }
+        }
+    }
+
+</script>
+}

@@ -1,0 +1,19 @@
+{
+  "solution": "Crecer.Fair.Web.Full.sln",
+  "mappings": {
+    "Ecubytes.AspNetCore.Mvc": "../../../EcubytesFramework/Common/Ecubytes.AspNetCore.Mvc/Ecubytes.AspNetCore.Mvc.csproj",
+    "Ecubytes.AspNetCore.Authentication": "../../../EcubytesFramework/Common/Ecubytes.AspNetCore.Authentication/Ecubytes.AspNetCore.Authentication.csproj",
+    "Ecubytes.AspNetCore.Http": "../../../EcubytesFramework/Common/Ecubytes.AspNetCore.Http/Ecubytes.AspNetCore.Http.csproj",
+    "Ecubytes.AspNetCore.WebUtilities": "../../../EcubytesFramework/Common/Ecubytes.AspNetCore.WebUtilities/Ecubytes.AspNetCore.WebUtilities.csproj",
+    "Ecubytes.DependencyInjection": "../../../EcubytesFramework/Common/Ecubytes.DependencyInjection/Ecubytes.DependencyInjection.csproj",
+    "Ecubytes.AspNetCore": "../../../EcubytesFramework/Common/Ecubytes.AspNetCore/Ecubytes.AspNetCore.csproj",
+    "Ecubytes.AspNetCore.Authorization": "../../../EcubytesFramework/Common/Ecubytes.AspNetCore.Authorization/Ecubytes.AspNetCore.Authorization.csproj",
+    "Ecubytes.Sdk.Identity": "../../../EcubytesFramework/Sdk/Ecubytes.Sdk.Identity/Ecubytes.Sdk.Identity.csproj",
+    "Ecubytes.AspNetCore.Mvc.TagHelpers": "../../../EcubytesFramework/Common/Ecubytes.AspNetCore.Mvc.TagHelpers/Ecubytes.AspNetCore.Mvc.TagHelpers.csproj",
+    "Ecubytes.Data": "../../../EcubytesFramework/Common/Ecubytes.Data/Ecubytes.Data.csproj",
+    "Ecubytes.Extensions.Mvc.Razor": "../../../EcubytesFramework/Common/Ecubytes.Extensions.Mvc.Razor/Ecubytes.Extensions.Mvc.Razor.csproj",
+    "Ecubytes.JsonUtilities": "../../../EcubytesFramework/Common/Ecubytes.JsonUtilities/Ecubytes.JsonUtilities.csproj",
+    "Ecubytes.ImageUtilities": "../../../EcubytesFramework/Common/Ecubytes.ImageUtilities/Ecubytes.ImageUtilities.csproj"
+  },
+  "removeProjects": false
+}

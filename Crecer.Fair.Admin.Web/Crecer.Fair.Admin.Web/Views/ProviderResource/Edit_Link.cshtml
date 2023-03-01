@@ -1,0 +1,157 @@
+@model ProviderResourceGeneralEditViewModel
+@{
+	ViewBag.Title = $"{Model.ProviderName} - Editar Recurso";
+	string titleAction = "Crear";
+
+	if(Model.IsDelete)
+	{
+		titleAction = "Eliminar";
+	}
+	else if (Model.ResourceId != Guid.Empty)
+	{
+		titleAction = "Actualizar";
+	}
+}
+
+<partial name="_BreadCrumbProviderResource" model="@Model"></partial>
+
+<div class="col-12 col-xl-12">
+	<div class="card">
+		<div class="card-header">
+			<h5 class="card-title">@titleAction Recurso (@Model.ResourceTypeName)</h5>
+		</div>
+		<div class="card-body pt-0">
+			<form method="post" asp-action="EditGeneral" asp-controller="ProviderResource">
+				@* <div class="mb-3">
+					<msgblock></msgblock>
+					</div> *@
+				<input type="hidden" asp-for="ProviderId">
+				<input type="hidden" asp-for="ResourceId">
+				<input type="hidden" asp-for="ResourceTypeId">
+				<div class="row">
+					<div class="mb-3 col-md-6">
+						<label class="form-label" asp-for="Name"></label>						
+						<input type="text" class="form-control" asp-for="Name" editfield>
+						<span asp-validation-for="Name"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="mb-3 col-md-6">
+						<label class="form-label" asp-for="Value"></label>
+						<input type="text" class="form-control" asp-for="Value" editfield>
+						<span asp-validation-for="Value"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="mb-3 col-md-6">
+						<label class="form-label" asp-for="Priority">Prioridad</label>
+						<input type="number" class="form-control" asp-for="Priority" editfield>
+						<span asp-validation-for="Priority"></span>
+
+					</div>
+				</div>
+
+				@if(Model.IsDelete)
+				{
+					<button id="post-delete-button" type="submit" class="btn btn-danger mt-3">@titleAction</button>					
+				}
+				else if(!Model.IsReadOnly)
+				{
+					<button id="post-resource-button" type="submit" class="btn btn-primary mt-3">@titleAction</button>
+				}
+				
+
+			</form>
+		</div>
+	</div>
+</div>
+
+
+@section Scripts{
+<script>
+	var editor = null;
+
+	$(function () {
+		$("#post-resource-button").on('click', function (e) {
+			e.preventDefault();
+			postResource();
+		});
+		$("#post-delete-button").on('click', function (e) {
+			e.preventDefault();
+			deleteResource();
+		});
+
+		@if(Model.IsReadOnly)
+		{
+			@: $("[editfield]").attr("readonly","readonly");		
+		}
+	});
+
+	function deleteResource(){
+		$.ajax({
+			type: "POST",
+			url: '@Html.Raw(Url.Action("DeleteResource","ProviderResource", new { providerId = Model.ProviderId, resourceId = Model.ResourceId } ))',			
+			success: function (data) {
+				if (data.isValid) {
+					location.href = data.redirectUrl;
+				}
+				else {
+					window.notyf.open({
+						type: 'error',
+						message: data.messages[0].text
+					});
+				}
+			},
+			error: function () {
+				window.notyf.open({
+					type: 'error',
+					message: "No se pudo eliminar el registro"
+				});
+			},
+			dataType: 'json'
+		});
+	}	
+
+	function postResource() {
+		let providerId = $("#ProviderId").val();
+		let resourceId = $("#ResourceId").val();
+		let name = $("#Name").val();
+		let resourceTypeId = $("#ResourceTypeId").val();
+		let value = $("#Value").val();
+		let priority = $("#Priority").val();
+
+		let model = {
+			providerId: providerId,
+			resourceId: resourceId,
+			resourceTypeId: resourceTypeId,
+			name: name,
+			priority : priority,
+			value: value
+		}
+
+		$.ajax({
+			type: "POST",
+			url: '@Url.Action("EditGeneral","ProviderResource")',
+			data: model,
+			success: function (data) {
+				if (data.isValid) {
+					location.href = data.redirectUrl;
+				}
+				else {
+					window.notyf.open({
+						type: 'error',
+						message: data.messages[0].text
+					});
+				}
+			},
+			error: function () {
+				window.notyf.open({
+					type: 'error',
+					message: "No se pudo completar la transacción"
+				});
+			},
+			dataType: 'json'
+		});
+	}
+</script>
+}

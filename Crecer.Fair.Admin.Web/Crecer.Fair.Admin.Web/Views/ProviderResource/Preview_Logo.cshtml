@@ -1,0 +1,25 @@
+@model ResourceTypeViewModel
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-actions float-end mt-0">
+            <a action-type="EDIT" asp-action="Edit" asp-controller="ProviderResource"
+                asp-route-providerId="@Model.MainData.ProviderId" asp-route-type="@Model.ResourceTypeId"
+                asp-route-resourceId="@Model.Resources[0].ResourceId"><i
+                    class="align-middle me-2 far fa-fw fa-edit"></i></a>
+        </div>
+
+        <h4 class="mt-1">Logo            
+        </h4>
+    </div>
+
+    <div class="card-body">
+
+        <div class="text-center">
+
+            <img src="@Model.Resources[0].Value" style="width: 350px; height: 150px; object-fit: scale-down" />
+
+        </div>
+
+    </div>
+</div>

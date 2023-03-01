@@ -1,0 +1,113 @@
+@model ProviderEditViewModel
+
+<div class="mb-3">
+    <msgblock></msgblock>
+</div>
+<input type="hidden" asp-for="ProviderId">
+<div class="row">
+    <div class="mb-3 col-md-6">
+        <label class="form-label" asp-for="Identification"></label>
+        <input type="text" class="form-control" asp-for="Identification">
+        <span asp-validation-for="Identification"></span>
+    </div>
+    <div class="mb-3 col-md-6">
+        <label class="form-label" asp-for="CategoryId"></label>
+        <select class="form-control select2" data-toggle="select2" asp-for="CategoryId"
+            asp-items="Model.CategorySelectList" placeholder="Seleccione una Categoría"
+            aria-placeholder="Seleccione una Categoría"></select>
+        <span asp-validation-for="CategoryId"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="mb-3 col-md-6">
+        <label class="form-label" asp-for="Tradename"></label>
+        <input type="text" class="form-control" asp-for="Tradename">
+        <span asp-validation-for="Tradename"></span>
+    </div>
+    <div class="mb-3 col-md-6">
+        <label class="form-label" asp-for="BusinessName"></label>
+        <input type="text" class="form-control" asp-for="BusinessName">
+        <span asp-validation-for="BusinessName"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="mb-3 col-md-6">
+        <label class="form-label" asp-for="Email"></label>
+        <input type="email" class="form-control" placeholder="Email" asp-for="Email">
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div class="mb-3 col-md-6">
+        <label class="form-label" asp-for="Website"></label>
+        <input type="text" class="form-control" placeholder="Sitio Web" asp-for="Website"></textarea>
+        <span asp-validation-for="Website"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="mb-3 col-md-6">
+        <label class="form-label" asp-for="PhoneNumber1"></label>
+        <input type="tel" class="form-control" placeholder="Teléfono" asp-for="PhoneNumber1">
+        <span asp-validation-for="PhoneNumber1"></span>
+    </div>
+    <div class="mb-3 col-md-6">
+        <label class="form-label" asp-for="PhoneNumber2"></label>
+        <input type="tel" class="form-control" placeholder="Teléfono 2" asp-for="PhoneNumber2">
+        <span asp-validation-for="PhoneNumber2"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="mb-3 col-md-12">
+        <label class="form-label" asp-for="Address"></label>
+        <textarea class="form-control" placeholder="Dirección" asp-for="Address"></textarea>
+        <span asp-validation-for="Address"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="mb-3 col-md-6">
+        <div class="input-group">
+            <span class="input-group-text"><i class="align-middle fab my-1 fa-facebook"></i></span>
+            <input type="tel" class="form-control" placeholder="Facebook" asp-for="FacebookAddress">
+        </div>
+    </div>
+
+    <div class="mb-3 col-md-6">
+        <div class="input-group">
+            <span class="input-group-text"><i class="align-middle fab my-1 fa-twitter"></i></span>
+            <input type="tel" class="form-control" placeholder="Twitter" asp-for="TwitterAddress">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="mb-3 col-md-6">
+        <div class="input-group">
+            <span class="input-group-text"><i class="align-middle fab my-1 fa-instagram"></i></span>
+            <input type="tel" class="form-control" placeholder="Instagram" asp-for="InstagramAddress">
+        </div>
+    </div>
+
+    <div class="mb-3 col-md-6">
+        <div class="input-group">
+            <span class="input-group-text"><i class="align-middle fab my-1 fa-youtube"></i></span>
+            <input type="tel" class="form-control" placeholder="Youtube" asp-for="YoutubeAddress">
+        </div>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label class="form-check m-0">
+        <input type="checkbox" class="form-check-input" asp-for="Active">
+        <span class="form-check-label">Activo</span>
+    </label>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        $("#CategoryId").select2();
+    });
+
+</script>

@@ -1,0 +1,36 @@
+@model UserEditViewModel
+
+<div class="mb-3">
+    <msgblock></msgblock>
+</div>
+<input type="hidden" asp-for="UserId">
+<div class="row">
+    <div class="mb-3 col-md-6">
+        <label class="form-label" asp-for="Email"></label>
+        <input type="text" class="form-control" asp-for="Email"  disabled="@(Model?.UserId != Guid.Empty)" >
+        <span asp-validation-for="Email"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="mb-3 col-md-6">
+        <label class="form-label" asp-for="Names"></label>
+        <input type="text" class="form-control" asp-for="Names">
+        <span asp-validation-for="Names"></span>
+    </div>
+    <div class="mb-3 col-md-6">
+        <label class="form-label" asp-for="LastNames"></label>
+        <input type="text" class="form-control" asp-for="LastNames">
+        <span asp-validation-for="LastNames"></span>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="mb-3">
+        <label class="form-check m-0">
+            <input type="checkbox" class="form-check-input" asp-for="BlockLogin">
+            <span class="form-check-label">Bloquer Inicio de Sesión</span>
+        </label>
+    </div>
+</div>

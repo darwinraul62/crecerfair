@@ -1,0 +1,40 @@
+include dummyText
+include mixins.pug
+doctype
+html(lang="en")
+  block vars
+    - var clientZone = false
+    - var active = ''
+    - var bodyAttrs = {}
+
+  if (!path)
+    - var path = ''
+
+  head
+    include head.pug
+
+    if (active == 'docs')
+      - var bodyAttrs = {'data-spy': "scroll", 'data-bs-target': "#components-nav", 'data-offset':"81"}
+    else
+      - var bodyAttrs = {}
+
+  body&attributes(bodyAttrs)
+    if (!locals.justContent)
+      if (header == 2)
+        include navbar-2.pug
+      else if (header == 3)
+        include navbar-3.pug
+      else
+        include navbar.pug
+
+    block content
+
+    if (!locals.justContent)
+      include footer.pug
+
+      include scrolltop.pug
+
+      if (locals.styleSwitcher)
+        include style-switcher.pug
+
+      include scripts.pug

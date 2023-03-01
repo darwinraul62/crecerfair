@@ -1,0 +1,137 @@
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<partial name="_SimpleHeader" />
+
+<!-- Hero Section-->
+<section class="hero">
+    <div class="container">
+        <!-- Hero Content-->
+        <div class="hero-content mt-4 pb-5 text-center">
+            <h1 class="hero-heading mb-0">Ingreso a la Feria</h1>
+        </div>
+    </div>
+</section>
+<!-- customer login-->
+<section>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <div class="block">
+                    <div class="block-header">
+                        <h6 class="text-uppercase mb-0">Registro</h6>
+                    </div>
+
+                    <div class="block-body">                        
+                        <form asp-action="Register" asp-controller="Account" method="post">
+                            <input type="hidden" id="Step" name="Step" value="@Model.Step">   
+                            <input type="hidden" id="Pwd" name="Pwd" value="@Model.Pwd">                               
+                            <div id="emai-validation-body" class="block-body show-email-validation">
+                                <p class="lead">Validación de Email</p>
+                                <p class="text-muted">Hemos enviado un Email, registra el código que te llego</p>                                
+                                <hr>
+                                <msgblock></msgblock>
+                                <div class="mb-4">
+                                    <label class="form-label" asp-for="OtpEmailValidation">Código de Verificación</label>
+                                    <input class="form-control" asp-for="OtpEmailValidation" type="text">
+                                    <span asp-validation-for="OtpEmailValidation"></span>
+                                </div>
+                            </div>
+                            <div id="form-body" class="show-form">
+                                <p class="lead">¿No estás registrado aún?</p>
+                                <p class="text-muted">Puedes registrarte si eres socio de la Cooperativa</p>
+                                @* <p class="text-muted">¡El registro es Gratis!</p> *@
+                                <hr>                 
+                                <msgblock></msgblock>               
+                                <div class="mb-4">
+                                    <label class="form-label" asp-for="Identification">Identificación</label>
+                                    <input class="form-control" asp-for="Identification" type="text">
+                                    <span asp-validation-for="Identification"></span>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" asp-for="Names">Nombres</label>
+                                    <input class="form-control" asp-for="Names" type="text">
+                                    <span asp-validation-for="Names"></span>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" asp-for="LastNames">Apellidos</label>
+                                    <input class="form-control" asp-for="LastNames" type="text">
+                                    <span asp-validation-for="LastNames"></span>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" asp-for="Email">Email</label>
+                                    <input class="form-control" asp-for="Email" type="text">
+                                    <span asp-validation-for="Email"></span>
+                                    <input type="hidden" asp-for="OtpEmailValidation"></hidden>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" asp-for="PhoneNumber">Teléfono</label>
+                                    <input class="form-control" asp-for="PhoneNumber" type="text" maxlength="20">
+                                    <span asp-validation-for="PhoneNumber"></span>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" asp-for="Address">Dirección</label>
+                                    <textarea class="form-control" asp-for="Address" type="text" maxlength="300"></textarea>
+                                    <span asp-validation-for="Address"></span>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" asp-for="Password">Password</label>
+                                    <input class="form-control" asp-for="Password" type="password">
+                                    <span asp-validation-for="Password"></span>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" asp-for="ConfirmPassword">Confirmación de Password</label>
+                                    <input class="form-control" asp-for="ConfirmPassword" type="password">
+                                    <span asp-validation-for="ConfirmPassword"></span>
+                                </div>
+                            </div>
+                            <div class="mb-4 text-center">
+                                <button id="back-register-button" class="btn btn-outline-dark show-email-validation"><i
+                                        class="fas fa-arrow-left"></i>Regresar </button>
+
+                                <button id="register-button" class="btn btn-outline-dark" type="submit"><i
+                                        class="far fa-user me-2"></i>Registrarme </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<vc:footer-section></vc:footer-section>
+
+@section Scripts{
+<script>
+    $(function () {
+
+        $("#back-register-button").on("click", function(e){
+            e.preventDefault();
+            $("#Step").val('FORM');
+            
+            $(".show-form").show();
+            $(".show-email-validation").hide();
+        });
+
+        @if(Model.Step == "FORM")
+        {
+            <text>
+                $(".show-form").show();
+                $(".show-email-validation").hide();
+            </text>
+        }
+        else
+        {
+            <text>
+                $(".show-form").hide();
+                $(".show-email-validation").show();
+            </text>
+        }
+
+        
+    })
+</script>
+}

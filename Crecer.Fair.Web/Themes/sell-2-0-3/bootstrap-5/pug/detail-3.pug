@@ -1,0 +1,41 @@
+extends _pug-includes/layout.pug
+
+block vars
+    - var active = 'category'  
+    - var current = 'detail-3.html'
+
+block content
+
+    - var breadcrumbs = []
+    - breadcrumbs.push({name: 'Home', link: 'index.html'})
+    - breadcrumbs.push({name: 'Tops and Jackets', link: 'category.html'})
+    - breadcrumbs.push({name: 'Modern Jacket'})
+    
+    - var images = ['img/product/kyle-loftus-596319-unsplash-cropped-2.jpg', 'img/product/kyle-loftus-596319-unsplash-cropped.jpg', 'img/product/kyle-loftus-596319-unsplash-cropped-.jpg']
+    - var detail3 = true
+
+    section.product-details
+        .container
+            .row
+                .col-lg-6.col-xl-7.pt-4.order-2.order-lg-1
+                     each image, index in images
+                        - var number = index + 1
+                        a.glightbox.d-block.mb-4(href=image, data-title=`Modern Jacket ${number} - Caption text`, data-gallery="product-gallery")
+                            div(data-bs-toggle="zoom", data-image=image)
+                                img.img-fluid(src=image, alt=`Modern Jacket ${number}`)
+    
+                .col-lg-6.col-xl-5.ps-lg-5.pt-4.order-1.order-lg-2
+                        ul(class="breadcrumb " + breadcrumbClass)
+                            each val in breadcrumbs
+                                if (val.link)
+                                    li.breadcrumb-item
+                                        a(href=val.link) #{val.name}
+                                else
+                                    li.breadcrumb-item.active #{val.name}    
+                        .sticky-top(style="top: 100px;")
+                            include _pug-includes/inc-detail-main.pug
+
+    include _pug-includes/inc-detail-tabs.pug
+    
+    include _pug-includes/inc-similar.pug
+    
